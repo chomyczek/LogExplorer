@@ -29,6 +29,7 @@ namespace LogExplorer.ViewModels
 
 		public RootViewModel(IExplorer explorer)
 		{
+			//TODO: Set start directory
 			this.explorer = explorer;
 			this.logs = new List<Log>();
 		}
@@ -36,11 +37,6 @@ namespace LogExplorer.ViewModels
 		#endregion
 
 		#region Public Methods and Operators
-
-		public void Init(string path)
-		{
-			//TODO: Set start directory
-		}
 
 		public override void Start()
 		{
