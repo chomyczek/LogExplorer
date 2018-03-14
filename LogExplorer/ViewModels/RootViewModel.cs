@@ -21,7 +21,7 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 
-		private List<Log> logs;
+		public List<Log> Logs { get; set; }
 
 		#endregion
 
@@ -31,7 +31,7 @@ namespace LogExplorer.ViewModels
 		{
 			//TODO: Set start directory
 			this.explorer = explorer;
-			this.logs = new List<Log>();
+			this.Logs = new List<Log>();
 		}
 
 		#endregion
@@ -50,7 +50,7 @@ namespace LogExplorer.ViewModels
 
 		private void Refresh()
 		{
-			this.logs = this.explorer.GetAllLogs();
+			this.Logs = this.explorer.GetAllLogs();
 		}
 
 		#endregion
