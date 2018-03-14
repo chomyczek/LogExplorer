@@ -71,6 +71,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Customs\App.cs" />
+    <Compile Include="Customs\CustomAppStart.cs" />
+    <Compile Include="Customs\CustomViewPresenter.cs" />
+    <Compile Include="Customs\Setup.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
     <Compile Include="Services\Interfaces\IExplorer.cs" />

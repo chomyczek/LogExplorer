@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// LogExplorer
+// Copyright(C) 2018
+// Author Adam Kaszubowski
+
+#region Usings
 
 using LogExplorer.Services.Core;
 using LogExplorer.Services.Interfaces;
@@ -10,10 +10,14 @@ using LogExplorer.Services.Interfaces;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
+#endregion
+
 namespace LogExplorer.Customs
 {
 	public class App : MvxApplication
 	{
+		#region Constructors and Destructors
+
 		/// <summary>
 		/// Setup IoC registrations.
 		/// </summary>
@@ -25,7 +29,8 @@ namespace LogExplorer.Customs
 			// the framework should return that same appStart instance.
 			var appStart = new CustomAppStart();
 			Mvx.RegisterSingleton<IMvxAppStart>(appStart);
-			
 		}
+
+		#endregion
 	}
 }
