@@ -35,14 +35,19 @@ namespace LogExplorer.Services.Core
 					continue;
 				}
 				var files = Directory.GetFiles(logDir);
-				string res;
-				if (files.Contains("Failed"))
+				var fileNames = files.Select(Path.GetFileName);
+;				string res;
+				if (fileNames.Contains("Failed"))
 				{
-					res = "Filed";
+					res = "Failed";
 				}
-				else if (files.Contains("Passed"))
+				else if (fileNames.Contains("Passed"))
 				{
 					res = "Passed";
+				}
+				else if (fileNames.Contains("Exception"))
+				{
+					res = "Exception";
 				}
 				else
 				{
@@ -51,7 +56,7 @@ namespace LogExplorer.Services.Core
 
 				var log = new Log
 				          {
-					          Name = Path.GetDirectoryName(dir),
+					          Name = Path.GetFileName(dir),
 					          Result = res,
 					          StartTime = Directory.GetCreationTime(logDir),
 					          DirPath = logDir
