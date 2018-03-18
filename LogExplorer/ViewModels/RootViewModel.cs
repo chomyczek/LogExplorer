@@ -38,15 +38,12 @@ namespace LogExplorer.ViewModels
 
 		#region Public Properties
 
-		public IMvxCommand<Log> CmdShowLog
+		public IMvxCommand<string> CmdStartProcess
 		{
 			get
 			{
-				return new MvxCommand<Log>(
-					log =>
-					{
-						FileHelper.OpenLog(log.LogPath);
-					});
+				return new MvxCommand<string>(
+					FileHelper.StartProcess);
 			}
 		}
 

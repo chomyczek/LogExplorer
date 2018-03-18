@@ -22,8 +22,12 @@
 					           Margin="10,0,0,0"
 					           Text="{Binding Result}" />
 					<Button Content="Show log"
-					        Command="{Binding DataContext.CmdShowLog, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-					        CommandParameter="{Binding}" 
+					        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+					        CommandParameter="{Binding LogPath}" 
+							Margin="10,0,0,0"/>
+					<Button Content="Show dir"
+					        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+					        CommandParameter="{Binding DirPath}" 
 							Margin="10,0,0,0"/>
 				</StackPanel>
 			</StackPanel>

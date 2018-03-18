@@ -8,16 +8,18 @@
 
 #endregion
 
+using System.Diagnostics;
+
 namespace LogExplorer.Services.Helpers
 {
 	public class FileHelper
 	{
 		#region Public Methods and Operators
 
-		public static void OpenLog(string path)
+		public static void StartProcess(string path)
 		{
 			//todo try catch
-			System.Diagnostics.Process.Start(path);
+			Process.Start(path);
 		}
 
 		#endregion
