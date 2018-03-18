@@ -41,9 +41,16 @@
 	</views:MvxWpfView.Resources>
 	
 	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="30" />
+		</Grid.RowDefinitions>
+		
 		<ListBox Grid.Row="0"
 		         ItemsSource="{Binding Logs}"
 		         ItemTemplate="{StaticResource LogsTemplate}"
 		         ScrollViewer.VerticalScrollBarVisibility="Visible" />
+
+		<Button Margin="5,5" Grid.Row="1" Content="Settings" Command="{Binding CmdNavigateSettings}" />
 	</Grid>
 </views:MvxWpfView>

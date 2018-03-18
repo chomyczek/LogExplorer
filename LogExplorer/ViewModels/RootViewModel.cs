@@ -4,7 +4,6 @@
 
 #region Usings
 
-using System;
 using System.Collections.Generic;
 
 using LogExplorer.Models;
@@ -42,12 +41,19 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand<string>(
-					FileHelper.StartProcess);
+				return new MvxCommand<string>(FileHelper.StartProcess);
 			}
 		}
 
 		public List<Log> Logs { get; set; }
+
+		public IMvxCommand CmdNavigateSettings
+		{
+			get
+			{
+				return new MvxCommand(() => this.ShowViewModel<SettingsViewModel>());
+			}
+		}
 
 		#endregion
 
