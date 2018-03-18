@@ -4,9 +4,11 @@
 
 #region Usings
 
+using System;
 using System.Collections.Generic;
 
 using LogExplorer.Models;
+using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 
 using MvvmCross.Core.ViewModels;
@@ -21,8 +23,6 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 
-		public List<Log> Logs { get; set; }
-
 		#endregion
 
 		#region Constructors and Destructors
@@ -33,6 +33,24 @@ namespace LogExplorer.ViewModels
 			this.explorer = explorer;
 			this.Logs = new List<Log>();
 		}
+
+		#endregion
+
+		#region Public Properties
+
+		public IMvxCommand<Log> CmdShowLog
+		{
+			get
+			{
+				return new MvxCommand<Log>(
+					log =>
+					{
+						FileHelper.OpenLog(log.LogPath);
+					});
+			}
+		}
+
+		public List<Log> Logs { get; set; }
 
 		#endregion
 

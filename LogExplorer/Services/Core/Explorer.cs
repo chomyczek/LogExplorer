@@ -59,8 +59,9 @@ namespace LogExplorer.Services.Core
 					          Name = Path.GetFileName(dir),
 					          Result = res,
 					          StartTime = Directory.GetCreationTime(logDir),
-					          DirPath = logDir
-				          };
+					          DirPath = logDir,
+							  DirTime = Path.GetFileName(logDir)
+				};
 				logs.Add(log);
 			}
 			return logs;

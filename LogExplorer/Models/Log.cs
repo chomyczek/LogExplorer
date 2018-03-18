@@ -22,6 +22,10 @@ namespace LogExplorer.Models
 
 		public string DirPath { get; set; }
 
+		public string DirTime { get; set; }
+
+		public string LogPath => $@"{this.DirPath}\LOG_{this.DirTime}.html";
+
 		#endregion
 	}
 }
