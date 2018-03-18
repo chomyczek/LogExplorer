@@ -26,6 +26,8 @@ namespace LogExplorer.Models
 
 		public string LogPath => $@"{this.DirPath}\LOG_{this.DirTime}.html";
 
+		public string StartTimeString => this.StartTime.ToString("g");
+
 		#endregion
 	}
 }

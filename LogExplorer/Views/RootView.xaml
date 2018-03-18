@@ -21,6 +21,12 @@
 					<TextBlock FontSize="16"
 					           Margin="10,0,0,0"
 					           Text="{Binding Result}" />
+					<TextBlock FontSize="16"
+					           Text="Time:"
+							   Margin="10,0,0,0"/>
+					<TextBlock FontSize="16"
+					           Margin="10,0,0,0"
+					           Text="{Binding StartTimeString}" />
 					<Button Content="Show log"
 					        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 					        CommandParameter="{Binding LogPath}" 
