@@ -30,34 +30,16 @@ namespace LogExplorer.Services.Core
 			foreach (var dir in logDirs)
 			{
 				var logDir = Directory.GetDirectories(dir).FirstOrDefault();
+
 				if (string.IsNullOrEmpty(logDir))
 				{
 					continue;
-				}
-				var files = Directory.GetFiles(logDir);
-				var fileNames = files.Select(Path.GetFileName);
-;				string res;
-				if (fileNames.Contains("Failed"))
-				{
-					res = "Failed";
-				}
-				else if (fileNames.Contains("Passed"))
-				{
-					res = "Passed";
-				}
-				else if (fileNames.Contains("Exception"))
-				{
-					res = "Exception";
-				}
-				else
-				{
-					res = "Unknown";
 				}
 
 				var log = new Log
 				          {
 					          Name = Path.GetFileName(dir),
-					          Result = res,
+					          Result = this.GetResult(logDir),
 					          StartTime = Directory.GetCreationTime(logDir),
 					          DirPath = logDir,
 							  DirTime = Path.GetFileName(logDir)
@@ -65,6 +47,34 @@ namespace LogExplorer.Services.Core
 				logs.Add(log);
 			}
 			return logs;
+		}
+
+		private string GetResult(string path)
+		{
+			var files = Directory.GetFiles(path);
+			var fileNames = files.Select(Path.GetFileName);
+
+			if (fileNames.Contains("Failed"))
+			{
+				return "Failed";
+			}
+			if (fileNames.Contains("Passed"))
+			{
+				return "Passed";
+			}
+			if (fileNames.Contains("Exception"))
+			{
+				return "Exception";
+			}
+			if (fileNames.Contains("Workaround"))
+			{
+				return "Workaround";
+			}
+			if (fileNames.Contains("Warning"))
+			{
+				return "Warning";
+			}
+			return "Unknown";
 		}
 
 		#endregion
