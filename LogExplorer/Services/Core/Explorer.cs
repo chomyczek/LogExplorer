@@ -20,12 +20,11 @@ namespace LogExplorer.Services.Core
 		#region Public Methods and Operators
 
 		/// <summary>
-		/// todo: This is basic version
+		/// todo: This is basic version, try catch
 		/// </summary>
-		public List<Log> GetAllLogs()
+		public List<Log> GetLogsRoot(string path)
 		{
-			const string LogsPath = @"C:\CONFIG TMP\History2";
-			var logDirs = Directory.GetDirectories(LogsPath);
+			var logDirs = Directory.GetDirectories(path);
 			var logs = new List<Log>();
 			foreach (var dir in logDirs)
 			{

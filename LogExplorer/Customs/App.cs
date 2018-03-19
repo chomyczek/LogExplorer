@@ -5,6 +5,7 @@
 #region Usings
 
 using LogExplorer.Services.Core;
+using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 
 using MvvmCross.Core.ViewModels;
@@ -24,6 +25,8 @@ namespace LogExplorer.Customs
 		public App()
 		{
 			Mvx.RegisterType<IExplorer, Explorer>();
+			var xmlPath = FileHelper.GetLocalPath("ConfigCleaner.xml");
+			Mvx.RegisterSingleton(new Repository(xmlPath));
 
 			// Tells the MvvmCross framework that whenever any code requests an IMvxAppStart reference,
 			// the framework should return that same appStart instance.

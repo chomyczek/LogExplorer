@@ -10,6 +10,6 @@ namespace LogExplorer.Services.Interfaces
 {
 	public interface IExplorer
 	{
-		List<Log> GetAllLogs();
+		List<Log> GetLogsRoot(string path);
 	}
 }

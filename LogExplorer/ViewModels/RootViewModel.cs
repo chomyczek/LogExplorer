@@ -7,10 +7,12 @@
 using System.Collections.Generic;
 
 using LogExplorer.Models;
+using LogExplorer.Services.Core;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 
 using MvvmCross.Core.ViewModels;
+using MvvmCross.Platform;
 
 #endregion
 
@@ -21,6 +23,8 @@ namespace LogExplorer.ViewModels
 		#region Fields
 
 		private readonly IExplorer explorer;
+
+		private Settings settings;
 
 		#endregion
 
@@ -61,6 +65,7 @@ namespace LogExplorer.ViewModels
 
 		public override void Start()
 		{
+			this.settings = Mvx.Resolve<Repository>().GetSettings();
 			this.Refresh();
 			base.Start();
 		}
@@ -71,7 +76,7 @@ namespace LogExplorer.ViewModels
 
 		private void Refresh()
 		{
-			this.Logs = this.explorer.GetAllLogs();
+			this.Logs = this.explorer.GetLogsRoot(this.settings.LogsPath);
 		}
 
 		#endregion
