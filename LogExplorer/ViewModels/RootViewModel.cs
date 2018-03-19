@@ -5,6 +5,7 @@
 #region Usings
 
 using System.Collections.Generic;
+using System.Linq;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
@@ -34,12 +35,27 @@ namespace LogExplorer.ViewModels
 		{
 			//TODO: Set start directory
 			this.explorer = explorer;
-			this.Logs = new List<Log>();
 		}
 
 		#endregion
 
 		#region Public Properties
+
+		public IMvxCommand CmdNavigateSettings
+		{
+			get
+			{
+				return new MvxCommand(() => this.ShowViewModel<SettingsViewModel>());
+			}
+		}
+
+		public IMvxCommand CmdRefresh
+		{
+			get
+			{
+				return new MvxCommand(this.Refresh);
+			}
+		}
 
 		public IMvxCommand<string> CmdStartProcess
 		{
@@ -51,21 +67,12 @@ namespace LogExplorer.ViewModels
 
 		public List<Log> Logs { get; set; }
 
-		public IMvxCommand CmdNavigateSettings
-		{
-			get
-			{
-				return new MvxCommand(() => this.ShowViewModel<SettingsViewModel>());
-			}
-		}
-
 		#endregion
 
 		#region Public Methods and Operators
 
 		public override void Start()
 		{
-			this.settings = Mvx.Resolve<Repository>().GetSettings();
 			this.Refresh();
 			base.Start();
 		}
@@ -76,7 +83,9 @@ namespace LogExplorer.ViewModels
 
 		private void Refresh()
 		{
-			this.Logs = this.explorer.GetLogsRoot(this.settings.LogsPath);
+			this.settings = Mvx.Resolve<Repository>().GetSettings();
+			this.Logs = this.explorer.GetLogsRoot(this.settings.LogsPath).ToList();
+			this.RaisePropertyChanged(() => this.Logs);
 		}
 
 		#endregion

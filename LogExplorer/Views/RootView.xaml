@@ -45,12 +45,18 @@
 			<RowDefinition Height="*" />
 			<RowDefinition Height="30" />
 		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
 		
 		<ListBox Grid.Row="0"
-		         ItemsSource="{Binding Logs}"
+				 Grid.ColumnSpan="2"
+		         ItemsSource="{Binding Logs, Mode=TwoWay}"
 		         ItemTemplate="{StaticResource LogsTemplate}"
 		         ScrollViewer.VerticalScrollBarVisibility="Visible" />
 
-		<Button Margin="5,5" Grid.Row="1" Content="Settings" Command="{Binding CmdNavigateSettings}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
 </views:MvxWpfView>

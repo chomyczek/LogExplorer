@@ -24,8 +24,16 @@ namespace LogExplorer.Services.Core
 		/// </summary>
 		public List<Log> GetLogsRoot(string path)
 		{
-			var logDirs = Directory.GetDirectories(path);
 			var logs = new List<Log>();
+
+			if (!Directory.Exists(path))
+			{
+				//todo: warning
+				return logs;
+			}
+
+			var logDirs = Directory.GetDirectories(path);
+
 			foreach (var dir in logDirs)
 			{
 				var logDir = Directory.GetDirectories(dir).FirstOrDefault();
@@ -41,12 +49,16 @@ namespace LogExplorer.Services.Core
 					          Result = this.GetResult(logDir),
 					          StartTime = Directory.GetCreationTime(logDir),
 					          DirPath = logDir,
-							  DirTime = Path.GetFileName(logDir)
-				};
+					          DirTime = Path.GetFileName(logDir)
+				          };
 				logs.Add(log);
 			}
 			return logs;
 		}
+
+		#endregion
+
+		#region Methods
 
 		private string GetResult(string path)
 		{
@@ -72,6 +84,10 @@ namespace LogExplorer.Services.Core
 			if (fileNames.Contains("Warning"))
 			{
 				return "Warning";
+			}
+			if (fileNames.Contains("Blocked"))
+			{
+				return "Blocked";
 			}
 			return "Unknown";
 		}
