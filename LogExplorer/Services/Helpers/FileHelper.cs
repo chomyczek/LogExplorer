@@ -22,6 +22,10 @@ namespace LogExplorer.Services.Helpers
 		public static void StartProcess(string path)
 		{
 			//todo try catch
+			if (string.IsNullOrEmpty(path))
+			{
+				return;
+			}
 			Process.Start(path);
 		}
 
