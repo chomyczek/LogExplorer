@@ -9,37 +9,33 @@
                   d:DesignHeight="300" d:DesignWidth="300">
 
 	<views:MvxWpfView.Resources>
-		<DataTemplate x:Key="LogsTemplate">
-			<StackPanel Margin="12"
-			            Orientation="Vertical">
-				<TextBlock FontSize="20"
-				           Text="{Binding Name}" />
-				<StackPanel Orientation="Horizontal"
-				            Margin="10,4,0,0">
-					<TextBlock FontSize="16"
-					           Text="Result:" />
-					<TextBlock FontSize="16"
-					           Margin="10,0,0,0"
-					           Text="{Binding Result}" />
-					<TextBlock FontSize="16"
-					           Text="Time:"
-							   Margin="10,0,0,0"/>
-					<TextBlock FontSize="16"
-					           Margin="10,0,0,0"
-					           Text="{Binding StartTimeString}" />
-					<Button Content="Show log"
-					        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-					        CommandParameter="{Binding LogPath}" 
-							Margin="10,0,0,0"/>
-					<Button Content="Show dir"
-					        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-					        CommandParameter="{Binding DirPath}" 
-							Margin="10,0,0,0"/>
-				</StackPanel>
-			</StackPanel>
-		</DataTemplate>
+		<DataGrid x:Key="LogsGrid"
+		          ItemsSource="{Binding .}"
+		          AutoGenerateColumns="False"
+		          IsReadOnly="True">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Test Name" Binding="{Binding Name}" />
+				<DataGridTextColumn Header="Result" Binding="{Binding Result}" />
+				<DataGridTextColumn Header="Start Time" Binding="{Binding StartTimeString}" />
+				<DataGridTemplateColumn Header="Commands">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<Button Content="Show log"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding LogPath}" />
+								<Button Content="Show dir"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding DirPath}" 
+										Margin="5,0,0,0"/>
+							</StackPanel>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+			</DataGrid.Columns>
+		</DataGrid>
 	</views:MvxWpfView.Resources>
-	
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
@@ -49,13 +45,8 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		
-		<ListBox Grid.Row="0"
-				 Grid.ColumnSpan="2"
-		         ItemsSource="{Binding Logs, Mode=TwoWay}"
-		         ItemTemplate="{StaticResource LogsTemplate}"
-		         ScrollViewer.VerticalScrollBarVisibility="Visible" />
-
+		<ContentControl Grid.Row="0" Grid.ColumnSpan="2" Content="{StaticResource LogsGrid}"
+		                DataContext="{Binding Logs, Mode=TwoWay}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
