@@ -36,7 +36,7 @@ namespace LogExplorer.Services.Core
 
 			foreach (var dir in logDirs)
 			{
-				var logDir = Directory.GetDirectories(dir).FirstOrDefault();
+				var logDir = Directory.GetDirectories(dir).OrderByDescending(Directory.GetCreationTime).FirstOrDefault();
 
 				if (string.IsNullOrEmpty(logDir))
 				{
@@ -53,7 +53,7 @@ namespace LogExplorer.Services.Core
 				          };
 				logs.Add(log);
 			}
-			return logs;
+			return logs.OrderByDescending(l=>l.StartTime).ToList();
 		}
 
 		#endregion
