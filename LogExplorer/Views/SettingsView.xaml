@@ -29,7 +29,7 @@
 			</Grid.ColumnDefinitions>
 			<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Text="Root logs path:" />
 			<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-					         Text="{Binding LogPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
+					         Text="{Binding RootLogsPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
 			<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickLogPath}" HorizontalAlignment="Right" Content=".."/>
 		</Grid>
 

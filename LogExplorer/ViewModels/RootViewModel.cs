@@ -84,7 +84,7 @@ namespace LogExplorer.ViewModels
 		private void Refresh()
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
-			this.Logs = this.explorer.GetLogsRoot(this.settings.LogsPath).ToList();
+			this.Logs = this.explorer.GetLogsRoot(this.settings.RootLogsPath).ToList();
 			this.RaisePropertyChanged(() => this.Logs);
 		}
 

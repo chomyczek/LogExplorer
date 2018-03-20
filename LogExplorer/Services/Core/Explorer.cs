@@ -49,7 +49,8 @@ namespace LogExplorer.Services.Core
 					          Result = this.GetResult(logDir),
 					          StartTime = Directory.GetCreationTime(logDir),
 					          DirPath = logDir,
-					          DirTime = Path.GetFileName(logDir)
+					          DirTime = Path.GetFileName(logDir),
+							  LogPath = this.GetLogPath(logDir)
 				          };
 				logs.Add(log);
 			}
@@ -59,6 +60,14 @@ namespace LogExplorer.Services.Core
 		#endregion
 
 		#region Methods
+
+		private string GetLogPath(string path)
+		{
+			var files = Directory.GetFiles(path).Select(Path.GetFileName);
+			var logName = files.FirstOrDefault(f => f.EndsWith($@"{Path.GetFileName(path)}.html") && f.StartsWith("LOG_"));
+			var logPath = string.IsNullOrEmpty(logName) ? string.Empty : $@"{path}\{logName}";
+			return logPath;
+		}
 
 		private string GetResult(string path)
 		{

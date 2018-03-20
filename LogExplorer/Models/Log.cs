@@ -24,7 +24,7 @@ namespace LogExplorer.Models
 
 		public string DirTime { get; set; }
 
-		public string LogPath => $@"{this.DirPath}\LOG_{this.DirTime}.html";
+		public string LogPath { get; set; }
 
 		public string StartTimeString => this.StartTime.ToString("g");
 

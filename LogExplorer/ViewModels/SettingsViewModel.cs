@@ -16,34 +16,16 @@ namespace LogExplorer.ViewModels
 {
 	public class SettingsViewModel : MvxViewModel
 	{
-		private Settings settings { get; set; }
-		public string LogPath { get
-		{
-			return this.settings.LogsPath;
-		}
-			set
-			{
-				this.settings.LogsPath = value;
-			}
-		}
-
-		public override void Start()
-		{
-			this.settings = Mvx.Resolve<Repository>().GetSettings();
-			base.Start();
-		}
+		#region Public Properties
 
 		public IMvxCommand CmdCancel
 		{
 			get
 			{
-				return new MvxCommand(
-					() =>
-					{
-						this.Close(this);
-					});
+				return new MvxCommand(() => { this.Close(this); });
 			}
 		}
+
 		public IMvxCommand CmdSave
 		{
 			get
@@ -56,5 +38,35 @@ namespace LogExplorer.ViewModels
 					});
 			}
 		}
+
+		public string RootLogsPath
+		{
+			get
+			{
+				return this.settings.RootLogsPath;
+			}
+			set
+			{
+				this.settings.RootLogsPath = value;
+			}
+		}
+
+		#endregion
+
+		#region Properties
+
+		private Settings settings { get; set; }
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		public override void Start()
+		{
+			this.settings = Mvx.Resolve<Repository>().GetSettings();
+			base.Start();
+		}
+
+		#endregion
 	}
 }

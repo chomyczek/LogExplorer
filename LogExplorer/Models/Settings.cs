@@ -12,7 +12,7 @@ namespace LogExplorer.Models
 		{
 			this.CopyPath = string.Empty;
 			this.Height = string.Empty;
-			this.LogsPath = @"C:\History\";
+			this.RootLogsPath = @"C:\History\";
 			this.PositionX = string.Empty;
 			this.PositionY = string.Empty;
 			this.Width = string.Empty;
@@ -26,7 +26,7 @@ namespace LogExplorer.Models
 
 		public string Height { get; set; }
 
-		public string LogsPath { get; set; }
+		public string RootLogsPath { get; set; }
 
 		public string PositionX { get; set; }
 

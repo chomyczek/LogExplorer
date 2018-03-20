@@ -25,7 +25,7 @@ namespace LogExplorer.Customs
 		public App()
 		{
 			Mvx.RegisterType<IExplorer, Explorer>();
-			var xmlPath = FileHelper.GetLocalPath("ConfigCleaner.xml");
+			var xmlPath = FileHelper.GetLocalPath("LogExplorer.xml");
 			Mvx.RegisterSingleton(new Repository(xmlPath));
 
 			// Tells the MvvmCross framework that whenever any code requests an IMvxAppStart reference,

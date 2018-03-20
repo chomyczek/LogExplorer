@@ -95,7 +95,8 @@ namespace LogExplorer.Services.Core
 				{
 					var node = this.doc.CreateElement(property.Name);
 					node.InnerText = property.GetValue(settings).ToString();
-					this.doc.FirstChild.AppendChild(node);
+					//FirstChild is header, second(last) is Settings
+					this.doc.LastChild.AppendChild(node);
 				}
 				else
 				{
