@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 
 using LogExplorer.Models;
+using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 
 #endregion
@@ -43,18 +44,21 @@ namespace LogExplorer.Services.Core
 					continue;
 				}
 
+				var result = this.GetResult(logDir);
+
 				var log = new Log
 				          {
 					          Name = Path.GetFileName(dir),
-					          Result = this.GetResult(logDir),
+					          Result = result,
 					          StartTime = Directory.GetCreationTime(logDir),
 					          DirPath = logDir,
 					          DirTime = Path.GetFileName(logDir),
-							  LogPath = this.GetLogPath(logDir)
+					          LogPath = this.GetLogPath(logDir),
+					          ResultColor = ResultHelper.GetColor(result)
 				          };
 				logs.Add(log);
 			}
-			return logs.OrderByDescending(l=>l.StartTime).ToList();
+			return logs.OrderByDescending(l => l.StartTime).ToList();
 		}
 
 		#endregion
@@ -73,32 +77,8 @@ namespace LogExplorer.Services.Core
 		{
 			var files = Directory.GetFiles(path);
 			var fileNames = files.Select(Path.GetFileName);
-
-			if (fileNames.Contains("Failed"))
-			{
-				return "Failed";
-			}
-			if (fileNames.Contains("Passed"))
-			{
-				return "Passed";
-			}
-			if (fileNames.Contains("Exception"))
-			{
-				return "Exception";
-			}
-			if (fileNames.Contains("Workaround"))
-			{
-				return "Workaround";
-			}
-			if (fileNames.Contains("Warning"))
-			{
-				return "Warning";
-			}
-			if (fileNames.Contains("Blocked"))
-			{
-				return "Blocked";
-			}
-			return "Unknown";
+			var result = ResultHelper.GetResult(fileNames);
+			return result;
 		}
 
 		#endregion

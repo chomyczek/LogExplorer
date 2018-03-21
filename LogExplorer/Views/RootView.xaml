@@ -13,6 +13,11 @@
 		          ItemsSource="{Binding .}"
 		          AutoGenerateColumns="False"
 		          IsReadOnly="True">
+			<DataGrid.RowStyle>
+				<Style TargetType="DataGridRow">
+					<Setter Property="Background" Value="{Binding ResultColor}"/>
+				</Style>
+			</DataGrid.RowStyle>
 			<DataGrid.Columns>
 				<DataGridTextColumn Header="Test Name" Binding="{Binding Name}" />
 				<DataGridTextColumn Header="Result" Binding="{Binding Result}" />

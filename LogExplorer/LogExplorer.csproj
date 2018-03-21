@@ -81,6 +81,7 @@
     <Compile Include="Services\Core\Explorer.cs" />
     <Compile Include="Services\Core\Repository.cs" />
     <Compile Include="Services\Helpers\FileHelper.cs" />
+    <Compile Include="Services\Helpers\ResultHelper.cs" />
     <Compile Include="Services\Interfaces\IExplorer.cs" />
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

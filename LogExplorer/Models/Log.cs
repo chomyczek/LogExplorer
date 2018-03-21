@@ -5,6 +5,7 @@
 #region Usings
 
 using System;
+using System.Windows.Media;
 
 #endregion
 
@@ -27,6 +28,8 @@ namespace LogExplorer.Models
 		public string LogPath { get; set; }
 
 		public string StartTimeString => this.StartTime.ToString("g");
+
+		public Brush ResultColor { get; set; }
 
 		#endregion
 	}
