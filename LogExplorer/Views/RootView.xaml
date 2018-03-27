@@ -54,10 +54,7 @@
 
 				<!-- Data rows -->
 				<TreeView Grid.Row="1" ItemsSource="{Binding .}" BorderBrush="Gray" BorderThickness="0 1 0 0">
-					<TreeView.ItemContainerStyle>
-						<!-- 
-    This Style binds a TreeViewItem to a TreeViewItemViewModel. 
-    -->
+					<!--<TreeView.ItemContainerStyle>	
 						<Style TargetType="{x:Type TreeViewItem}">
 							<Setter Property="FontWeight" Value="Normal" />
 							<Style.Triggers>
@@ -66,7 +63,7 @@
 								</Trigger>
 							</Style.Triggers>
 						</Style>
-					</TreeView.ItemContainerStyle>
+					</TreeView.ItemContainerStyle>-->
 
 					<TreeView.ItemTemplate>
 
@@ -106,7 +103,7 @@
 										<Grid Background="{Binding ResultColor}">
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition SharedSizeGroup="Name" />
-												<ColumnDefinition SharedSizeGroup="none6" />
+												<ColumnDefinition SharedSizeGroup="" />
 												<ColumnDefinition SharedSizeGroup="Result" />
 												<ColumnDefinition SharedSizeGroup="StartTime" />
 												<ColumnDefinition SharedSizeGroup="Duration" />
