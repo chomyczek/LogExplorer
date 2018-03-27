@@ -54,8 +54,25 @@ namespace LogExplorer.Services.Core
 					          DirPath = logDir,
 					          DirTime = Path.GetFileName(logDir),
 					          LogPath = this.GetLogPath(logDir),
-					          ResultColor = ResultHelper.GetColor(result)
+					          ResultColor = ResultHelper.GetColor(result),
+							  History = new List<Log>()
 				          };
+				//todo: remove next lines
+				var log1 = new Log
+				{
+					Name = log.Name+" clone",
+					Result = log.Result,
+					StartTime = log.StartTime,
+					DirPath = log.DirPath,
+					DirTime = log.DirTime,
+					LogPath = log.LogPath,
+					ResultColor = log.ResultColor,
+					History = new List<Log>()
+				};
+				//todo: remove next 2 lines
+				log.History.Add(log1);
+				log.History.Add(log1);
+				//todo: end-todo
 				logs.Add(log);
 			}
 			return logs.OrderByDescending(l => l.StartTime).ToList();

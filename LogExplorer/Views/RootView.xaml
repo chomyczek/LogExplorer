@@ -39,6 +39,107 @@
 				</DataGridTemplateColumn>
 			</DataGrid.Columns>
 		</DataGrid>
+		
+		
+		<!-- TreeGrid "Control" -->
+		<Border x:Key="LogsTree" BorderBrush="Black" BorderThickness="1" >
+				<Border.Resources>
+					<Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
+						<Setter Property="Margin" Value="3 0 3 0"/>
+					</Style>
+					<Style x:Key="TextBlockBoldStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource TextBlockStyle}">
+						<Setter Property="FontWeight" Value="Bold"/>
+					</Style>
+				</Border.Resources>
+
+				<!-- Content -->
+				<Grid Grid.IsSharedSizeScope="True">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition/>
+					</Grid.RowDefinitions>
+
+					<!-- Column headers -->
+					<TreeViewItem Grid.Row="0" BorderThickness="1">
+						<TreeViewItem.Header>
+							<Grid>
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition SharedSizeGroup="Name"/>
+									<!-- Placeholders for two columns of ToggleButton -->
+									<ColumnDefinition SharedSizeGroup="Toggle"/>
+									<ColumnDefinition SharedSizeGroup="Result"/>
+								<ColumnDefinition SharedSizeGroup="StartTime"/>
+								<ColumnDefinition SharedSizeGroup="Commands"/>
+							</Grid.ColumnDefinitions>
+								<TextBlock Grid.Column="0" Text="Name" Style="{StaticResource TextBlockBoldStyle}"/>
+								<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
+								<TreeViewItem Grid.Column="1" Padding="0"/>
+								<TextBlock Grid.Column="2" Text="Result" Style="{StaticResource TextBlockBoldStyle}"/>
+							<TextBlock Grid.Column="3" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}"/>
+							<TextBlock Grid.Column="4" Text="Commands" Style="{StaticResource TextBlockBoldStyle}"/>
+						</Grid>
+						</TreeViewItem.Header>
+					</TreeViewItem>
+
+					<!-- Data rows -->
+					<TreeView Grid.Row="1" ItemsSource="{Binding .}" BorderBrush="Gray" BorderThickness="0 1 0 0">
+						<TreeView.ItemTemplate>
+
+							<!-- Level 0 template leaves space for 1 child "Toggle" levels -->
+							<HierarchicalDataTemplate ItemsSource="{Binding History}">
+								<Grid Background="{Binding ResultColor}">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition SharedSizeGroup="Name"/>
+										<ColumnDefinition SharedSizeGroup="Toggle"/>
+										<ColumnDefinition SharedSizeGroup="Result"/>
+										<ColumnDefinition SharedSizeGroup="StartTime"/>
+									<ColumnDefinition SharedSizeGroup="Commands"/>
+								</Grid.ColumnDefinitions>
+									<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}"/>
+									<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}"/>
+									<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}"/>
+								<StackPanel Grid.Column="4" Orientation="Horizontal">
+									<Button Content="Show log"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding LogPath}" />
+									<Button Content="Show dir"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding DirPath}" 
+										Margin="5,0,0,0"/>
+								</StackPanel>
+							</Grid>
+
+								<!--Level 1 template leaves space for 0 child "Toggle" level-->
+								<HierarchicalDataTemplate.ItemTemplate>
+									<HierarchicalDataTemplate ItemsSource="{Binding History}">
+										<Grid Background="{Binding ResultColor}">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition SharedSizeGroup="Name"/>
+												<ColumnDefinition/>
+												<ColumnDefinition SharedSizeGroup="Result"/>
+												<ColumnDefinition SharedSizeGroup="StartTime"/>
+											<ColumnDefinition SharedSizeGroup="Commands"/>
+										</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}"/>
+											<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}"/>
+											<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}"/>
+										<StackPanel Grid.Column="4" Orientation="Horizontal" >
+											<Button Content="Show log"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding LogPath}" />
+											<Button Content="Show dir"
+								        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+								        CommandParameter="{Binding DirPath}" 
+										Margin="5,0,0,0"/>
+										</StackPanel>
+									</Grid>
+									</HierarchicalDataTemplate>
+								</HierarchicalDataTemplate.ItemTemplate>
+							</HierarchicalDataTemplate>
+						</TreeView.ItemTemplate>
+					</TreeView>
+				</Grid>
+			</Border>
 	</views:MvxWpfView.Resources>
 
 	<Grid>
@@ -50,9 +151,17 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-		<ContentControl Grid.Row="0" Grid.ColumnSpan="2" Content="{StaticResource LogsGrid}"
+		<!--<ContentControl Grid.Row="0" Grid.ColumnSpan="2" Content="{StaticResource LogsGrid}"
+		                DataContext="{Binding Logs, Mode=TwoWay}" />-->
+		<ContentControl Grid.Row="0" Grid.ColumnSpan="2" Content="{StaticResource LogsTree}"
 		                DataContext="{Binding Logs, Mode=TwoWay}" />
+		<!--Oneway?-->
+		
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
+
+
+	
+
 </views:MvxWpfView>
