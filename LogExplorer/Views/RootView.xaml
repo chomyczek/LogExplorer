@@ -70,53 +70,57 @@
 
 						<!-- Level 0 template leaves space for 1 child "Toggle" levels -->
 						<HierarchicalDataTemplate ItemsSource="{Binding History}">
-							<Grid Background="{Binding ResultColor}">
-								<Grid.ColumnDefinitions>
-									<ColumnDefinition SharedSizeGroup="Name" />
-									<ColumnDefinition SharedSizeGroup="Toggle" />
-									<ColumnDefinition SharedSizeGroup="Result" />
-									<ColumnDefinition SharedSizeGroup="StartTime" />
-									<ColumnDefinition SharedSizeGroup="Commands" />
-								</Grid.ColumnDefinitions>
-								<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
-								<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
-								<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-								<StackPanel Grid.Column="4" Orientation="Horizontal">
-									<Button Content="Show log"
-									        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-									        CommandParameter="{Binding LogPath}" />
-									<Button Content="Show dir"
-									        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-									        CommandParameter="{Binding DirPath}"
-									        Margin="5,0,0,0" />
-								</StackPanel>
-							</Grid>
-							
+							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
+								<Grid Background="{Binding ResultColor}">
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition SharedSizeGroup="Name" />
+										<ColumnDefinition SharedSizeGroup="Toggle" />
+										<ColumnDefinition SharedSizeGroup="Result" />
+										<ColumnDefinition SharedSizeGroup="StartTime" />
+										<ColumnDefinition SharedSizeGroup="Commands" />
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
+									<StackPanel Grid.Column="4" Orientation="Horizontal">
+										<Button Content="Show log"
+										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding LogPath}" />
+										<Button Content="Show dir"
+										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding DirPath}"
+										        Margin="5,0,0,0" />
+									</StackPanel>
+								</Grid>
+							</Border>
+
 
 							<!--Level 1 template leaves space for 0 child "Toggle" level-->
 							<HierarchicalDataTemplate.ItemTemplate>
 								<HierarchicalDataTemplate ItemsSource="{Binding History}">
-									<Grid Background="{Binding ResultColor}">
-										<Grid.ColumnDefinitions>
-											<ColumnDefinition SharedSizeGroup="Name" />
-											<ColumnDefinition SharedSizeGroup="none6" />
-											<ColumnDefinition SharedSizeGroup="Result" />
-											<ColumnDefinition SharedSizeGroup="StartTime" />
-											<ColumnDefinition SharedSizeGroup="Commands" />
-										</Grid.ColumnDefinitions>
-										<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
-										<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
-										<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-										<StackPanel Grid.Column="4" Orientation="Horizontal">
-											<Button Content="Show log"
-											        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-											        CommandParameter="{Binding LogPath}" />
-											<Button Content="Show dir"
-											        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-											        CommandParameter="{Binding DirPath}"
-											        Margin="5,0,0,0" />
-										</StackPanel>
-									</Grid>
+									<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.2">
+										<Grid Background="{Binding ResultColor}">
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition SharedSizeGroup="Name" />
+												<ColumnDefinition SharedSizeGroup="none6" />
+												<ColumnDefinition SharedSizeGroup="Result" />
+												<ColumnDefinition SharedSizeGroup="StartTime" />
+												<ColumnDefinition SharedSizeGroup="Commands" />
+											</Grid.ColumnDefinitions>
+											<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
+											<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
+											<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
+											<StackPanel Grid.Column="4" Orientation="Horizontal">
+												<Button Content="Show log"
+												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding LogPath}" />
+												<Button Content="Show dir"
+												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding DirPath}"
+												        Margin="5,0,0,0" />
+											</StackPanel>
+										</Grid>
+									</Border>
 								</HierarchicalDataTemplate>
 							</HierarchicalDataTemplate.ItemTemplate>
 						</HierarchicalDataTemplate>
