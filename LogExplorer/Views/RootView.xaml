@@ -52,6 +52,20 @@
 
 				<!-- Data rows -->
 				<TreeView Grid.Row="1" ItemsSource="{Binding .}" BorderBrush="Gray" BorderThickness="0 1 0 0">
+					<TreeView.ItemContainerStyle>
+						<!-- 
+    This Style binds a TreeViewItem to a TreeViewItemViewModel. 
+    -->
+						<Style TargetType="{x:Type TreeViewItem}">
+							<Setter Property="FontWeight" Value="Normal" />
+							<Style.Triggers>
+								<Trigger Property="IsSelected" Value="True">
+									<Setter Property="FontWeight" Value="ExtraBold" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</TreeView.ItemContainerStyle>
+
 					<TreeView.ItemTemplate>
 
 						<!-- Level 0 template leaves space for 1 child "Toggle" levels -->
@@ -77,6 +91,7 @@
 									        Margin="5,0,0,0" />
 								</StackPanel>
 							</Grid>
+							
 
 							<!--Level 1 template leaves space for 0 child "Toggle" level-->
 							<HierarchicalDataTemplate.ItemTemplate>
