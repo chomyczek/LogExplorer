@@ -50,16 +50,19 @@ namespace LogExplorer.Services.Core
 				}
 
 				var result = this.GetResult(logDir);
+				var logPath = this.GetLogPath(logDir);
+				var startTime = Directory.GetCreationTime(logDir);
 
 				var log = new Log
 				          {
 					          Name = Path.GetFileName(dir),
 					          Result = result,
-					          StartTime = Directory.GetCreationTime(logDir),
+					          StartTime = startTime,
 					          DirPath = logDir,
 					          DirTime = Path.GetFileName(logDir),
-					          LogPath = this.GetLogPath(logDir),
+					          LogPath = logPath,
 					          ResultColor = ResultHelper.GetColor(result),
+							  Duration = this.GetDuration(startTime, logPath),
 							  History = this.GetLogHistory(dir)//new List<Log>()
 				          };
 				logs.Add(log);
@@ -68,6 +71,17 @@ namespace LogExplorer.Services.Core
 			var diff = DateTime.Now.Subtract(start);
 			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
 			return logs.OrderByDescending(l => l.StartTime).ToList();
+		}
+
+		private TimeSpan GetDuration(DateTime startTime, string logPath)
+		{
+			if (string.IsNullOrEmpty(logPath)
+			    || !File.Exists(logPath))
+			{
+				return new TimeSpan();
+			}
+			var logTime = File.GetCreationTime(logPath);
+			return logTime - startTime;
 		}
 
 		public List<Log> GetLogHistory(string path)
@@ -80,15 +94,18 @@ namespace LogExplorer.Services.Core
 			{
 
 				var result = this.GetResult(dir);
+				var logPath = this.GetLogPath(dir);
+				var startTime = Directory.GetCreationTime(dir);
 
 				var log = new Log
 				{
 					Name = name,
 					Result = result,
-					StartTime = Directory.GetCreationTime(dir),
+					StartTime = startTime,
 					DirPath = dir,
 					DirTime = Path.GetFileName(dir),
-					LogPath = this.GetLogPath(dir),
+					LogPath = logPath,
+					Duration = this.GetDuration(startTime, logPath),
 					ResultColor = ResultHelper.GetColor(result)
 				};
 

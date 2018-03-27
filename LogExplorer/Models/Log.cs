@@ -20,6 +20,10 @@ namespace LogExplorer.Models
 
 		public string DirTime { get; set; }
 
+		public TimeSpan Duration { get; set; }
+
+		public string DurationString => this.Duration.ToString(@"hh\:mm\:ss");
+
 		public List<Log> History { get; set; }
 
 		public string LogPath { get; set; }

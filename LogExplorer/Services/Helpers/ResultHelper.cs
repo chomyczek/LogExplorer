@@ -74,9 +74,9 @@ namespace LogExplorer.Services.Helpers
 
 		public static string GetResult(IEnumerable<string> fileNames)
 		{
-			var z = fileNames.Intersect(ExpectedResults);
-			var zz = z.FirstOrDefault();
-			return zz ?? Unknown;
+			var result = fileNames.Intersect(ExpectedResults).FirstOrDefault();
+			
+			return result ?? Unknown;
 		}
 
 		#endregion

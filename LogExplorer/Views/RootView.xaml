@@ -38,6 +38,7 @@
 								<ColumnDefinition SharedSizeGroup="Toggle" />
 								<ColumnDefinition SharedSizeGroup="Result" />
 								<ColumnDefinition SharedSizeGroup="StartTime" />
+								<ColumnDefinition SharedSizeGroup="Duration" />
 								<ColumnDefinition SharedSizeGroup="Commands" />
 							</Grid.ColumnDefinitions>
 							<TextBlock Grid.Column="0" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
@@ -45,7 +46,8 @@
 							<TreeViewItem Grid.Column="1" Padding="0" />
 							<TextBlock Grid.Column="2" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
 							<TextBlock Grid.Column="3" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="4" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Column="4" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Column="5" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
 						</Grid>
 					</TreeViewItem.Header>
 				</TreeViewItem>
@@ -77,12 +79,14 @@
 										<ColumnDefinition SharedSizeGroup="Toggle" />
 										<ColumnDefinition SharedSizeGroup="Result" />
 										<ColumnDefinition SharedSizeGroup="StartTime" />
+										<ColumnDefinition SharedSizeGroup="Duration" />
 										<ColumnDefinition SharedSizeGroup="Commands" />
 									</Grid.ColumnDefinitions>
 									<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
 									<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
 									<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-									<StackPanel Grid.Column="4" Orientation="Horizontal">
+									<TextBlock Grid.Column="4" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
+									<StackPanel Grid.Column="5" Orientation="Horizontal">
 										<Button Content="Show log"
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding LogPath}" />
@@ -105,12 +109,14 @@
 												<ColumnDefinition SharedSizeGroup="none6" />
 												<ColumnDefinition SharedSizeGroup="Result" />
 												<ColumnDefinition SharedSizeGroup="StartTime" />
+												<ColumnDefinition SharedSizeGroup="Duration" />
 												<ColumnDefinition SharedSizeGroup="Commands" />
 											</Grid.ColumnDefinitions>
 											<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
 											<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
 											<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-											<StackPanel Grid.Column="4" Orientation="Horizontal">
+											<TextBlock Grid.Column="4" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
+											<StackPanel Grid.Column="5" Orientation="Horizontal">
 												<Button Content="Show log"
 												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding LogPath}" />
