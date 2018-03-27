@@ -4,6 +4,7 @@
 
 #region Usings
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,6 +26,10 @@ namespace LogExplorer.Services.Core
 		/// </summary>
 		public List<Log> GetLogsRoot(string path)
 		{
+			//todo remove debug
+			var start = DateTime.Now;
+			
+			
 			var logs = new List<Log>();
 
 			if (!Directory.Exists(path))
@@ -55,26 +60,41 @@ namespace LogExplorer.Services.Core
 					          DirTime = Path.GetFileName(logDir),
 					          LogPath = this.GetLogPath(logDir),
 					          ResultColor = ResultHelper.GetColor(result),
-							  History = new List<Log>()
+							  History = this.GetLogHistory(dir)//new List<Log>()
 				          };
-				//todo: remove next lines
-				var log1 = new Log
-				{
-					Name = log.Name+" clone",
-					Result = log.Result,
-					StartTime = log.StartTime,
-					DirPath = log.DirPath,
-					DirTime = log.DirTime,
-					LogPath = log.LogPath,
-					ResultColor = log.ResultColor,
-					History = new List<Log>()
-				};
-				//todo: remove next 2 lines
-				log.History.Add(log1);
-				log.History.Add(log1);
-				//todo: end-todo
 				logs.Add(log);
 			}
+			//todo remove debug
+			var diff = DateTime.Now.Subtract(start);
+			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
+			return logs.OrderByDescending(l => l.StartTime).ToList();
+		}
+
+		public List<Log> GetLogHistory(string path)
+		{
+			var logs = new List<Log>();
+			var logDirs = Directory.GetDirectories(path);
+			var name = Path.GetFileName(path);
+
+			foreach (var dir in logDirs)
+			{
+
+				var result = this.GetResult(dir);
+
+				var log = new Log
+				{
+					Name = name,
+					Result = result,
+					StartTime = Directory.GetCreationTime(dir),
+					DirPath = dir,
+					DirTime = Path.GetFileName(dir),
+					LogPath = this.GetLogPath(dir),
+					ResultColor = ResultHelper.GetColor(result)
+				};
+
+				logs.Add(log);
+			}
+
 			return logs.OrderByDescending(l => l.StartTime).ToList();
 		}
 
