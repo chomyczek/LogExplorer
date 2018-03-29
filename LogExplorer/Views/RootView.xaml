@@ -9,6 +9,12 @@
                   d:DesignHeight="300" d:DesignWidth="300">
 
 	<views:MvxWpfView.Resources>
+		<GridLength x:Key="NameWidth">350</GridLength>
+		<GridLength x:Key="PlaceholderWidth">18</GridLength>
+		<GridLength x:Key="ResultWidth">100</GridLength>
+		<GridLength x:Key="StartTimeWidth">100</GridLength>
+		<GridLength x:Key="DurationWidth">70</GridLength>
+		<GridLength x:Key="CommandsWidth">200</GridLength>
 
 		<!-- TreeGrid "Control" -->
 		<Border x:Key="LogsTree" BorderBrush="Black" BorderThickness="1">
@@ -33,14 +39,15 @@
 					<TreeViewItem.Header>
 						<Grid>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition SharedSizeGroup="Name" />
-								<!-- Placeholders for two columns of ToggleButton -->
-								<ColumnDefinition SharedSizeGroup="Toggle" />
-								<ColumnDefinition SharedSizeGroup="Result" />
-								<ColumnDefinition SharedSizeGroup="StartTime" />
-								<ColumnDefinition SharedSizeGroup="Duration" />
-								<ColumnDefinition SharedSizeGroup="Commands" />
+								<ColumnDefinition Width="{StaticResource NameWidth}" />
+								<!-- Placeholders for column of ToggleButton -->
+								<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
+								<ColumnDefinition Width="{StaticResource ResultWidth}" />
+								<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
+								<ColumnDefinition Width="{StaticResource DurationWidth}" />
+								<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 							</Grid.ColumnDefinitions>
+
 							<TextBlock Grid.Column="0" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
 							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
 							<TreeViewItem Grid.Column="1" Padding="0" />
@@ -72,12 +79,13 @@
 							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
 								<Grid Background="{Binding ResultColor}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition SharedSizeGroup="Name" />
-										<ColumnDefinition SharedSizeGroup="Toggle" />
-										<ColumnDefinition SharedSizeGroup="Result" />
-										<ColumnDefinition SharedSizeGroup="StartTime" />
-										<ColumnDefinition SharedSizeGroup="Duration" />
-										<ColumnDefinition SharedSizeGroup="Commands" />
+										<ColumnDefinition Width="{StaticResource NameWidth}" />
+										<!-- Placeholders for column of ToggleButton -->
+										<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
+										<ColumnDefinition Width="{StaticResource ResultWidth}" />
+										<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
+										<ColumnDefinition Width="{StaticResource DurationWidth}" />
+										<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 									</Grid.ColumnDefinitions>
 									<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
 									<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
@@ -102,12 +110,13 @@
 									<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.2">
 										<Grid Background="{Binding ResultColor}">
 											<Grid.ColumnDefinitions>
-												<ColumnDefinition SharedSizeGroup="Name" />
-												<ColumnDefinition SharedSizeGroup="" />
-												<ColumnDefinition SharedSizeGroup="Result" />
-												<ColumnDefinition SharedSizeGroup="StartTime" />
-												<ColumnDefinition SharedSizeGroup="Duration" />
-												<ColumnDefinition SharedSizeGroup="Commands" />
+												<ColumnDefinition Width="{StaticResource NameWidth}" />
+												<!-- Placeholders for column of ToggleButton -->
+												<ColumnDefinition Width="0" />
+												<ColumnDefinition Width="{StaticResource ResultWidth}" />
+												<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
+												<ColumnDefinition Width="{StaticResource DurationWidth}" />
+												<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 											</Grid.ColumnDefinitions>
 											<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
 											<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
