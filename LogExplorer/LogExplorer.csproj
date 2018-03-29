@@ -35,6 +35,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>LogExplorer.Customs.CustomBuild</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MvvmCross.Core, Version=5.6.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\MvvmCross.Core.5.6.3\lib\net45\MvvmCross.Core.dll</HintPath>
@@ -74,6 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Customs\App.cs" />
     <Compile Include="Customs\CustomAppStart.cs" />
+    <Compile Include="Customs\CustomBuild.cs" />
     <Compile Include="Customs\CustomViewPresenter.cs" />
     <Compile Include="Customs\Setup.cs" />
     <Compile Include="Models\Log.cs" />
@@ -149,4 +153,11 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Target Name="AfterResolveReferences">
+    <ItemGroup>
+      <EmbeddedResource Include="@(ReferenceCopyLocalPaths)" Condition="'%(ReferenceCopyLocalPaths.Extension)' == '.dll'">
+        <LogicalName>%(ReferenceCopyLocalPaths.DestinationSubDirectory)%(ReferenceCopyLocalPaths.Filename)%(ReferenceCopyLocalPaths.Extension)</LogicalName>
+      </EmbeddedResource>
+    </ItemGroup>
+  </Target>
 </Project>
