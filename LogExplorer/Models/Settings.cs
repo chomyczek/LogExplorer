@@ -16,6 +16,7 @@ namespace LogExplorer.Models
 			this.PositionX = string.Empty;
 			this.PositionY = string.Empty;
 			this.Width = string.Empty;
+			this.ExportPath = @"C:\ExpoertedLogs\";
 		}
 
 		#endregion
@@ -24,13 +25,15 @@ namespace LogExplorer.Models
 
 		public string CopyPath { get; set; }
 
-		public string Height { get; set; }
+		public string ExportPath { get; set; }
 
-		public string RootLogsPath { get; set; }
+		public string Height { get; set; }
 
 		public string PositionX { get; set; }
 
 		public string PositionY { get; set; }
+
+		public string RootLogsPath { get; set; }
 
 		public string Width { get; set; }
 

@@ -46,5 +46,42 @@ namespace LogExplorer.Services.Helpers
 
 			return Path.Combine(fullPath, fileName);
 		}
+
+		public static bool PathExist(string path)
+		{
+			return Directory.Exists(path);
+		}
+
+		public static void CreateDir(string path)
+		{
+			//todo check if directory can be created
+			Directory.CreateDirectory(path);
+		}
+
+		public static string CombinePaths(string p1, string p2)
+		{
+			//todo
+			string combination;
+			try
+			{
+				combination = Path.Combine(p1, p2);
+			}
+			catch (Exception e)
+			{
+				if (p1 == null)
+					p1 = "null";
+				if (p2 == null)
+					p2 = "null";
+				Console.WriteLine("You cannot combine '{0}' and '{1}' because: {2}{3}",
+							p1, p2, Environment.NewLine, e.Message);
+				return p1;
+			}
+			return combination;
+		}
+
+		public static void CopyFile(string source, string destination)
+		{
+			File.Copy(source, destination, true);
+		}
 	}
 }

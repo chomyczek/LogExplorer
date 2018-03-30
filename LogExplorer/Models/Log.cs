@@ -26,6 +26,8 @@ namespace LogExplorer.Models
 
 		public List<Log> History { get; set; }
 
+		public bool IsSelected { get; set; }
+
 		public string LogPath { get; set; }
 
 		public string Name { get; set; }

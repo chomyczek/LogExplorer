@@ -24,6 +24,7 @@ namespace LogExplorer.ViewModels
 		#region Fields
 
 		private readonly IExplorer explorer;
+		private readonly IManager manager;
 
 		private Settings settings;
 
@@ -31,10 +32,10 @@ namespace LogExplorer.ViewModels
 
 		#region Constructors and Destructors
 
-		public RootViewModel(IExplorer explorer)
+		public RootViewModel(IExplorer explorer, IManager manager)
 		{
-			//TODO: Set start directory
 			this.explorer = explorer;
+			this.manager = manager;
 		}
 
 		#endregion
@@ -57,6 +58,22 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand CmdExport
+		{
+			get
+			{
+				return new MvxCommand(this.Export);
+			}
+		}
+
+		private void Export()
+		{
+			var selectedLogs = this.manager.GetSelectedLogs();
+			this.manager.Export(selectedLogs, this.settings.ExportPath);
+		}
+
+
+
 		public IMvxCommand<string> CmdStartProcess
 		{
 			get
@@ -65,7 +82,17 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public List<Log> Logs { get; set; }
+		public List<Log> Logs {
+			get
+			{
+				return this.manager.Logs;
+			}
+
+			set
+			{
+				this.manager.Logs = value;
+			}
+		}
 
 		#endregion
 

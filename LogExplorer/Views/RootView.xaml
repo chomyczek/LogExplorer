@@ -9,6 +9,7 @@
                   d:DesignHeight="300" d:DesignWidth="300">
 
 	<views:MvxWpfView.Resources>
+		<GridLength x:Key="SelectWidth">15</GridLength>
 		<GridLength x:Key="NameWidth">350</GridLength>
 		<GridLength x:Key="PlaceholderWidth">18</GridLength>
 		<GridLength x:Key="ResultWidth">100</GridLength>
@@ -39,6 +40,7 @@
 					<TreeViewItem.Header>
 						<Grid>
 							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="{StaticResource SelectWidth}" />
 								<ColumnDefinition Width="{StaticResource NameWidth}" />
 								<!-- Placeholders for column of ToggleButton -->
 								<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
@@ -48,13 +50,14 @@
 								<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 							</Grid.ColumnDefinitions>
 
-							<TextBlock Grid.Column="0" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
+							<CheckBox Grid.Column="0" />
+							<TextBlock Grid.Column="1" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
 							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
-							<TreeViewItem Grid.Column="1" Padding="0" />
-							<TextBlock Grid.Column="2" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="3" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="4" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="5" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
+							<TreeViewItem Grid.Column="2" Padding="0" />
+							<TextBlock Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
 						</Grid>
 					</TreeViewItem.Header>
 				</TreeViewItem>
@@ -74,11 +77,12 @@
 
 					<TreeView.ItemTemplate>
 
-						<!-- Level 0 template leaves space for 1 child "Toggle" levels -->
+						<!-- Level 0 - Newest log -->
 						<HierarchicalDataTemplate ItemsSource="{Binding History}">
 							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
 								<Grid Background="{Binding ResultColor}">
 									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="{StaticResource SelectWidth}" />
 										<ColumnDefinition Width="{StaticResource NameWidth}" />
 										<!-- Placeholders for column of ToggleButton -->
 										<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
@@ -87,11 +91,12 @@
 										<ColumnDefinition Width="{StaticResource DurationWidth}" />
 										<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 									</Grid.ColumnDefinitions>
-									<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
-									<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
-									<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-									<TextBlock Grid.Column="4" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
-									<StackPanel Grid.Column="5" Orientation="Horizontal">
+									<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+									<TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="3" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="4" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="5" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
+									<StackPanel Grid.Column="6" Orientation="Horizontal">
 										<Button Content="Show log"
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding LogPath}" />
@@ -104,12 +109,13 @@
 							</Border>
 
 
-							<!--Level 1 template leaves space for 0 child "Toggle" level-->
+							<!--Level 1 - All expanded logs-->
 							<HierarchicalDataTemplate.ItemTemplate>
 								<HierarchicalDataTemplate ItemsSource="{Binding History}">
 									<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.2">
 										<Grid Background="{Binding ResultColor}">
 											<Grid.ColumnDefinitions>
+												<ColumnDefinition Width="{StaticResource SelectWidth}" />
 												<ColumnDefinition Width="{StaticResource NameWidth}" />
 												<!-- Placeholders for column of ToggleButton -->
 												<ColumnDefinition Width="0" />
@@ -118,11 +124,12 @@
 												<ColumnDefinition Width="{StaticResource DurationWidth}" />
 												<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 											</Grid.ColumnDefinitions>
-											<TextBlock Grid.Column="0" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
-											<TextBlock Grid.Column="2" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
-											<TextBlock Grid.Column="3" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-											<TextBlock Grid.Column="4" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
-											<StackPanel Grid.Column="5" Orientation="Horizontal">
+											<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+											<TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
+											<TextBlock Grid.Column="3" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
+											<TextBlock Grid.Column="4" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />
+											<TextBlock Grid.Column="5" Text="{Binding DurationString}" Style="{StaticResource TextBlockStyle}" />
+											<StackPanel Grid.Column="6" Orientation="Horizontal">
 												<Button Content="Show log"
 												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding LogPath}" />
@@ -150,12 +157,14 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
-		<ContentControl Grid.Row="0" Grid.ColumnSpan="2" Content="{StaticResource LogsTree}"
+		<ContentControl Grid.Row="0" Grid.ColumnSpan="3" Content="{StaticResource LogsTree}"
 		                DataContext="{Binding Logs, Mode=Oneway}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
-		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Refresh" Command="{Binding CmdRefresh}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding CmdExport}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="2" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
 
 

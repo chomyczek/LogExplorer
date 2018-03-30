@@ -83,10 +83,13 @@
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
+    <Compile Include="Services\Core\Manager.cs" />
     <Compile Include="Services\Core\Repository.cs" />
+    <Compile Include="Services\Extensions\LinqExtension.cs" />
     <Compile Include="Services\Helpers\FileHelper.cs" />
     <Compile Include="Services\Helpers\ResultHelper.cs" />
     <Compile Include="Services\Interfaces\IExplorer.cs" />
+    <Compile Include="Services\Interfaces\IManager.cs" />
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\RootView.xaml.cs">
