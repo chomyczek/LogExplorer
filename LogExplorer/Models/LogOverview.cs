@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Media;
 
 namespace LogExplorer.Models
@@ -12,6 +13,8 @@ namespace LogExplorer.Models
         public string DurationString => Log.DurationString;
 
         public List<Log> History { get; set; }
+
+        public DateTime StartTime => Log.StartTime;
 
         public bool IsSelected
         {

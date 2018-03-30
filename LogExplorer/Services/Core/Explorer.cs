@@ -24,17 +24,17 @@ namespace LogExplorer.Services.Core
 		/// <summary>
 		/// todo: This is basic version, try catch
 		/// </summary>
-		public List<Log> GetLogsRoot(string path)
+		public List<LogOverview> GetLogsRoot(string path)
 		{
 			//todo remove debug
 			var start = DateTime.Now;
 
-			var logs = new List<Log>();
+			var logOverviews = new List<LogOverview>();
 
 			if (!Directory.Exists(path))
 			{
 				//todo: warning
-				return logs;
+				return logOverviews;
 			}
 
 			var logDirs = Directory.GetDirectories(path);
@@ -47,16 +47,15 @@ namespace LogExplorer.Services.Core
 				{
 					continue;
 				}
-
-				var log = this.CollectLogInfo(logDir, Path.GetFileName(dir));
-				log.History = this.GetLogHistory(dir);
-				logs.Add(log);
+                
+			    var logOverview = new LogOverview {History = this.GetLogHistory(dir)};
+			    logOverviews.Add(logOverview);
 			}
 
 			//todo remove debug
 			var diff = DateTime.Now.Subtract(start);
 			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
-			return logs.OrderByDescending(l => l.StartTime).ToList();
+			return logOverviews.OrderByDescending(overview => overview.StartTime).ToList();
 		}
 
 		#endregion

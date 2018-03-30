@@ -16,7 +16,7 @@ namespace LogExplorer.Services.Interfaces
 	{
 		#region Public Methods and Operators
 
-		List<Log> GetLogsRoot(string path);
+		List<LogOverview> GetLogsRoot(string path);
 
 		#endregion
 	}

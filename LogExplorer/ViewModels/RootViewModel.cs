@@ -82,15 +82,15 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public List<Log> Logs {
+		public List<LogOverview> Logs {
 			get
 			{
-				return this.manager.Logs;
+				return this.manager.LogOverview;
 			}
 
 			set
 			{
-				this.manager.Logs = value;
+				this.manager.LogOverview = value;
 			}
 		}
 

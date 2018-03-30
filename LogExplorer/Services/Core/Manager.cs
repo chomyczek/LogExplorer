@@ -21,7 +21,7 @@ namespace LogExplorer.Services.Core
 	{
 		#region Public Properties
 
-		public List<Log> Logs { get; set; }
+		public List<LogOverview> LogOverview { get; set; }
 
 		#endregion
 
@@ -71,10 +71,9 @@ namespace LogExplorer.Services.Core
 
 		public List<Log> GetSelectedLogs()
 		{
-			var selectedLogs = this.Logs.Where(newLog => newLog.IsSelected).ToList();
-			this.Logs.ForEach(logs => selectedLogs.AddRange(logs.History.Where(log => log.IsSelected)));
+		    var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
+            return selectedLogs;
 
-			return selectedLogs.DistinctBy(log => log.DirPath).ToList();
 		}
 
 		#endregion

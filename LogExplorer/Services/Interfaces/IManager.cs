@@ -21,6 +21,6 @@ namespace LogExplorer.Services.Interfaces
 		#endregion
 
 		List<Log> GetSelectedLogs();
-		List<Log> Logs { get; set; } 
+		List<LogOverview> LogOverview { get; set; } 
 	}
 }
