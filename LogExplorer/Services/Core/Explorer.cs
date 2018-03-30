@@ -12,6 +12,7 @@ using System.Linq;
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+using MvvmCross.Core.ViewModels;
 
 #endregion
 
@@ -24,12 +25,12 @@ namespace LogExplorer.Services.Core
 		/// <summary>
 		/// todo: This is basic version, try catch
 		/// </summary>
-		public List<LogOverview> GetLogsRoot(string path)
+		public MvxObservableCollection<LogOverview> GetLogsRoot(string path)
 		{
 			//todo remove debug
 			var start = DateTime.Now;
 
-			var logOverviews = new List<LogOverview>();
+			var logOverviews = new MvxObservableCollection<LogOverview>();
 
 			if (!Directory.Exists(path))
 			{
@@ -55,8 +56,10 @@ namespace LogExplorer.Services.Core
 			//todo remove debug
 			var diff = DateTime.Now.Subtract(start);
 			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
-			return logOverviews.OrderByDescending(overview => overview.StartTime).ToList();
-		}
+            //todo fix
+            //return logOverviews.OrderByDescending(overview => overview.StartTime).ToList();
+            return logOverviews;
+        }
 
 		#endregion
 
@@ -93,9 +96,9 @@ namespace LogExplorer.Services.Core
 			return logTime - startTime;
 		}
 
-		private List<Log> GetLogHistory(string path)
+		private MvxObservableCollection<Log> GetLogHistory(string path)
 		{
-			var logs = new List<Log>();
+			var logs = new MvxObservableCollection<Log>();
 			var logDirs = Directory.GetDirectories(path);
 			var name = Path.GetFileName(path);
 
@@ -106,7 +109,9 @@ namespace LogExplorer.Services.Core
 				logs.Add(log);
 			}
 
-			return logs.OrderByDescending(l => l.StartTime).ToList();
+            //todo fix
+			//return logs.OrderByDescending(l => l.StartTime).ToList();
+		    return logs;
 		}
 
 		private string GetLogPath(string path)

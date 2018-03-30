@@ -82,7 +82,7 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public List<LogOverview> Logs {
+		public MvxObservableCollection<LogOverview> Logs {
 			get
 			{
 				return this.manager.LogOverview;
@@ -91,7 +91,8 @@ namespace LogExplorer.ViewModels
 			set
 			{
 				this.manager.LogOverview = value;
-			}
+                RaisePropertyChanged(() => Logs);
+            }
 		}
 
 		#endregion
@@ -111,7 +112,7 @@ namespace LogExplorer.ViewModels
 		private void Refresh()
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
-			this.Logs = this.explorer.GetLogsRoot(this.settings.RootLogsPath).ToList();
+			this.Logs = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
 			this.RaisePropertyChanged(() => this.Logs);
 		}
 

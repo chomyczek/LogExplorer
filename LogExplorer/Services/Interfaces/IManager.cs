@@ -5,8 +5,9 @@
 #region Usings
 
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using LogExplorer.Models;
+using MvvmCross.Core.ViewModels;
 
 #endregion
 
@@ -21,6 +22,6 @@ namespace LogExplorer.Services.Interfaces
 		#endregion
 
 		List<Log> GetSelectedLogs();
-		List<LogOverview> LogOverview { get; set; } 
+        MvxObservableCollection<LogOverview> LogOverview { get; set; } 
 	}
 }

@@ -12,6 +12,7 @@ using LogExplorer.Models;
 using LogExplorer.Services.Extensions;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+using MvvmCross.Core.ViewModels;
 
 #endregion
 
@@ -21,7 +22,7 @@ namespace LogExplorer.Services.Core
 	{
 		#region Public Properties
 
-		public List<LogOverview> LogOverview { get; set; }
+		public MvxObservableCollection<LogOverview> LogOverview { get; set; }
 
 		#endregion
 

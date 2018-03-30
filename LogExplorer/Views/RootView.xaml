@@ -77,7 +77,7 @@
 
 					<TreeView.ItemTemplate>
 
-						<!-- Level 0 - Newest log -->
+						<!-- Level 0 - log overview -->
 						<HierarchicalDataTemplate ItemsSource="{Binding History}">
 							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
 								<Grid Background="{Binding ResultColor}">
@@ -111,7 +111,7 @@
 
 							<!--Level 1 - All expanded logs-->
 							<HierarchicalDataTemplate.ItemTemplate>
-								<HierarchicalDataTemplate ItemsSource="{Binding History}">
+								<HierarchicalDataTemplate>
 									<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.2">
 										<Grid Background="{Binding ResultColor}">
 											<Grid.ColumnDefinitions>
@@ -124,7 +124,7 @@
 												<ColumnDefinition Width="{StaticResource DurationWidth}" />
 												<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 											</Grid.ColumnDefinitions>
-											<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}"/>
+											<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 											<TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
 											<TextBlock Grid.Column="3" Text="{Binding Result}" Style="{StaticResource TextBlockStyle}" />
 											<TextBlock Grid.Column="4" Text="{Binding StartTimeString}" Style="{StaticResource TextBlockStyle}" />

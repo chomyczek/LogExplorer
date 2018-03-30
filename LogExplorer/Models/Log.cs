@@ -7,13 +7,14 @@
 using System;
 using System.Collections.Generic;
 using System.Windows.Media;
+using MvvmCross.Core.ViewModels;
 
 #endregion
 
 namespace LogExplorer.Models
 {
-	public class Log
-	{
+	public class Log: MvxNotifyPropertyChanged
+    {
 		#region Public Properties
 
 		public string DirPath { get; set; }
@@ -23,10 +24,18 @@ namespace LogExplorer.Models
 		public TimeSpan Duration { get; set; }
 
 		public string DurationString => this.Duration.ToString(@"hh\:mm\:ss");
-        
-		public bool IsSelected { get; set; }
 
-		public string LogPath { get; set; }
+	    private bool isSelected;
+        public bool IsSelected
+        {
+            get { return this.isSelected; }
+            set {
+                this.isSelected = value;
+                RaisePropertyChanged(() => this.IsSelected);
+            }
+        }
+
+        public string LogPath { get; set; }
 
 		public string Name { get; set; }
 

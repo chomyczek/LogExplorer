@@ -5,8 +5,9 @@
 #region Usings
 
 using System.Collections.Generic;
-
+using System.Collections.ObjectModel;
 using LogExplorer.Models;
+using MvvmCross.Core.ViewModels;
 
 #endregion
 
@@ -14,9 +15,9 @@ namespace LogExplorer.Services.Interfaces
 {
 	public interface IExplorer
 	{
-		#region Public Methods and Operators
+        #region Public Methods and Operators
 
-		List<LogOverview> GetLogsRoot(string path);
+        MvxObservableCollection<LogOverview> GetLogsRoot(string path);
 
 		#endregion
 	}
