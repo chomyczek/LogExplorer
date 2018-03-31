@@ -9,36 +9,18 @@ namespace LogExplorer.Models
     {
         #region Public Properties
 
-        public string DirPath => Log.DirPath;
-
-        public string DurationString => Log.DurationString;
-        
-        public MvxObservableCollection<Log> History { get; set; }
-
-        public DateTime StartTime => Log.StartTime;
-
-        public bool IsSelected
+        private MvxObservableCollection<Log> history;
+        public MvxObservableCollection<Log> History
         {
-            get
+            get { return this.history; }
+
+            set
             {
-                return Log.IsSelected;
+                this.history = value;
+                RaisePropertyChanged(() => History);
             }
-            set { Log.IsSelected = value; RaisePropertyChanged(() => IsSelected); }
         }
-
-
-        public string LogPath => Log.LogPath;
-
-        public string Name => Log.Name;
-
-        public string Result => Log.Result;
-
-        public Brush ResultColor => Log.ResultColor;
-
-        public string StartTimeString => Log.StartTimeString;
-
-        //when log.isSelected is updated, get IsSelected remain the same
-        private Log Log => History[0];
+        public Log Log => History[0];
 
         #endregion
     }
