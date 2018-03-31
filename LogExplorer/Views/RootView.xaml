@@ -98,10 +98,10 @@
 									<StackPanel Grid.Column="6" Orientation="Horizontal">
 										<Button Content="Show log"
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-										        CommandParameter="{Binding LogPath}" />
+										        CommandParameter="{Binding Log.LogPath}" />
 										<Button Content="Show dir"
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-										        CommandParameter="{Binding DirPath}"
+										        CommandParameter="{Binding Log.DirPath}"
 										        Margin="5,0,0,0" />
 									</StackPanel>
 								</Grid>
