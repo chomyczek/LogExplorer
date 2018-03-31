@@ -35,7 +35,7 @@ namespace LogExplorer.Services.Core
 			if (!Directory.Exists(path))
 			{
 				//todo: warning
-				return logOverviews;
+				return new MvxObservableCollection<LogOverview>();
 			}
 
 			var logDirs = Directory.GetDirectories(path);
@@ -56,10 +56,9 @@ namespace LogExplorer.Services.Core
 			//todo remove debug
 			var diff = DateTime.Now.Subtract(start);
 			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
-            //todo fix
-            //return logOverviews.OrderByDescending(overview => overview.StartTime).ToList();
-            return logOverviews;
-        }
+
+		    return new MvxObservableCollection<LogOverview>(logOverviews.OrderByDescending(overview => overview.Log.StartTime));
+		}
 
 		#endregion
 
@@ -108,10 +107,8 @@ namespace LogExplorer.Services.Core
 
 				logs.Add(log);
 			}
-
-            //todo fix
-			//return logs.OrderByDescending(l => l.StartTime).ToList();
-		    return logs;
+            
+		    return new MvxObservableCollection<Log>(logs.OrderByDescending(l => l.StartTime));
 		}
 
 		private string GetLogPath(string path)
