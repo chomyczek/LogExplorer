@@ -48,14 +48,28 @@ namespace LogExplorer.ViewModels
 			set
 			{
 				this.settings.RootLogsPath = value;
+                this.RaisePropertyChanged(()=>this.RootLogsPath);
 			}
 		}
 
-		#endregion
+        public string ExportPath
+        {
+            get
+            {
+                return this.settings.ExportPath;
+            }
+            set
+            {
+                this.settings.ExportPath = value;
+                this.RaisePropertyChanged(() => this.ExportPath);
+            }
+        }
 
-		#region Properties
+        #endregion
 
-		private Settings settings { get; set; }
+        #region Properties
+
+        private Settings settings { get; set; }
 
 		#endregion
 
