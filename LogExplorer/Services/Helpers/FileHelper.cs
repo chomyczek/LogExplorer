@@ -12,6 +12,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 
 namespace LogExplorer.Services.Helpers
 {
@@ -47,7 +48,20 @@ namespace LogExplorer.Services.Helpers
 			return Path.Combine(fullPath, fileName);
 		}
 
-		public static bool PathExist(string path)
+        public static string SelectDir(string path)
+        {
+            var directory = path;
+            using (var dialog = new FolderBrowserDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    directory = dialog.SelectedPath;
+                }
+            }
+            return directory;
+        }
+
+        public static bool PathExist(string path)
 		{
 			return Directory.Exists(path);
 		}

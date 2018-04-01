@@ -6,7 +6,7 @@
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
-
+using LogExplorer.Services.Helpers;
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
@@ -37,9 +37,33 @@ namespace LogExplorer.ViewModels
 						this.Close(this);
 					});
 			}
-		}
+        }
 
-		public string RootLogsPath
+        public IMvxCommand CmdPickExportDir
+        {
+            get
+            {
+                return new MvxCommand(
+                    () =>
+                    {
+                        ExportPath = FileHelper.SelectDir(ExportPath);
+                    });
+            }
+        }
+
+        public IMvxCommand CmdPickRootDir
+        {
+            get
+            {
+                return new MvxCommand(
+                    () =>
+                    {
+                        RootLogsPath = FileHelper.SelectDir(RootLogsPath);
+                    });
+            }
+        }
+
+        public string RootLogsPath
 		{
 			get
 			{
