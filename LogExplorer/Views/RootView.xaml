@@ -63,9 +63,11 @@
                             <TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
 
 
-                            <TextBox Grid.Row="1" Grid.Column="1"
-                                    
+                            <TextBox Grid.Row="1" Grid.Column="1"    
 					         Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
+                            <TextBox Grid.Row="1" Grid.Column="3"    
+					         Text="{Binding DataContext.ResultSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
+
 
                         </Grid>
 					</TreeViewItem.Header>

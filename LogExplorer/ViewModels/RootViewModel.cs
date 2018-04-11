@@ -58,6 +58,22 @@ namespace LogExplorer.ViewModels
             }
         }
 
+	    private string resultSrch;
+
+        public string ResultSrch
+        {
+            get
+            {
+                return resultSrch;
+            }
+            set
+            {
+                this.resultSrch = value;
+                this.Filtr();
+                this.RaisePropertyChanged(() => this.ResultSrch);
+            }
+        }
+
         public IMvxCommand CmdNavigateSettings
 		{
 			get
@@ -134,15 +150,31 @@ namespace LogExplorer.ViewModels
 		    this.Filtr();
 		}
 
-	    private void Filtr() 
+	    private void Filtr()
 	    {
-	        if (string.IsNullOrEmpty(this.NameSrch))
+	        var isActie = false;
+	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview;
+            if (!string.IsNullOrEmpty(this.nameSrch))
 	        {
-	            this.Logs = this.manager.LogOverview;
-                return;
-	        }
+	            isActie = true;
+                searchLogs= searchLogs.Where(log => log.Log.Name.ContainsString(this.nameSrch));
+            }
 
-	        this.Logs = new MvxObservableCollection<LogOverview>(this.Logs.Where(log=>log.Log.Name.ContainsString(this.NameSrch)));
+	        if (!string.IsNullOrEmpty(this.resultSrch))
+	        {
+                isActie = true;
+
+                searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.resultSrch)));
+            }
+
+	        if (isActie)
+	        {
+                this.Logs = new MvxObservableCollection<LogOverview>(searchLogs);
+                return;
+            }
+
+            this.Logs = this.manager.LogOverview;
+            
 	    }
 
 		#endregion
