@@ -37,8 +37,12 @@
 
 				<!-- Column headers -->
 				<TreeViewItem Grid.Row="0" BorderThickness="1">
-					<TreeViewItem.Header>
-						<Grid>
+                    <TreeViewItem.Header>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="{StaticResource SelectWidth}" />
 								<ColumnDefinition Width="{StaticResource NameWidth}" />
@@ -50,14 +54,20 @@
 								<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 							</Grid.ColumnDefinitions>
 
-							<TextBlock Grid.Column="1" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Row="0" Grid.Column="1" Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
 							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
-							<TreeViewItem Grid.Column="2" Padding="0" />
-							<TextBlock Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
-							<TextBlock Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
-						</Grid>
+                            <TreeViewItem Grid.Row="0" Grid.Column="2" Padding="0" />
+                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
+                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
+                            <TextBlock Grid.Row="0" Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
+                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
+
+
+                            <TextBox Grid.Row="1" Grid.Column="1"
+                                    
+					         Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
+
+                        </Grid>
 					</TreeViewItem.Header>
 				</TreeViewItem>
 

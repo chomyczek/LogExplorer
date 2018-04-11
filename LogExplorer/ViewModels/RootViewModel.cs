@@ -9,6 +9,7 @@ using System.Linq;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
+using LogExplorer.Services.Extensions;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 
@@ -25,6 +26,7 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 		private readonly IManager manager;
+	    private string nameSrch;
 
 		private Settings settings;
 
@@ -38,11 +40,25 @@ namespace LogExplorer.ViewModels
 			this.manager = manager;
 		}
 
-		#endregion
+        #endregion
 
-		#region Public Properties
+        #region Public Properties
 
-		public IMvxCommand CmdNavigateSettings
+        public string NameSrch
+        {
+            get
+            {
+                return nameSrch;
+            }
+            set
+            {
+                this.nameSrch = value;
+                this.Filtr();
+                this.RaisePropertyChanged(() => this.NameSrch);
+            }
+        }
+
+        public IMvxCommand CmdNavigateSettings
 		{
 			get
 			{
@@ -82,15 +98,17 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public MvxObservableCollection<LogOverview> Logs {
+	    private MvxObservableCollection<LogOverview> logs;
+
+        public MvxObservableCollection<LogOverview> Logs {
 			get
 			{
-				return this.manager.LogOverview;
+				return this.logs;
 			}
 
 			set
 			{
-				this.manager.LogOverview = value;
+				this.logs = value;
                 RaisePropertyChanged(() => Logs);
             }
 		}
@@ -112,9 +130,20 @@ namespace LogExplorer.ViewModels
 		private void Refresh()
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
-			this.Logs = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
-			this.RaisePropertyChanged(() => this.Logs);
+            this.manager.LogOverview = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
+		    this.Filtr();
 		}
+
+	    private void Filtr() 
+	    {
+	        if (string.IsNullOrEmpty(this.NameSrch))
+	        {
+	            this.Logs = this.manager.LogOverview;
+                return;
+	        }
+
+	        this.Logs = new MvxObservableCollection<LogOverview>(this.Logs.Where(log=>log.Log.Name.ContainsString(this.NameSrch)));
+	    }
 
 		#endregion
 	}

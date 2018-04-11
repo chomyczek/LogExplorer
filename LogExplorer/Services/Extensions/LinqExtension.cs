@@ -29,6 +29,11 @@ namespace LogExplorer.Services.Extensions
 			}
 		}
 
-		#endregion
-	}
+        public static bool ContainsString(this string target, string value, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            return target.IndexOf(value, comparison) >= 0;
+        }
+
+        #endregion
+    }
 }
