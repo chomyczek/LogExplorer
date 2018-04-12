@@ -65,9 +65,12 @@
 
                             <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"   
 					         Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
-                            <TextBox Grid.Row="1" Grid.Column="3"    
-					         Text="{Binding DataContext.ResultSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
 
+                            <ComboBox  Grid.Row="1" Grid.Column="3" 
+                                       ItemsSource="{Binding DataContext.AllResults, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"   
+                                        SelectedItem="{Binding DataContext.SelResultSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+                                       DisplayMemberPath="Name"
+                                       />
 
                         </Grid>
 					</TreeViewItem.Header>

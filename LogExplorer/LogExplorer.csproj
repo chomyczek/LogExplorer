@@ -83,6 +83,7 @@
     <Compile Include="Customs\Setup.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\LogOverview.cs" />
+    <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
     <Compile Include="Services\Core\Manager.cs" />

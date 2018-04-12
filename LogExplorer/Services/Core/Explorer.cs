@@ -66,19 +66,17 @@ namespace LogExplorer.Services.Core
 
 		private Log CollectLogInfo(string path, string name)
 		{
-			var result = this.GetResult(path);
 			var logPath = this.GetLogPath(path);
 			var startTime = Directory.GetCreationTime(path);
 
 			var log = new Log
 			          {
 				          Name = name,
-				          Result = result,
+                          ResultContainer = this.GetResult(path),
 				          StartTime = startTime,
 				          DirPath = path,
 				          DirTime = Path.GetFileName(path),
 				          LogPath = logPath,
-				          ResultColor = ResultHelper.GetColor(result),
 				          Duration = this.GetDuration(startTime, logPath)
 			          };
 			return log;
@@ -119,7 +117,7 @@ namespace LogExplorer.Services.Core
 			return logPath;
 		}
 
-		private string GetResult(string path)
+		private Result GetResult(string path)
 		{
 			var files = Directory.GetFiles(path);
 			var fileNames = files.Select(Path.GetFileName);

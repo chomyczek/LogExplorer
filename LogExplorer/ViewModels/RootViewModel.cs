@@ -38,6 +38,10 @@ namespace LogExplorer.ViewModels
 		{
 			this.explorer = explorer;
 			this.manager = manager;
+		    this.AllResults = ResultHelper.GetAllResults();
+		    selResultSrch = this.AllResults.First();
+
+
 		}
 
         #endregion
@@ -58,23 +62,25 @@ namespace LogExplorer.ViewModels
             }
         }
 
-	    private string resultSrch;
+	    private Result selResultSrch;
 
-        public string ResultSrch
+        public Result SelResultSrch
         {
             get
             {
-                return resultSrch;
+                return selResultSrch;
             }
             set
             {
-                this.resultSrch = value;
+                this.selResultSrch = value;
                 this.Filtr();
-                this.RaisePropertyChanged(() => this.ResultSrch);
+                this.RaisePropertyChanged(() => this.SelResultSrch);
             }
         }
 
-        public IMvxCommand CmdNavigateSettings
+	    public List<Result> AllResults { get; }
+
+	    public IMvxCommand CmdNavigateSettings
 		{
 			get
 			{
@@ -135,7 +141,7 @@ namespace LogExplorer.ViewModels
 
 		public override void Start()
 		{
-			this.Refresh();
+            this.Refresh();
 			base.Start();
 		}
 
@@ -160,11 +166,11 @@ namespace LogExplorer.ViewModels
                 searchLogs= searchLogs.Where(log => log.Log.Name.ContainsString(this.nameSrch));
             }
 
-	        if (!string.IsNullOrEmpty(this.resultSrch))
+	        if (!string.IsNullOrEmpty(this.selResultSrch?.Value))
 	        {
                 isActie = true;
 
-                searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.resultSrch)));
+                searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.selResultSrch.Value)));
             }
 
 	        if (isActie)

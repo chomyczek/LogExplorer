@@ -39,14 +39,16 @@ namespace LogExplorer.Models
 
 		public string Name { get; set; }
 
-		public string Result { get; set; }
+	    public string Result => this.ResultContainer.Name;
 
-		public Brush ResultColor { get; set; }
+	    public Brush ResultColor => this.ResultContainer.Brush;
 
-		public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; }
 
 		public string StartTimeString => this.StartTime.ToString("g");
 
-		#endregion
-	}
+	    public Result ResultContainer { get; set; }
+
+        #endregion
+    }
 }
