@@ -80,7 +80,7 @@ namespace LogExplorer.ViewModels
             }
         }
 
-    private Result selResultSrch;
+        private Result selResultSrch;
 
         public Result SelResultSrch
         {
@@ -192,7 +192,7 @@ namespace LogExplorer.ViewModels
                 searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.selResultSrch.Value)));
             }
 
-            if (this.dateSrc!=null)
+            if (this.dateSrc.HasValue)
             {
                 isActie = true;
 

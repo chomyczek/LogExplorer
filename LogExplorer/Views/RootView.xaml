@@ -65,9 +65,11 @@
                             <TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
 
 
-                            <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"   
-					         Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
-
+                            <xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
+                                                   Watermark="Filtr by name.."
+                                                   Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+                                                    />
+                           
                             <ComboBox  Grid.Row="1" Grid.Column="3" 
                                        ItemsSource="{Binding DataContext.AllResults, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"   
                                         SelectedItem="{Binding DataContext.SelResultSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
