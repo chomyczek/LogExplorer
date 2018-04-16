@@ -14,7 +14,8 @@ using MvvmCross.Core.ViewModels;
 namespace LogExplorer.Models
 {
 	public class Log: MvxNotifyPropertyChanged
-    {
+	{
+	    public const string DateFormat = "g";
 		#region Public Properties
 
 		public string DirPath { get; set; }
@@ -45,7 +46,7 @@ namespace LogExplorer.Models
 
         public DateTime StartTime { get; set; }
 
-		public string StartTimeString => this.StartTime.ToString("g");
+		public string StartTimeString => this.StartTime.ToString(DateFormat);
 
 	    public Result ResultContainer { get; set; }
 

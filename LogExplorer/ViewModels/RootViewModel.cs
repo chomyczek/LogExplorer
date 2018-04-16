@@ -4,6 +4,7 @@
 
 #region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -62,7 +63,24 @@ namespace LogExplorer.ViewModels
             }
         }
 
-	    private Result selResultSrch;
+	    private DateTime? dateSrc;
+
+
+        public DateTime? DateSrch
+        {
+            get
+            {
+                return dateSrc;
+            }
+            set
+            {
+                this.dateSrc = value;
+                this.Filtr();
+                this.RaisePropertyChanged(() => this.DateSrch);
+            }
+        }
+
+    private Result selResultSrch;
 
         public Result SelResultSrch
         {
@@ -77,6 +95,7 @@ namespace LogExplorer.ViewModels
                 this.RaisePropertyChanged(() => this.SelResultSrch);
             }
         }
+
 
 	    public List<Result> AllResults { get; }
 
@@ -173,7 +192,16 @@ namespace LogExplorer.ViewModels
                 searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.selResultSrch.Value)));
             }
 
-	        if (isActie)
+            if (this.dateSrc!=null)
+            {
+                isActie = true;
+
+                searchLogs =
+                    searchLogs.Where(
+                        log => log.History.Any(history => DateTime.Compare(this.dateSrc.Value, history.StartTime) <= 0));
+            }
+
+            if (isActie)
 	        {
                 this.Logs = new MvxObservableCollection<LogOverview>(searchLogs);
                 return;

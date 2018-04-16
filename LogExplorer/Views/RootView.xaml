@@ -6,6 +6,7 @@
                   xmlns:local="clr-namespace:LogExplorer.Views"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+                  xmlns:models="clr-namespace:LogExplorer.Models"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="300">
 
@@ -74,12 +75,10 @@
                                        />
                             <xctk:DateTimePicker Grid.Row="1" Grid.Column="4" 
                                                  Watermark="Older then.."
+                                                 Format="Custom"
+                                                 FormatString ="{x:Static models:Log.DateFormat}"
+                                                 Value="{Binding DataContext.DateSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
                                                  />
-                            <!--Maximum=z dostępnych czasów
-                            Minimum=aa
-                            Text=albo value
-                            Value=albo text-->
-                            
 
                         </Grid>
 					</TreeViewItem.Header>
