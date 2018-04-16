@@ -65,18 +65,18 @@ namespace LogExplorer.ViewModels
             }
         }
 
-	    private DateTime? dateSrc;
+	    private DateTime? dateSrch;
 
 
         public DateTime? DateSrch
         {
             get
             {
-                return dateSrc;
+                return dateSrch;
             }
             set
             {
-                this.dateSrc = value;
+                this.dateSrch = value;
                 this.Filter();
                 this.RaisePropertyChanged(() => this.DateSrch);
             }
@@ -124,8 +124,26 @@ namespace LogExplorer.ViewModels
 				return new MvxCommand(this.Export);
 			}
 		}
+        public IMvxCommand CmdClearFilter
+        {
+            get
+            {
+                return new MvxCommand(this.ClearFilter);
+            }
+        }
 
-		private void Export()
+	    private void ClearFilter()
+	    {
+            this.nameSrch = string.Empty;
+            this.selResultSrch = AllResults[0];
+	        this.dateSrch = null;
+            this.RaisePropertyChanged(() => this.NameSrch);
+            this.RaisePropertyChanged(() => this.SelResultSrch);
+            this.RaisePropertyChanged(() => this.DateSrch);
+            this.Filter();
+	    }
+
+        private void Export()
 		{
 			var selectedLogs = this.manager.GetSelectedLogs();
 			this.manager.Export(selectedLogs, this.settings.ExportPath);
@@ -194,13 +212,13 @@ namespace LogExplorer.ViewModels
                 searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.selResultSrch.Value)));
             }
 
-            if (this.dateSrc.HasValue)
+            if (this.dateSrch.HasValue)
             {
                 isActie = true;
 
                 searchLogs =
                     searchLogs.Where(
-                        log => log.History.Any(history => DateTime.Compare(this.dateSrc.Value, history.StartTime) <= 0));
+                        log => log.History.Any(history => DateTime.Compare(this.dateSrch.Value, history.StartTime) <= 0));
             }
 
             if (isActie)
