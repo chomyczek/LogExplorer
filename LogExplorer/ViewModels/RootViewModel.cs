@@ -49,7 +49,9 @@ namespace LogExplorer.ViewModels
 
         #region Public Properties
 
-        public string NameSrch
+	    public string FiltrCounter => $"({this.Logs.Count}/{this.manager.LogOverview.Count})";
+
+	    public string NameSrch
         {
             get
             {
@@ -203,13 +205,22 @@ namespace LogExplorer.ViewModels
 
             if (isActie)
 	        {
+	            if (this.Logs?.Count == searchLogs.Count())
+	            {
+	                return;
+	            }
                 this.Logs = new MvxObservableCollection<LogOverview>(searchLogs);
+                this.RaisePropertyChanged(() => this.FiltrCounter);
                 return;
             }
-
+            if (this.Logs?.Count == this.manager.LogOverview.Count())
+            {
+                return;
+            }
             this.Logs = this.manager.LogOverview;
-            
-	    }
+            this.RaisePropertyChanged(() => this.FiltrCounter);
+
+        }
 
 		#endregion
 	}
