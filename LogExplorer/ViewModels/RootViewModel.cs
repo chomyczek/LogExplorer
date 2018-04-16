@@ -6,9 +6,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
+
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.Extensions;
@@ -51,21 +50,7 @@ namespace LogExplorer.ViewModels
 
         #region Public Properties
 
-	    //private string filterCounter;
-
         public string FilterCounter
-        //{
-        //    get
-        //    {
-        //        return nameSrch;
-        //    }
-        //    set
-        //    {
-        //        this.nameSrch = value;
-        //        this.Filter();
-        //        this.RaisePropertyChanged(() => this.NameSrch);
-        //    }
-        //}
         => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
 
         public string NameSrch
@@ -228,9 +213,10 @@ namespace LogExplorer.ViewModels
         private void Filter()
 	    {
 	        var isActie = false;
-	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview;
+	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview.ToArray();
 
-            if (!string.IsNullOrEmpty(this.nameSrch))
+
+			if (!string.IsNullOrEmpty(this.nameSrch))
 	        {
 	            isActie = true;
                 searchLogs= searchLogs.Where(log => log.Log.Name.ContainsString(this.nameSrch));
@@ -245,12 +231,12 @@ namespace LogExplorer.ViewModels
 
             if (this.dateSrch.HasValue)
             {
-                isActie = true;
+				isActie = true;
 
-                searchLogs =
-                    searchLogs.Where(
-                        log => log.History.Any(history => DateTime.Compare(this.dateSrch.Value, history.StartTime) <= 0));
-            }
+				searchLogs =
+					searchLogs.Where(
+						log => log.History.Any(history => DateTime.Compare(this.dateSrch.Value, history.StartTime) <= 0));
+			}
 
             if (isActie)
 	        {
@@ -258,17 +244,20 @@ namespace LogExplorer.ViewModels
 	            {
 	                return;
 	            }
-                this.Logs = new MvxObservableCollection<LogOverview>(searchLogs);
-                this.RaisePropertyChanged(() => this.FilterCounter);
+				var backup = new MvxObservableCollection<LogOverview>(this.manager.LogOverview);
+				this.Logs.SwitchTo(searchLogs);
+
+				this.manager.LogOverview = backup;
+				this.RaisePropertyChanged(() => this.FilterCounter);
                 return;
             }
             if (this.Logs?.Count == this.manager.LogOverview?.Count())
             {
                 return;
             }
-
-            this.Logs = this.manager.LogOverview;
-            this.RaisePropertyChanged(() => this.FilterCounter);
+			
+			this.Logs.SwitchTo(this.manager.LogOverview);
+			this.RaisePropertyChanged(() => this.FilterCounter);
 
         }
 

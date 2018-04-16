@@ -77,7 +77,7 @@ namespace LogExplorer.Services.Core
 
 		public List<Log> GetSelectedLogs()
 		{
-		    var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
+		    var selectedLogs = this.LogOverview.SelectMany(l => Enumerable.Where(l.History, log => log.IsSelected)).ToList();
             return selectedLogs;
 
 		}
