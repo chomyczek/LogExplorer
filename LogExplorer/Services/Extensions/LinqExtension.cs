@@ -15,6 +15,14 @@ namespace LogExplorer.Services.Extensions
 	{
 		#region Public Methods and Operators
 
+		public static bool ContainsString(
+			this string target,
+			string value,
+			StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+		{
+			return target.IndexOf(value, comparison) >= 0;
+		}
+
 		public static IEnumerable<TSource> DistinctBy<TSource, TKey>(
 			this IEnumerable<TSource> source,
 			Func<TSource, TKey> keySelector)
@@ -29,11 +37,6 @@ namespace LogExplorer.Services.Extensions
 			}
 		}
 
-        public static bool ContainsString(this string target, string value, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
-        {
-            return target.IndexOf(value, comparison) >= 0;
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

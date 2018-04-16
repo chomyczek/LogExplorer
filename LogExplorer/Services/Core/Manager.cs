@@ -9,9 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using LogExplorer.Models;
-using LogExplorer.Services.Extensions;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+
 using MvvmCross.Core.ViewModels;
 
 #endregion
@@ -20,11 +20,15 @@ namespace LogExplorer.Services.Core
 {
 	public class Manager : IManager
 	{
-	    public Manager()
-	    {
-            LogOverview = new MvxObservableCollection<LogOverview>();
+		#region Constructors and Destructors
 
-        }
+		public Manager()
+		{
+			LogOverview = new MvxObservableCollection<LogOverview>();
+		}
+
+		#endregion
+
 		#region Public Properties
 
 		public MvxObservableCollection<LogOverview> LogOverview { get; set; }
@@ -77,9 +81,8 @@ namespace LogExplorer.Services.Core
 
 		public List<Log> GetSelectedLogs()
 		{
-		    var selectedLogs = this.LogOverview.SelectMany(l => Enumerable.Where(l.History, log => log.IsSelected)).ToList();
-            return selectedLogs;
-
+			var selectedLogs = this.LogOverview.SelectMany(l => Enumerable.Where(l.History, log => log.IsSelected)).ToList();
+			return selectedLogs;
 		}
 
 		#endregion

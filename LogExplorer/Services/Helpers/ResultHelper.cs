@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Media;
+
 using LogExplorer.Models;
 
 #endregion
@@ -17,7 +18,7 @@ namespace LogExplorer.Services.Helpers
 	{
 		#region Constants
 
-	    private const string All = "All";
+		private const string All = "All";
 
 		private const string Blocked = "Blocked";
 
@@ -33,15 +34,18 @@ namespace LogExplorer.Services.Helpers
 
 		private const string Workaround = "Workaround";
 
-        #endregion
+		#endregion
 
-        #region Static Fields
+		#region Static Fields
 
-        private static readonly string[] ExpectedResults = { Failed, Passed, Exception, Workaround, Warning, Blocked };
+		private static readonly string[] ExpectedResults = { Failed, Passed, Exception, Workaround, Warning, Blocked };
 
-        private static readonly string[] AllResults = { All, Passed, Failed, Blocked, Workaround, Warning,  Exception, Unknown};
+		private static readonly string[] AllResults =
+		{
+			All, Passed, Failed, Blocked, Workaround, Warning, Exception, Unknown
+		};
 
-        private static readonly Brush BlockedBrush = GetSolidBrush("#91C0E8");
+		private static readonly Brush BlockedBrush = GetSolidBrush("#91C0E8");
 
 		private static readonly Brush ExceptionBrush = GetSolidBrush("#D2BEFF");
 
@@ -56,61 +60,61 @@ namespace LogExplorer.Services.Helpers
 		#endregion
 
 		#region Public Methods and Operators
-        
+
+		public static List<Result> GetAllResults()
+		{
+			return AllResults.Select(PrepareResult).ToList();
+		}
+
 		public static Result GetResult(IEnumerable<string> fileNames)
 		{
 			var result = fileNames.Intersect(ExpectedResults).FirstOrDefault();
-			
+
 			return PrepareResult(result ?? Unknown);
 		}
-
-	    public static List<Result> GetAllResults()
-	    {
-	        return AllResults.Select(PrepareResult).ToList();
-	    } 
 
 		#endregion
 
 		#region Methods
 
-	    private static Result PrepareResult(string value)
-	    {
-	        var result = new Result {Value = value, Name = value};
-            switch (value)
-            {
-                case Failed:
-                    result.Brush = FailedBrush;
-                    break;
-                case Passed:
-                    result.Brush = PassedBrush;
-                    break;
-                case Exception:
-                    result.Brush = ExceptionBrush;
-                    break;
-                case Blocked:
-                    result.Brush = BlockedBrush;
-                    break;
-                case Warning:
-                    result.Brush = WarningWorkaroundBrush;
-                    break;
-                case Workaround:
-                    result.Brush = WarningWorkaroundBrush;
-                    break;
-                case Unknown:
-                    result.Brush = UnknownBrush;
-                    break;
-                default:
-                    result.Name = All;
-                    result.Value = string.Empty;
-                    break;
-            }
-
-	        return result;
-	    }
-
 		private static Brush GetSolidBrush(string rgb)
 		{
 			return new SolidColorBrush((Color)ColorConverter.ConvertFromString(rgb));
+		}
+
+		private static Result PrepareResult(string value)
+		{
+			var result = new Result { Value = value, Name = value };
+			switch (value)
+			{
+				case Failed:
+					result.Brush = FailedBrush;
+					break;
+				case Passed:
+					result.Brush = PassedBrush;
+					break;
+				case Exception:
+					result.Brush = ExceptionBrush;
+					break;
+				case Blocked:
+					result.Brush = BlockedBrush;
+					break;
+				case Warning:
+					result.Brush = WarningWorkaroundBrush;
+					break;
+				case Workaround:
+					result.Brush = WarningWorkaroundBrush;
+					break;
+				case Unknown:
+					result.Brush = UnknownBrush;
+					break;
+				default:
+					result.Name = All;
+					result.Value = string.Empty;
+					break;
+			}
+
+			return result;
 		}
 
 		#endregion

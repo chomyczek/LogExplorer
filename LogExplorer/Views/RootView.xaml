@@ -39,12 +39,12 @@
 
 				<!-- Column headers -->
 				<TreeViewItem Grid.Row="0" BorderThickness="1">
-                    <TreeViewItem.Header>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                            </Grid.RowDefinitions>
+					<TreeViewItem.Header>
+						<Grid>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="{StaticResource SelectWidth}" />
 								<ColumnDefinition Width="{StaticResource NameWidth}" />
@@ -56,54 +56,50 @@
 								<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 							</Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                                <TextBlock
-                                       Text="{Binding DataContext.FilterCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-                                       Style="{StaticResource TextBlockBoldStyle}"/>
-                                <TextBlock  Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
-                            </StackPanel>
-                            
+							<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+								<TextBlock
+									Text="{Binding DataContext.FilterCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+									Style="{StaticResource TextBlockBoldStyle}" />
+								<TextBlock Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
+							</StackPanel>
+
 							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
-                            <TreeViewItem Grid.Row="0" Grid.Column="2" Padding="0" />
-                            <TextBlock Grid.Row="0" Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
-                            <TextBlock Grid.Row="0" Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
-                            <TextBlock Grid.Row="0" Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
-                            <TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
+							<TreeViewItem Grid.Row="0" Grid.Column="2" Padding="0" />
+							<TextBlock Grid.Row="0" Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Row="0" Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Row="0" Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
 
 
-                            <xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" 
-                                                   Text="{Binding DataContext.NameSrch, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-                                                    >
-                                <xctk:WatermarkTextBox.Watermark>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="{StaticResource NameWidth}" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock TextAlignment="Right" Text="Filter by name.." />
-                                    </Grid>
-                                </xctk:WatermarkTextBox.Watermark>
-                            </xctk:WatermarkTextBox>
-                           
-                            <ComboBox  Grid.Row="1" Grid.Column="3" 
-                                       ItemsSource="{Binding DataContext.AllResults, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"   
-                                        SelectedItem="{Binding DataContext.SelResultSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-                                       DisplayMemberPath="Name"
-                                       />
-                            <xctk:DateTimePicker Grid.Row="1" Grid.Column="4"
-                                                 TextAlignment="Left"
-                                                 Watermark="Older than.."
-                                                 Format="Custom"
-                                                 FormatString ="{x:Static models:Log.DateFormat}"
-                                                 Value="{Binding DataContext.DateSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-                                                 />
+							<xctk:WatermarkTextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"
+							                       Text="{Binding DataContext.SrchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}">
+								<xctk:WatermarkTextBox.Watermark>
+									<Grid>
+										<Grid.ColumnDefinitions>
+											<ColumnDefinition Width="{StaticResource NameWidth}" />
+										</Grid.ColumnDefinitions>
+										<TextBlock TextAlignment="Right" Text="Filter by name.." />
+									</Grid>
+								</xctk:WatermarkTextBox.Watermark>
+							</xctk:WatermarkTextBox>
 
-                            <StackPanel Grid.Row="1" Grid.Column="6" Orientation="Horizontal">
-                                <Button Content="Clear filters"
-										Command="{Binding DataContext.CmdClearFilter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-										/>
-                            </StackPanel>
+							<ComboBox Grid.Row="1" Grid.Column="3"
+							          ItemsSource="{Binding DataContext.AllResults, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+							          SelectedItem="{Binding DataContext.SrchSelResult, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+							          DisplayMemberPath="Name" />
+							<xctk:DateTimePicker Grid.Row="1" Grid.Column="4"
+							                     TextAlignment="Left"
+							                     Watermark="Older than.."
+							                     Format="Custom"
+							                     FormatString="{x:Static models:Log.DateFormat}"
+							                     Value="{Binding DataContext.SrchDate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
 
-                        </Grid>
+							<StackPanel Grid.Row="1" Grid.Column="6" Orientation="Horizontal">
+								<Button Content="Clear filters"
+								        Command="{Binding DataContext.CmdClearFilter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
+							</StackPanel>
+
+						</Grid>
 					</TreeViewItem.Header>
 				</TreeViewItem>
 
@@ -136,11 +132,11 @@
 										<ColumnDefinition Width="{StaticResource DurationWidth}" />
 										<ColumnDefinition Width="{StaticResource CommandsWidth}" />
 									</Grid.ColumnDefinitions>
-									<CheckBox Grid.Column="0" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}"/>
-                                    <TextBlock Grid.Column="1" Text="{Binding Log.Name}" Style="{StaticResource TextBlockStyle}" />
-                                    <TextBlock Grid.Column="3" Text="{Binding Log.Result}" Style="{StaticResource TextBlockStyle}" />
-                                    <TextBlock Grid.Column="4" Text="{Binding Log.StartTimeString}" Style="{StaticResource TextBlockStyle}" />
-                                    <TextBlock Grid.Column="5" Text="{Binding Log.DurationString}" Style="{StaticResource TextBlockStyle}" />
+									<CheckBox Grid.Column="0" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
+									<TextBlock Grid.Column="1" Text="{Binding Log.Name}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="3" Text="{Binding Log.Result}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="4" Text="{Binding Log.StartTimeString}" Style="{StaticResource TextBlockStyle}" />
+									<TextBlock Grid.Column="5" Text="{Binding Log.DurationString}" Style="{StaticResource TextBlockStyle}" />
 									<StackPanel Grid.Column="6" Orientation="Horizontal">
 										<Button Content="Show log"
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"

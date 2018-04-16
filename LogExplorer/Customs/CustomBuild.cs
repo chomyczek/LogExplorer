@@ -4,13 +4,15 @@
 
 #region Usings
 
-
-
 #endregion
+
+#region Usings
 
 using System;
 using System.Globalization;
 using System.Reflection;
+
+#endregion
 
 namespace LogExplorer.Customs
 {

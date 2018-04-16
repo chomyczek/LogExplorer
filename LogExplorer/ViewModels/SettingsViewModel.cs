@@ -7,6 +7,7 @@
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.Helpers;
+
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
@@ -26,6 +27,22 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand CmdPickExportDir
+		{
+			get
+			{
+				return new MvxCommand(() => { ExportPath = FileHelper.SelectDir(ExportPath); });
+			}
+		}
+
+		public IMvxCommand CmdPickRootDir
+		{
+			get
+			{
+				return new MvxCommand(() => { RootLogsPath = FileHelper.SelectDir(RootLogsPath); });
+			}
+		}
+
 		public IMvxCommand CmdSave
 		{
 			get
@@ -37,33 +54,22 @@ namespace LogExplorer.ViewModels
 						this.Close(this);
 					});
 			}
-        }
+		}
 
-        public IMvxCommand CmdPickExportDir
-        {
-            get
-            {
-                return new MvxCommand(
-                    () =>
-                    {
-                        ExportPath = FileHelper.SelectDir(ExportPath);
-                    });
-            }
-        }
+		public string ExportPath
+		{
+			get
+			{
+				return this.settings.ExportPath;
+			}
+			set
+			{
+				this.settings.ExportPath = value;
+				this.RaisePropertyChanged(() => this.ExportPath);
+			}
+		}
 
-        public IMvxCommand CmdPickRootDir
-        {
-            get
-            {
-                return new MvxCommand(
-                    () =>
-                    {
-                        RootLogsPath = FileHelper.SelectDir(RootLogsPath);
-                    });
-            }
-        }
-
-        public string RootLogsPath
+		public string RootLogsPath
 		{
 			get
 			{
@@ -72,28 +78,15 @@ namespace LogExplorer.ViewModels
 			set
 			{
 				this.settings.RootLogsPath = value;
-                this.RaisePropertyChanged(()=>this.RootLogsPath);
+				this.RaisePropertyChanged(() => this.RootLogsPath);
 			}
 		}
 
-        public string ExportPath
-        {
-            get
-            {
-                return this.settings.ExportPath;
-            }
-            set
-            {
-                this.settings.ExportPath = value;
-                this.RaisePropertyChanged(() => this.ExportPath);
-            }
-        }
+		#endregion
 
-        #endregion
+		#region Properties
 
-        #region Properties
-
-        private Settings settings { get; set; }
+		private Settings settings { get; set; }
 
 		#endregion
 

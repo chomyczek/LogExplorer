@@ -1,8 +1,16 @@
-﻿using System;
+﻿// LogExplorer
+// Copyright(C) 2018
+// Author Adam Kaszubowski
+
+#region Usings
+
+using System;
 using System.Xml;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
+
+#endregion
 
 namespace LogExplorer.Services.Core
 {
@@ -49,6 +57,7 @@ namespace LogExplorer.Services.Core
 		#region Public Methods and Operators
 
 		public Settings GetSettings(
+			
 			//todo: change when message system will be updated
 			//Action<string, string, string> showInfo
 			)
@@ -106,6 +115,7 @@ namespace LogExplorer.Services.Core
 
 			this.doc.Save(this.xmlPath);
 		}
+
 		#endregion
 	}
 }

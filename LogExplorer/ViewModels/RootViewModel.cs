@@ -26,10 +26,18 @@ namespace LogExplorer.ViewModels
 		#region Fields
 
 		private readonly IExplorer explorer;
+
 		private readonly IManager manager;
-	    private string nameSrch;
+
+		private MvxObservableCollection<LogOverview> logs;
 
 		private Settings settings;
+
+		private DateTime? srchDate;
+
+		private string srchName;
+
+		private Result srchSelResult;
 
 		#endregion
 
@@ -39,71 +47,34 @@ namespace LogExplorer.ViewModels
 		{
 			this.explorer = explorer;
 			this.manager = manager;
-		    this.AllResults = ResultHelper.GetAllResults();
-			this.selResultSrch = this.AllResults.First();
+			this.AllResults = ResultHelper.GetAllResults();
+			this.srchSelResult = this.AllResults.First();
 			this.logs = manager.LogOverview;
+		}
 
+		#endregion
 
-        }
+		#region Public Properties
 
-        #endregion
+		public List<Result> AllResults { get; }
 
-        #region Public Properties
+		public IMvxCommand CmdClearFilter
+		{
+			get
+			{
+				return new MvxCommand(this.ClearFilter);
+			}
+		}
 
-        public string FilterCounter
-        => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
+		public IMvxCommand CmdExport
+		{
+			get
+			{
+				return new MvxCommand(this.Export);
+			}
+		}
 
-        public string NameSrch
-        {
-            get
-            {
-                return this.nameSrch;
-            }
-            set
-            {
-                this.nameSrch = value;
-                this.Filter();
-                this.RaisePropertyChanged(() => this.NameSrch);
-            }
-        }
-
-	    private DateTime? dateSrch;
-
-
-        public DateTime? DateSrch
-        {
-            get
-            {
-                return this.dateSrch;
-            }
-            set
-            {
-                this.dateSrch = value;
-                this.Filter();
-                this.RaisePropertyChanged(() => this.DateSrch);
-            }
-        }
-
-        private Result selResultSrch;
-
-        public Result SelResultSrch
-        {
-            get
-            {
-                return this.selResultSrch;
-            }
-            set
-            {
-                this.selResultSrch = value;
-                this.Filter();
-                this.RaisePropertyChanged(() => this.SelResultSrch);
-            }
-        }
-
-
-	    public List<Result> AllResults { get; }
-
-	    public IMvxCommand CmdNavigateSettings
+		public IMvxCommand CmdNavigateSettings
 		{
 			get
 			{
@@ -119,40 +90,6 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public IMvxCommand CmdExport
-		{
-			get
-			{
-				return new MvxCommand(this.Export);
-			}
-		}
-        public IMvxCommand CmdClearFilter
-        {
-            get
-            {
-                return new MvxCommand(this.ClearFilter);
-            }
-        }
-
-	    private void ClearFilter()
-	    {
-            this.nameSrch = string.Empty;
-            this.selResultSrch = this.AllResults[0];
-	        this.dateSrch = null;
-            this.RaisePropertyChanged(() => this.NameSrch);
-            this.RaisePropertyChanged(() => this.SelResultSrch);
-            this.RaisePropertyChanged(() => this.DateSrch);
-            this.Filter();
-	    }
-
-        private void Export()
-		{
-			var selectedLogs = this.manager.GetSelectedLogs();
-			this.manager.Export(selectedLogs, this.settings.ExportPath);
-		}
-
-
-
 		public IMvxCommand<string> CmdStartProcess
 		{
 			get
@@ -161,9 +98,10 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-	    private MvxObservableCollection<LogOverview> logs;
+		public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
 
-        public MvxObservableCollection<LogOverview> Logs {
+		public MvxObservableCollection<LogOverview> Logs
+		{
 			get
 			{
 				return this.logs;
@@ -173,36 +111,130 @@ namespace LogExplorer.ViewModels
 			{
 				this.logs = value;
 				this.RaisePropertyChanged(() => this.Logs);
-            }
+			}
 		}
 
-        #endregion
-
-        #region Public Methods and Operators
-
-        public override void Start()
-        {
-            base.Start();
-            this.Refresh();
-        }
-
-        #endregion
-
-        #region Methods
-
-        private async void Refresh()
+		public DateTime? SrchDate
 		{
-			this.settings = Mvx.Resolve<Repository>().GetSettings();
-	        this.ReasignCollections(new MvxObservableCollection<LogOverview>());
-			await
-		        this.explorer.PopulateLogsRootAsync(
-			        this.manager.LogOverview,
-			        this.settings.RootLogsPath,
-			        () => this.RaisePropertyChanged(() => this.FilterCounter));
-			
+			get
+			{
+				return this.srchDate;
+			}
+			set
+			{
+				this.srchDate = value;
+				this.Filter();
+				this.RaisePropertyChanged(() => this.SrchDate);
+			}
+		}
+
+		public string SrchName
+		{
+			get
+			{
+				return this.srchName;
+			}
+			set
+			{
+				this.srchName = value;
+				this.Filter();
+				this.RaisePropertyChanged(() => this.SrchName);
+			}
+		}
+
+		public Result SrchSelResult
+		{
+			get
+			{
+				return this.srchSelResult;
+			}
+			set
+			{
+				this.srchSelResult = value;
+				this.Filter();
+				this.RaisePropertyChanged(() => this.SrchSelResult);
+			}
+		}
+
+		#endregion
+
+		#region Public Methods and Operators
+
+		public override void Start()
+		{
+			base.Start();
+			this.Refresh();
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void ClearFilter()
+		{
+			this.srchName = string.Empty;
+			this.srchSelResult = this.AllResults[0];
+			this.srchDate = null;
+			this.RaisePropertyChanged(() => this.SrchName);
+			this.RaisePropertyChanged(() => this.SrchSelResult);
+			this.RaisePropertyChanged(() => this.SrchDate);
 			this.Filter();
-            this.RaisePropertyChanged(() => this.FilterCounter);
-        }
+		}
+
+		private void Export()
+		{
+			var selectedLogs = this.manager.GetSelectedLogs();
+			this.manager.Export(selectedLogs, this.settings.ExportPath);
+		}
+
+		private void Filter()
+		{
+			var isActie = false;
+			IEnumerable<LogOverview> searchLogs = this.manager.LogOverview.ToArray();
+
+			if (!string.IsNullOrEmpty(this.srchName))
+			{
+				isActie = true;
+				searchLogs = searchLogs.Where(log => log.Log.Name.ContainsString(this.srchName));
+			}
+
+			if (!string.IsNullOrEmpty(this.srchSelResult?.Value))
+			{
+				isActie = true;
+
+				searchLogs =
+					searchLogs.Where(log => log.History.Any(history => history.Result.ContainsString(this.srchSelResult.Value)));
+			}
+
+			if (this.srchDate.HasValue)
+			{
+				isActie = true;
+
+				searchLogs =
+					searchLogs.Where(log => log.History.Any(history => DateTime.Compare(this.srchDate.Value, history.StartTime) <= 0));
+			}
+
+			if (isActie)
+			{
+				if (this.Logs?.Count == searchLogs.Count())
+				{
+					return;
+				}
+				var backup = new MvxObservableCollection<LogOverview>(this.manager.LogOverview);
+				this.Logs.SwitchTo(searchLogs);
+
+				this.manager.LogOverview = backup;
+				this.RaisePropertyChanged(() => this.FilterCounter);
+				return;
+			}
+			if (this.Logs?.Count == this.manager.LogOverview?.Count())
+			{
+				return;
+			}
+
+			this.Logs.SwitchTo(this.manager.LogOverview);
+			this.RaisePropertyChanged(() => this.FilterCounter);
+		}
 
 		private void ReasignCollections(MvxObservableCollection<LogOverview> newCollection)
 		{
@@ -210,57 +242,19 @@ namespace LogExplorer.ViewModels
 			this.Logs = this.manager.LogOverview;
 		}
 
-        private void Filter()
-	    {
-	        var isActie = false;
-	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview.ToArray();
+		private async void Refresh()
+		{
+			this.settings = Mvx.Resolve<Repository>().GetSettings();
+			this.ReasignCollections(new MvxObservableCollection<LogOverview>());
+			await
+				this.explorer.PopulateLogsRootAsync(
+					this.manager.LogOverview,
+					this.settings.RootLogsPath,
+					() => this.RaisePropertyChanged(() => this.FilterCounter));
 
-
-			if (!string.IsNullOrEmpty(this.nameSrch))
-	        {
-	            isActie = true;
-                searchLogs= searchLogs.Where(log => log.Log.Name.ContainsString(this.nameSrch));
-            }
-
-	        if (!string.IsNullOrEmpty(this.selResultSrch?.Value))
-	        {
-                isActie = true;
-
-                searchLogs = searchLogs.Where(log => log.History.Any(history=>history.Result.ContainsString(this.selResultSrch.Value)));
-            }
-
-            if (this.dateSrch.HasValue)
-            {
-				isActie = true;
-
-				searchLogs =
-					searchLogs.Where(
-						log => log.History.Any(history => DateTime.Compare(this.dateSrch.Value, history.StartTime) <= 0));
-			}
-
-            if (isActie)
-	        {
-	            if (this.Logs?.Count == searchLogs.Count())
-	            {
-	                return;
-	            }
-				var backup = new MvxObservableCollection<LogOverview>(this.manager.LogOverview);
-				this.Logs.SwitchTo(searchLogs);
-
-				this.manager.LogOverview = backup;
-				this.RaisePropertyChanged(() => this.FilterCounter);
-                return;
-            }
-            if (this.Logs?.Count == this.manager.LogOverview?.Count())
-            {
-                return;
-            }
-			
-			this.Logs.SwitchTo(this.manager.LogOverview);
+			this.Filter();
 			this.RaisePropertyChanged(() => this.FilterCounter);
-
-        }
-
+		}
 
 		#endregion
 	}

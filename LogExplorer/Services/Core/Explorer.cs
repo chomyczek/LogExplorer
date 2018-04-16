@@ -22,8 +22,11 @@ namespace LogExplorer.Services.Core
 	public class Explorer : IExplorer
 	{
 		#region Public Methods and Operators
-		
-		public Task PopulateLogsRootAsync(MvxObservableCollection<LogOverview> logOverviews, string path, Action propertyChanges)
+
+		public Task PopulateLogsRootAsync(
+			MvxObservableCollection<LogOverview> logOverviews,
+			string path,
+			Action propertyChanges)
 		{
 			//todo try/catch
 			return Task.Run(

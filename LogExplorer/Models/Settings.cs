@@ -21,7 +21,7 @@ namespace LogExplorer.Models
 		#endregion
 
 		#region Public Properties
-        
+
 		public string ExportPath { get; set; }
 
 		public string Height { get; set; }
