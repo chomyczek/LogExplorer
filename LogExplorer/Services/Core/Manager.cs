@@ -20,6 +20,11 @@ namespace LogExplorer.Services.Core
 {
 	public class Manager : IManager
 	{
+	    public Manager()
+	    {
+            LogOverview = new MvxObservableCollection<LogOverview>();
+
+        }
 		#region Public Properties
 
 		public MvxObservableCollection<LogOverview> LogOverview { get; set; }

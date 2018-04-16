@@ -6,8 +6,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
-
+using System.Threading.Tasks;
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.Extensions;
@@ -41,17 +42,33 @@ namespace LogExplorer.ViewModels
 			this.manager = manager;
 		    this.AllResults = ResultHelper.GetAllResults();
 		    selResultSrch = this.AllResults.First();
+            logs = manager.LogOverview;
 
 
-		}
+        }
 
         #endregion
 
         #region Public Properties
 
-	    public string FilterCounter => $"({this.Logs.Count}/{this.manager.LogOverview.Count})";
+	    //private string filterCounter;
 
-	    public string NameSrch
+        public string FilterCounter
+        //{
+        //    get
+        //    {
+        //        return nameSrch;
+        //    }
+        //    set
+        //    {
+        //        this.nameSrch = value;
+        //        this.Filter();
+        //        this.RaisePropertyChanged(() => this.NameSrch);
+        //    }
+        //}
+        => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
+
+        public string NameSrch
         {
             get
             {
@@ -174,28 +191,46 @@ namespace LogExplorer.ViewModels
             }
 		}
 
-		#endregion
+        #endregion
 
-		#region Public Methods and Operators
+        #region Public Methods and Operators
 
-		public override void Start()
-		{
+        public override async void Start()
+        {
+            
+            base.Start();
             this.Refresh();
-			base.Start();
-		}
+        }
 
-		#endregion
+        #endregion
 
-		#region Methods
+        #region Methods
 
-		private void Refresh()
+        private async void Refresh()
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
-            this.manager.LogOverview = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
-		    this.Filter();
-		}
+            //this.manager.LogOverview = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
+            //await this.AsyncTest(logs, () => this.RaisePropertyChanged(() => this.FilterCounter));
+            await this.AsyncTest(this.manager.LogOverview, () => this.RaisePropertyChanged(() => this.FilterCounter));
+            //this.manager.LogOverview = this.Logs;
+            this.Filter();
+            this.RaisePropertyChanged(() => this.FilterCounter);
+        }
+        private async Task<MvxObservableCollection<LogOverview>> AsyncTest(MvxObservableCollection<LogOverview> zz, Action propertyChanges)
+        {
+            await Task.Run(async () =>
+            {
+                foreach (var log in this.explorer.GetLogsRoot(this.settings.RootLogsPath))
+                {
+                    zz.Add(log);
+                    propertyChanges.Invoke();
+                    await Task.Delay(100);
+                }
+            });
+            return zz;
+        }
 
-	    private void Filter()
+        private void Filter()
 	    {
 	        var isActie = false;
 	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview;
@@ -231,7 +266,7 @@ namespace LogExplorer.ViewModels
                 this.RaisePropertyChanged(() => this.FilterCounter);
                 return;
             }
-            if (this.Logs?.Count == this.manager.LogOverview.Count())
+            if (this.Logs?.Count == this.manager.LogOverview?.Count())
             {
                 return;
             }
