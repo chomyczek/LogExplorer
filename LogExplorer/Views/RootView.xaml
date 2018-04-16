@@ -58,7 +58,7 @@
 
                             <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
                                 <TextBlock
-                                       Text="{Binding DataContext.FiltrCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+                                       Text="{Binding DataContext.FilterCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
                                        Style="{StaticResource TextBlockBoldStyle}"/>
                                 <TextBlock  Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
                             </StackPanel>
@@ -79,7 +79,7 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="{StaticResource NameWidth}" />
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock TextAlignment="Right" Text="Filtr by name.." />
+                                        <TextBlock TextAlignment="Right" Text="Filter by name.." />
                                     </Grid>
                                 </xctk:WatermarkTextBox.Watermark>
                             </xctk:WatermarkTextBox>
@@ -96,6 +96,10 @@
                                                  FormatString ="{x:Static models:Log.DateFormat}"
                                                  Value="{Binding DataContext.DateSrch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
                                                  />
+
+                            <Button Grid.Row="1" Grid.Column="6" Content="Clear filters"
+												        Command="{Binding DataContext.CmdClearFilter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        />
 
                         </Grid>
 					</TreeViewItem.Header>

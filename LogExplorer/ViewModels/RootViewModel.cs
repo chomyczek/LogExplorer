@@ -49,7 +49,7 @@ namespace LogExplorer.ViewModels
 
         #region Public Properties
 
-	    public string FiltrCounter => $"({this.Logs.Count}/{this.manager.LogOverview.Count})";
+	    public string FilterCounter => $"({this.Logs.Count}/{this.manager.LogOverview.Count})";
 
 	    public string NameSrch
         {
@@ -60,7 +60,7 @@ namespace LogExplorer.ViewModels
             set
             {
                 this.nameSrch = value;
-                this.Filtr();
+                this.Filter();
                 this.RaisePropertyChanged(() => this.NameSrch);
             }
         }
@@ -77,7 +77,7 @@ namespace LogExplorer.ViewModels
             set
             {
                 this.dateSrc = value;
-                this.Filtr();
+                this.Filter();
                 this.RaisePropertyChanged(() => this.DateSrch);
             }
         }
@@ -93,7 +93,7 @@ namespace LogExplorer.ViewModels
             set
             {
                 this.selResultSrch = value;
-                this.Filtr();
+                this.Filter();
                 this.RaisePropertyChanged(() => this.SelResultSrch);
             }
         }
@@ -174,10 +174,10 @@ namespace LogExplorer.ViewModels
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
             this.manager.LogOverview = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
-		    this.Filtr();
+		    this.Filter();
 		}
 
-	    private void Filtr()
+	    private void Filter()
 	    {
 	        var isActie = false;
 	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview;
@@ -210,7 +210,7 @@ namespace LogExplorer.ViewModels
 	                return;
 	            }
                 this.Logs = new MvxObservableCollection<LogOverview>(searchLogs);
-                this.RaisePropertyChanged(() => this.FiltrCounter);
+                this.RaisePropertyChanged(() => this.FilterCounter);
                 return;
             }
             if (this.Logs?.Count == this.manager.LogOverview.Count())
@@ -218,7 +218,7 @@ namespace LogExplorer.ViewModels
                 return;
             }
             this.Logs = this.manager.LogOverview;
-            this.RaisePropertyChanged(() => this.FiltrCounter);
+            this.RaisePropertyChanged(() => this.FilterCounter);
 
         }
 
