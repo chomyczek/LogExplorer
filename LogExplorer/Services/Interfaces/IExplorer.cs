@@ -4,8 +4,11 @@
 
 #region Usings
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
+
 using LogExplorer.Models;
 using MvvmCross.Core.ViewModels;
 
@@ -17,7 +20,7 @@ namespace LogExplorer.Services.Interfaces
 	{
         #region Public Methods and Operators
 
-        MvxObservableCollection<LogOverview> GetLogsRoot(string path);
+		Task PopulateLogsRootAsync(MvxObservableCollection<LogOverview> logOverviews, string path, Action propertyChanges);
 
 		#endregion
 	}

@@ -41,8 +41,8 @@ namespace LogExplorer.ViewModels
 			this.explorer = explorer;
 			this.manager = manager;
 		    this.AllResults = ResultHelper.GetAllResults();
-		    selResultSrch = this.AllResults.First();
-            logs = manager.LogOverview;
+			this.selResultSrch = this.AllResults.First();
+			this.logs = manager.LogOverview;
 
 
         }
@@ -72,7 +72,7 @@ namespace LogExplorer.ViewModels
         {
             get
             {
-                return nameSrch;
+                return this.nameSrch;
             }
             set
             {
@@ -89,7 +89,7 @@ namespace LogExplorer.ViewModels
         {
             get
             {
-                return dateSrch;
+                return this.dateSrch;
             }
             set
             {
@@ -105,7 +105,7 @@ namespace LogExplorer.ViewModels
         {
             get
             {
-                return selResultSrch;
+                return this.selResultSrch;
             }
             set
             {
@@ -152,7 +152,7 @@ namespace LogExplorer.ViewModels
 	    private void ClearFilter()
 	    {
             this.nameSrch = string.Empty;
-            this.selResultSrch = AllResults[0];
+            this.selResultSrch = this.AllResults[0];
 	        this.dateSrch = null;
             this.RaisePropertyChanged(() => this.NameSrch);
             this.RaisePropertyChanged(() => this.SelResultSrch);
@@ -187,7 +187,7 @@ namespace LogExplorer.ViewModels
 			set
 			{
 				this.logs = value;
-                RaisePropertyChanged(() => Logs);
+				this.RaisePropertyChanged(() => this.Logs);
             }
 		}
 
@@ -195,9 +195,8 @@ namespace LogExplorer.ViewModels
 
         #region Public Methods and Operators
 
-        public override async void Start()
+        public override void Start()
         {
-            
             base.Start();
             this.Refresh();
         }
@@ -209,31 +208,28 @@ namespace LogExplorer.ViewModels
         private async void Refresh()
 		{
 			this.settings = Mvx.Resolve<Repository>().GetSettings();
-            //this.manager.LogOverview = this.explorer.GetLogsRoot(this.settings.RootLogsPath);
-            //await this.AsyncTest(logs, () => this.RaisePropertyChanged(() => this.FilterCounter));
-            await this.AsyncTest(this.manager.LogOverview, () => this.RaisePropertyChanged(() => this.FilterCounter));
-            //this.manager.LogOverview = this.Logs;
-            this.Filter();
+	        this.ReasignCollections(new MvxObservableCollection<LogOverview>());
+			await
+		        this.explorer.PopulateLogsRootAsync(
+			        this.manager.LogOverview,
+			        this.settings.RootLogsPath,
+			        () => this.RaisePropertyChanged(() => this.FilterCounter));
+			
+			this.Filter();
             this.RaisePropertyChanged(() => this.FilterCounter);
         }
-        private async Task<MvxObservableCollection<LogOverview>> AsyncTest(MvxObservableCollection<LogOverview> zz, Action propertyChanges)
-        {
-            await Task.Run(async () =>
-            {
-                foreach (var log in this.explorer.GetLogsRoot(this.settings.RootLogsPath))
-                {
-                    zz.Add(log);
-                    propertyChanges.Invoke();
-                    await Task.Delay(100);
-                }
-            });
-            return zz;
-        }
+
+		private void ReasignCollections(MvxObservableCollection<LogOverview> newCollection)
+		{
+			this.manager.LogOverview = newCollection;
+			this.Logs = this.manager.LogOverview;
+		}
 
         private void Filter()
 	    {
 	        var isActie = false;
 	        IEnumerable<LogOverview> searchLogs = this.manager.LogOverview;
+
             if (!string.IsNullOrEmpty(this.nameSrch))
 	        {
 	            isActie = true;
@@ -270,10 +266,12 @@ namespace LogExplorer.ViewModels
             {
                 return;
             }
+
             this.Logs = this.manager.LogOverview;
             this.RaisePropertyChanged(() => this.FilterCounter);
 
         }
+
 
 		#endregion
 	}

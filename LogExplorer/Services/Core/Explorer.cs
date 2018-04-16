@@ -5,13 +5,14 @@
 #region Usings
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+
 using MvvmCross.Core.ViewModels;
 
 #endregion
@@ -21,43 +22,43 @@ namespace LogExplorer.Services.Core
 	public class Explorer : IExplorer
 	{
 		#region Public Methods and Operators
-
-		/// <summary>
-		/// todo: This is basic version, try catch
-		/// </summary>
-		public MvxObservableCollection<LogOverview> GetLogsRoot(string path)
+		
+		public Task PopulateLogsRootAsync(MvxObservableCollection<LogOverview> logOverviews, string path, Action propertyChanges)
 		{
-			//todo remove debug
-			var start = DateTime.Now;
-
-			var logOverviews = new MvxObservableCollection<LogOverview>();
-
-			if (!Directory.Exists(path))
-			{
-				//todo: warning
-				return new MvxObservableCollection<LogOverview>();
-			}
-
-			var logDirs = Directory.GetDirectories(path);
-
-			foreach (var dir in logDirs)
-			{
-				var logDir = Directory.GetDirectories(dir).OrderByDescending(Directory.GetCreationTime).FirstOrDefault();
-
-				if (string.IsNullOrEmpty(logDir))
+			//todo try/catch
+			return Task.Run(
+				() =>
 				{
-					continue;
-				}
-                
-			    var logOverview = new LogOverview {History = this.GetLogHistory(dir)};
-			    logOverviews.Add(logOverview);
-			}
+					//todo remove debug
+					var start = DateTime.Now;
 
-			//todo remove debug
-			var diff = DateTime.Now.Subtract(start);
-			Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
+					if (!Directory.Exists(path))
+					{
+						//todo: warning
+						//return new MvxObservableCollection<LogOverview>();
+						return;
+					}
 
-		    return new MvxObservableCollection<LogOverview>(logOverviews.OrderByDescending(overview => overview.Log.StartTime));
+					var logDirs = Directory.GetDirectories(path).OrderByDescending(Directory.GetLastWriteTime);
+
+					foreach (var dir in logDirs)
+					{
+						var logDir = Directory.GetDirectories(dir).OrderByDescending(Directory.GetCreationTime).FirstOrDefault();
+
+						if (string.IsNullOrEmpty(logDir))
+						{
+							continue;
+						}
+
+						var logOverview = new LogOverview { History = this.GetLogHistory(dir) };
+						logOverviews.Add(logOverview);
+						propertyChanges.Invoke();
+					}
+
+					//todo remove debug
+					var diff = DateTime.Now.Subtract(start);
+					Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
+				});
 		}
 
 		#endregion
@@ -72,7 +73,7 @@ namespace LogExplorer.Services.Core
 			var log = new Log
 			          {
 				          Name = name,
-                          ResultContainer = this.GetResult(path),
+				          ResultContainer = this.GetResult(path),
 				          StartTime = startTime,
 				          DirPath = path,
 				          DirTime = Path.GetFileName(path),
@@ -105,8 +106,8 @@ namespace LogExplorer.Services.Core
 
 				logs.Add(log);
 			}
-            
-		    return new MvxObservableCollection<Log>(logs.OrderByDescending(l => l.StartTime));
+
+			return new MvxObservableCollection<Log>(logs.OrderByDescending(l => l.StartTime));
 		}
 
 		private string GetLogPath(string path)
