@@ -46,10 +46,12 @@ namespace LogExplorer.ViewModels
             get { return new MvxCommand(() => { RootLogsPath = FileHelper.SelectDir(RootLogsPath); }); }
         }
 
-        public IMvxCommand CmdPickCustomConfig
-        {
-            get { return new MvxCommand(() => { CustomConfigPath = FileHelper.SelectFile(CustomConfigPath,"xml","Config file"); }, () => IsConfigPathEnabled); }
-        }
+        /// <summary>
+        /// Require private MvxCommand field to  resolve Enable function.
+        /// </summary>
+        public IMvxCommand CmdPickCustomConfig => this.cmdPickCustomConfig;
+
+        private MvxCommand cmdPickCustomConfig;
 
         public IMvxCommand CmdSave
         {
@@ -119,6 +121,7 @@ namespace LogExplorer.ViewModels
                 new Tuple<int, string>(1, "Previously executed"),
                 new Tuple<int, string>(2, "Custom")
             };
+            this.cmdPickCustomConfig= new MvxCommand(() => { CustomConfigPath = FileHelper.SelectFile(CustomConfigPath, "xml", "Config file"); }, () => IsConfigPathEnabled);
             ConfigSetting = ConfigSettingDictionary[settings.ConfigMode];
         }
 
@@ -130,19 +133,13 @@ namespace LogExplorer.ViewModels
                 configSetting = value;
                 settings.ConfigMode = value.Item1;
                 IsConfigPathEnabled = value.Item1 == 2;
+                CmdPickCustomConfig.RaiseCanExecuteChanged();
                 RaisePropertyChanged(() => ConfigSetting);
             }
         }
 
-        public bool IsConfigPathEnabled
-        {
-            get { return isConfigPathEnabled; }
-            set
-            {
-                isConfigPathEnabled = value;
-                RaisePropertyChanged(() => IsConfigPathEnabled);
-            }
-        }
+        private bool IsConfigPathEnabled { get; set; }
+
         public bool IsHiddenTester
         {
             get { return settings.IsHiddenTester; }
@@ -155,7 +152,6 @@ namespace LogExplorer.ViewModels
 
 
         private Tuple<int, string> configSetting;
-        private bool isConfigPathEnabled;
 
         #endregion
     }
