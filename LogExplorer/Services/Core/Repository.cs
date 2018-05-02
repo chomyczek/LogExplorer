@@ -74,12 +74,25 @@ namespace LogExplorer.Services.Core
 				}
 
 				var xmlValue = node[0].InnerText;
-				var z = property.GetType();
 
 				if (property.PropertyType == typeof(string))
 				{
 					property.SetValue(settings, xmlValue);
 				}
+                else if (property.PropertyType == typeof(int))
+                {
+                    int value;
+                    if (int.TryParse(xmlValue, out value))
+                    {
+                        property.SetValue(settings, value);
+                    }
+                    else
+                    {
+                        //todo message
+                        property.SetValue(settings, 0);
+                    }
+                    
+                }
 				else if (property.PropertyType == typeof(bool))
 				{
 					property.SetValue(settings, xmlValue.Equals("True", StringComparison.CurrentCultureIgnoreCase));
@@ -132,6 +145,10 @@ namespace LogExplorer.Services.Core
             {
                 settings.TesterPath = @"C:\Program Files (x86)\Intel\Multi Tester\";
             }
+	        if (settings.ConfigMode > 2 || settings.ConfigMode < 0)
+	        {
+	            settings.ConfigMode = 0;
+	        }
         }
 
 		#endregion

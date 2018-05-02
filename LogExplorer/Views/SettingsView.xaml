@@ -26,6 +26,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -49,7 +50,28 @@
 			         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
             <Button Margin="4" Grid.Row="5" Grid.Column="1" Command="{Binding CmdPickTesterDir}" HorizontalAlignment="Right"
 			        Content=".." />
-
+            
+            <Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Text="Config path:" />
+                <TextBox Margin="4" Grid.Row="1" Grid.Column="0"
+			         Text="{Binding CustomConfigPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" 
+                     IsEnabled="{Binding IsConfigPathEnabled}"/>
+                <Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickCustomConfig}" HorizontalAlignment="Right"
+			        Content=".." />
+                <ComboBox Grid.Row="1" Grid.Column="2"
+							          ItemsSource="{Binding ConfigSettingDictionary}"
+							          SelectedItem="{Binding ConfigSetting}"
+							          DisplayMemberPath="Item2" />
+            </Grid>
         </Grid>
 
 

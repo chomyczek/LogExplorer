@@ -17,7 +17,10 @@ namespace LogExplorer.Models
 			this.Width = string.Empty;
 			this.ExportPath = string.Empty;
             this.TesterPath = string.Empty;
-        }
+		    this.ConfigMode = 0;
+		    CustomConfigPath = string.Empty;
+
+		}
 
 		#endregion
 
@@ -36,6 +39,10 @@ namespace LogExplorer.Models
 		public string RootLogsPath { get; set; }
 
 		public string Width { get; set; }
+
+        public int ConfigMode { get; set; }
+
+	    public string CustomConfigPath { get; set; }
 
 		#endregion
 	}

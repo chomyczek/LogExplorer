@@ -121,7 +121,30 @@ namespace LogExplorer.Services.Helpers
 			return directory;
 		}
 
-		public static void StartProcess(string path)
+	    public static string SelectFile(string path, string extension, string extensionDescription)
+	    {
+	        var newPath = path;
+
+	        using (
+	            var openFileDialog = new OpenFileDialog
+	            {
+	                InitialDirectory =
+	                    string.IsNullOrEmpty(path) ? @"c:\" : Path.GetDirectoryName(path),
+	                Filter = $"{extensionDescription} (*.{extension})|*.{extension}",
+	                RestoreDirectory = true,
+	                Multiselect = false
+	            })
+	        {
+	            if (openFileDialog.ShowDialog() == DialogResult.OK)
+	            {
+	                newPath = openFileDialog.FileName;
+	            }
+	        }
+
+	        return newPath;
+	    }
+
+        public static void StartProcess(string path)
 		{
 			//todo try catch, what if path doesn't exist
 			if (string.IsNullOrEmpty(path))
