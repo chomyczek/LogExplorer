@@ -26,7 +26,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -44,14 +43,27 @@
 			         Text="{Binding ExportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
 			<Button Margin="4" Grid.Row="3" Grid.Column="1" Command="{Binding CmdPickExportDir}" HorizontalAlignment="Right"
 			        Content=".." />
+            <Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Tester path:" />
+                <TextBlock Margin="4" Grid.Row="0"  Grid.Column="2" Text="Hide Tester cmd.exe:" HorizontalAlignment="Right" />
+                <TextBox Margin="4" Grid.Row="1" Grid.Column="0"
+			                 Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
+                    <Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickTesterDir}" HorizontalAlignment="Right"
+			                Content=".." />
+                <CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
+			                 IsChecked="{Binding IsHiddenTester, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+                </Grid>
             
-            <TextBlock Margin="4" Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" Text="Tester path:" />
-            <TextBox Margin="4" Grid.Row="5" Grid.Column="0"
-			         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
-            <Button Margin="4" Grid.Row="5" Grid.Column="1" Command="{Binding CmdPickTesterDir}" HorizontalAlignment="Right"
-			        Content=".." />
-            
-            <Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" >
+            <Grid Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

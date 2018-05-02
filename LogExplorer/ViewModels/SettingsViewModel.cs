@@ -143,6 +143,15 @@ namespace LogExplorer.ViewModels
                 RaisePropertyChanged(() => IsConfigPathEnabled);
             }
         }
+        public bool IsHiddenTester
+        {
+            get { return settings.IsHiddenTester; }
+            set
+            {
+                settings.IsHiddenTester = value;
+                RaisePropertyChanged(() => IsHiddenTester);
+            }
+        }
 
 
         private Tuple<int, string> configSetting;

@@ -108,11 +108,11 @@ namespace LogExplorer.ViewModels
 				return new MvxCommand<string>(FileHelper.StartProcess);
 			}
 		}
-        public IMvxCommand<string> CmdRerun
+        public IMvxCommand<Log> CmdRerun
         {
             get
             {
-                return new MvxCommand<string>(name=>this.tester.Rerun(name, this.settings));
+                return new MvxCommand<Log>(log=>this.tester.Rerun(log, this.settings));
             }
         }
 

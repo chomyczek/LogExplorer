@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Windows;
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
@@ -11,12 +12,14 @@ namespace LogExplorer.Services.Core
     {
         private const string LibSubDir = @"Packages\";
         private const string TesterName = @"Tester.exe";
+        private const string ConfigPrefix = @"FinalConfiguration";
 
 
-        public void Rerun(string testName, Settings settings)
+        public void Rerun(Log log, Settings settings)
         {
+            var testName = log.Name;
             var librariesPath = FileHelper.CombinePaths(settings.TesterPath, LibSubDir);
-            var pdbs = FileHelper.GetPdbs(librariesPath);
+            var pdbs = FileHelper.GetFiles(librariesPath, "pdb");
 
             var start = DateTime.Now;
 
@@ -31,10 +34,26 @@ namespace LogExplorer.Services.Core
                 return;
             }
             Console.WriteLine($@"Correct component was found = {component}.");
-            var testerPath = FileHelper.CombinePaths(settings.TesterPath, TesterName);
-            Execute(settings.TesterPath, testName, component);
+
+            var config = this.prepareConfig(settings, log);
+
+            this.Execute(settings.TesterPath, testName, component, config , settings.IsHiddenTester);
         }
 
+        private string prepareConfig(Settings settings, Log log)
+        {
+            switch (settings.ConfigMode)
+            {
+                case 1:
+                    var xmls =FileHelper.GetFiles(log.DirPath, "xml");
+                    return xmls.FirstOrDefault(file => FileHelper.GetFileName(file).StartsWith(ConfigPrefix));
+                case 2:
+                    return settings.CustomConfigPath;
+                default:
+                    return null;
+
+            }
+        }
         private string GetCorrectComponent(string[] pdbs, string testName)
         {
             foreach (var pdb in pdbs)
@@ -62,14 +81,23 @@ namespace LogExplorer.Services.Core
             return null;
         }
 
-        private void Execute(string testerPath, string name, string component, string config = null)
+        private void Execute(string testerPath, string name, string component, string config, bool hidden)
         {
             if (!FileHelper.FileExist(FileHelper.CombinePaths(testerPath, TesterName)))
             {
                 return;
             }
-            var command = $"{TesterName} -p {component} -n {name}";
-            FileHelper.StartSilentCmd(command, testerPath);
+            string command = $"{TesterName} -p {component} -n {name}";
+            if(FileHelper.FileExist(config))
+            {
+                command = $"{command} -c {config}";
+            }
+            else
+            {
+                Console.WriteLine($"Config file was incorrec ({config})");
+            }            
+
+            FileHelper.StartCmdProcess(command, testerPath, hidden);
         }
     }
 }

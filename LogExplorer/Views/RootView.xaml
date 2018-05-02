@@ -147,7 +147,7 @@
 										        Margin="5,0,0,0" />
                                         <Button Content="Rerun"
 										        Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-										        CommandParameter="{Binding Log.Name}"
+										        CommandParameter="{Binding Log}"
 										        Margin="5,0,0,0" />
 									</StackPanel>
 								</Grid>

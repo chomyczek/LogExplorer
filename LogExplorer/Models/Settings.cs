@@ -19,6 +19,7 @@ namespace LogExplorer.Models
             this.TesterPath = string.Empty;
 		    this.ConfigMode = 0;
 		    CustomConfigPath = string.Empty;
+		    IsHiddenTester = false;
 
 		}
 
@@ -43,7 +44,8 @@ namespace LogExplorer.Models
         public int ConfigMode { get; set; }
 
 	    public string CustomConfigPath { get; set; }
+	    public bool IsHiddenTester { get; set; }
 
-		#endregion
+	    #endregion
 	}
 }
