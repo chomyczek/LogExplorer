@@ -35,7 +35,15 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public IMvxCommand CmdPickRootDir
+        public IMvxCommand CmdPickTesterDir
+        {
+            get
+            {
+                return new MvxCommand(() => { TesterPath = FileHelper.SelectDir(ExportPath); });
+            }
+        }
+
+        public IMvxCommand CmdPickRootDir
 		{
 			get
 			{
@@ -68,8 +76,20 @@ namespace LogExplorer.ViewModels
 				this.RaisePropertyChanged(() => this.ExportPath);
 			}
 		}
+        public string TesterPath
+        {
+            get
+            {
+                return this.settings.TesterPath;
+            }
+            set
+            {
+                this.settings.TesterPath = value;
+                this.RaisePropertyChanged(() => this.TesterPath);
+            }
+        }
 
-		public string RootLogsPath
+        public string RootLogsPath
 		{
 			get
 			{

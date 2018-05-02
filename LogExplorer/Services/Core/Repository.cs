@@ -91,6 +91,8 @@ namespace LogExplorer.Services.Core
 				}
 			}
 
+            this.PrepareDefaultProperties(ref settings);
+
 			return settings;
 		}
 
@@ -115,6 +117,22 @@ namespace LogExplorer.Services.Core
 
 			this.doc.Save(this.xmlPath);
 		}
+
+	    private void PrepareDefaultProperties(ref Settings settings)
+	    {
+	        if (string.IsNullOrEmpty(settings.RootLogsPath))
+	        {
+	            settings.RootLogsPath = @"C:\History\";
+            }
+            if (string.IsNullOrEmpty(settings.ExportPath))
+            {
+                settings.ExportPath = @"C:\ExportedLogs\";
+            }
+            if (string.IsNullOrEmpty(settings.TesterPath))
+            {
+                settings.TesterPath = @"C:\Program Files (x86)\Intel\Multi Tester\";
+            }
+        }
 
 		#endregion
 	}

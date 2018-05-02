@@ -11,18 +11,21 @@ namespace LogExplorer.Models
 		public Settings()
 		{
 			this.Height = string.Empty;
-			this.RootLogsPath = @"C:\History\";
+			this.RootLogsPath = string.Empty;
 			this.PositionX = string.Empty;
 			this.PositionY = string.Empty;
 			this.Width = string.Empty;
-			this.ExportPath = @"C:\ExportedLogs\";
-		}
+			this.ExportPath = string.Empty;
+            this.TesterPath = string.Empty;
+        }
 
 		#endregion
 
 		#region Public Properties
-
+        
 		public string ExportPath { get; set; }
+
+	    public string TesterPath { get; set; }
 
 		public string Height { get; set; }
 
