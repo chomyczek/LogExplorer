@@ -24,8 +24,9 @@ namespace LogExplorer.Customs
 		/// </summary>
 		public App()
 		{
-			Mvx.RegisterType<IExplorer, Explorer>();
-			Mvx.RegisterType<IManager, Manager>();
+            Mvx.RegisterType<IExplorer, Explorer>();
+            Mvx.RegisterType<ITester, Tester>();
+            Mvx.RegisterType<IManager, Manager>();
 			var xmlPath = FileHelper.GetLocalPath("LogExplorer.xml");
 			Mvx.RegisterSingleton(new Repository(xmlPath));
 

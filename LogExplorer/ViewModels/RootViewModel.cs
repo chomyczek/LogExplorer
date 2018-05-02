@@ -27,9 +27,11 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 
-		private readonly IManager manager;
+        private readonly IManager manager;
 
-		private MvxObservableCollection<LogOverview> logs;
+        private readonly ITester tester;
+
+        private MvxObservableCollection<LogOverview> logs;
 
 		private Settings settings;
 
@@ -43,10 +45,11 @@ namespace LogExplorer.ViewModels
 
 		#region Constructors and Destructors
 
-		public RootViewModel(IExplorer explorer, IManager manager)
+		public RootViewModel(IExplorer explorer, IManager manager, ITester tester)
 		{
 			this.explorer = explorer;
 			this.manager = manager;
+		    this.tester = tester;
 			this.AllResults = ResultHelper.GetAllResults();
 			this.srchSelResult = this.AllResults.First();
 			this.logs = manager.LogOverview;
@@ -97,8 +100,15 @@ namespace LogExplorer.ViewModels
 				return new MvxCommand<string>(FileHelper.StartProcess);
 			}
 		}
+        public IMvxCommand<string> CmdRerun
+        {
+            get
+            {
+                return new MvxCommand<string>(name=>this.tester.Rerun(name, this.settings));
+            }
+        }
 
-		public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
+        public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
 
 		public MvxObservableCollection<LogOverview> Logs
 		{

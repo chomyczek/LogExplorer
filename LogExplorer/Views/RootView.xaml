@@ -145,6 +145,10 @@
 										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding Log.DirPath}"
 										        Margin="5,0,0,0" />
+                                        <Button Content="Rerun"
+										        Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding Log.Name}"
+										        Margin="5,0,0,0" />
 									</StackPanel>
 								</Grid>
 							</Border>

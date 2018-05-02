@@ -11,6 +11,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -46,7 +47,31 @@ namespace LogExplorer.Services.Helpers
 			return combination;
 		}
 
-		public static void CopyFile(string source, string destination)
+	    public static string[] GetPdbs(string path)
+	    {
+	        if (!PathExist(path))
+	        {
+                Console.WriteLine($"GetPdbs method, path({path}) does not exist.");
+	            return new string[0];
+	        }
+
+            var dlls = Directory.GetFiles(path, "*.pdb");//.Where(file=>file.EndsWith(".dll"));//.Select(Path.GetFullFileName);
+
+	        return dlls.ToArray();
+	    }
+
+	    public static string GetFullFileName(string path)
+	    {
+	        return Path.GetFileName(path);
+
+	    }
+        public static string GetFileName(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
+
+        }
+
+        public static void CopyFile(string source, string destination)
 		{
 			File.Copy(source, destination, true);
 		}
@@ -57,7 +82,12 @@ namespace LogExplorer.Services.Helpers
 			Directory.CreateDirectory(path);
 		}
 
-		public static bool FileExist(string path)
+	    public static Assembly LoadAssembly(string path)
+	    {
+            return Assembly.ReflectionOnlyLoadFrom(path);
+	    }
+
+        public static bool FileExist(string path)
 		{
 			return File.Exists(path);
 		}
@@ -93,7 +123,7 @@ namespace LogExplorer.Services.Helpers
 
 		public static void StartProcess(string path)
 		{
-			//todo try catch
+			//todo try catch, what if path doesn't exist
 			if (string.IsNullOrEmpty(path))
 			{
 				return;
@@ -101,6 +131,26 @@ namespace LogExplorer.Services.Helpers
 			Process.Start(path);
 		}
 
-		#endregion
-	}
+        public static void StartSilentCmd(string command, string workingDir)
+        {
+            //todo try catch
+            if (string.IsNullOrEmpty(command))
+            {
+                return;
+            }
+
+            var process = new Process();
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = ProcessWindowStyle.Hidden,
+                WorkingDirectory = workingDir,
+                FileName = "cmd.exe",
+                Arguments = $@"/C {command}"
+            };
+            process.StartInfo = startInfo;
+            process.Start();
+        }
+
+        #endregion
+    }
 }
