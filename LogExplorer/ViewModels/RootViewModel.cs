@@ -61,7 +61,15 @@ namespace LogExplorer.ViewModels
 
 		public List<Result> AllResults { get; }
 
-		public IMvxCommand CmdClearFilter
+	    public override void ViewAppearing()
+	    {
+	        this.settings = Mvx.Resolve<Repository>().GetSettings();
+            this.Refresh();
+
+            base.ViewDisappeared();
+        }
+
+        public IMvxCommand CmdClearFilter
 		{
 			get
 			{
@@ -167,17 +175,7 @@ namespace LogExplorer.ViewModels
 		}
 
 		#endregion
-
-		#region Public Methods and Operators
-
-		public override void Start()
-		{
-			base.Start();
-			this.Refresh();
-		}
-
-		#endregion
-
+        
 		#region Methods
 
 		private void ClearFilter()
@@ -254,7 +252,6 @@ namespace LogExplorer.ViewModels
 
 		private async void Refresh()
 		{
-			this.settings = Mvx.Resolve<Repository>().GetSettings();
 			this.ReasignCollections(new MvxObservableCollection<LogOverview>());
 			await
 				this.explorer.PopulateLogsRootAsync(
