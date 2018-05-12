@@ -41,7 +41,9 @@ namespace LogExplorer
 
 		private void DoSetup()
 		{
-			var presenter = new CustomViewPresenter(this.MainWindow);
+			var presenter1 = new CustomViewPresenter(this.MainWindow);
+			var ourWindow = new MainWindow();
+			var presenter = new MultiRegionPresenter(this.MainWindow);
 
 			var setup = new Setup(this.Dispatcher, presenter);
 			setup.Initialize();

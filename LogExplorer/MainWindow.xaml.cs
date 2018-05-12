@@ -24,5 +24,20 @@ namespace LogExplorer
 		{
 			InitializeComponent();
 		}
+
+		public void PresentInRegion(FrameworkElement frameworkElement, string regionName)
+		{
+			switch (regionName)
+			{
+				case "Detail":
+					RightHandColumn.Children.Clear();
+					RightHandColumn.Children.Add(frameworkElement);
+					break;
+				default:
+					LeftHandColumn.Children.Clear();
+					LeftHandColumn.Children.Add(frameworkElement);
+					break;
+			}
+		}
 	}
 }

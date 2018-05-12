@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="Log Explorer - BETA" Height="500" Width="1000">
     <Grid>
-        
-    </Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="200"/>
+			<RowDefinition/>
+		</Grid.RowDefinitions>
+		<!--<Grid  Grid.Row="0"></Grid>
+		<TextBox Grid.Row="1" Text="aaaaaaaaaaaaaaaaaaaaa"></TextBox>-->
+		<Grid x:Name="LeftHandColumn"></Grid>
+		<Grid x:Name="RightHandColumn" Grid.Row="1"></Grid>
+	</Grid>
 </Window>

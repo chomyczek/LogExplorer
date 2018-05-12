@@ -108,6 +108,8 @@
     <Compile Include="Customs\CustomAppStart.cs" />
     <Compile Include="Customs\CustomBuild.cs" />
     <Compile Include="Customs\CustomViewPresenter.cs" />
+    <Compile Include="Customs\MultiRegionPresenter.cs" />
+    <Compile Include="Customs\RegionAttribute.cs" />
     <Compile Include="Customs\Setup.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\LogOverview.cs" />
