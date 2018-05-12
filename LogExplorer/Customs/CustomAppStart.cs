@@ -25,6 +25,7 @@ namespace LogExplorer.Customs
 			// ShowViewModel is a core navigation mechanism in MvvmCross.
 			// for now, just start the regular RootViewModel view.
 			this.ShowViewModel<RootViewModel>();
+			this.ShowViewModel<LoggerViewModel>();
 		}
 
 		#endregion

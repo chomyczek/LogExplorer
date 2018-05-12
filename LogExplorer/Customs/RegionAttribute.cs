@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// LogExplorer
+// Copyright(C) 2018
+// Author Adam Kaszubowski
+
+#region Usings
+
+using System;
+
+#endregion
 
 namespace LogExplorer.Customs
 {
 	public class RegionAttribute : Attribute
 	{
+		#region Constructors and Destructors
+
 		public RegionAttribute(string name)
 		{
-			Name = name;
+			this.Name = name;
 		}
 
+		#endregion
+
+		#region Public Properties
+
 		public string Name { get; private set; }
+
+		#endregion
 	}
 }

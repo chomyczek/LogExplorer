@@ -9,12 +9,9 @@
     <Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*"/>
-			<RowDefinition Height="200"/>
-			<RowDefinition/>
+			<RowDefinition Height="100"/>
 		</Grid.RowDefinitions>
-		<!--<Grid  Grid.Row="0"></Grid>
-		<TextBox Grid.Row="1" Text="aaaaaaaaaaaaaaaaaaaaa"></TextBox>-->
-		<Grid x:Name="LeftHandColumn"></Grid>
-		<Grid x:Name="RightHandColumn" Grid.Row="1"></Grid>
+		<Grid x:Name="MainViewRow" Grid.Row="0"/>
+		<Grid x:Name="LoggerRow" Grid.Row="1"/>
 	</Grid>
 </Window>
