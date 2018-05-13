@@ -116,6 +116,7 @@
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
+    <Compile Include="Services\OutputSystem\Logger.cs" />
     <Compile Include="Services\Core\Manager.cs" />
     <Compile Include="Services\Core\Repository.cs" />
     <Compile Include="Services\Core\Tester.cs" />
