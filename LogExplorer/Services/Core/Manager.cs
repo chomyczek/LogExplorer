@@ -21,7 +21,12 @@ namespace LogExplorer.Services.Core
 {
 	public class Manager : IManager
 	{
+		#region Fields
+
 		private Logger logger;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		public Manager()
@@ -40,7 +45,7 @@ namespace LogExplorer.Services.Core
 
 		#region Public Methods and Operators
 
-		public void Export( string exportPath)
+		public void Export(string exportPath)
 		{
 			var logs = this.GetSelectedLogs();
 			if (logs == null
@@ -61,17 +66,19 @@ namespace LogExplorer.Services.Core
 
 			if (!FileHelper.PathExist(path))
 			{
-				FileHelper.CreateDir(path);
+				if (!FileHelper.CreateDir(path))
+				{
+					return;
+				}
 			}
 
 			foreach (var log in logs)
 			{
-				if (string.IsNullOrEmpty(log.LogPath) )
+				if (string.IsNullOrEmpty(log.LogPath))
 				{
 					this.logger.AddMessage(Messages.GetNoLogFile(log.DirPath));
 					continue;
 				}
-
 
 				this.logger.AddDetailMessage(Messages.GetCopyingFile(log.Name, log.DirPath, path));
 				var counter = 0;
@@ -85,9 +92,15 @@ namespace LogExplorer.Services.Core
 
 				FileHelper.CopyFile(log.LogPath, newFilePath);
 			}
-			FileHelper.StartProcess(path);
-			this.logger.AddMessage(Messages.ExportSuccess);
+			if (FileHelper.StartProcess(path))
+			{
+				this.logger.AddMessage(Messages.ExportSuccess);
+			}
 		}
+
+		#endregion
+
+		#region Methods
 
 		private List<Log> GetSelectedLogs()
 		{

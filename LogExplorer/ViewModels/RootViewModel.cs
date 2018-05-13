@@ -105,7 +105,7 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand<string>(FileHelper.StartProcess);
+				return new MvxCommand<string>(path=> { FileHelper.StartProcess(path); });
 			}
 		}
         public IMvxCommand<Log> CmdRerun

@@ -24,19 +24,40 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string XmlFileLoadSuccess = "XML file was successfully loaded";
 
+		private const string CantCreateDir = "Directory cannot be created: {0}";
+
 		private const string CollectingLogsDuration = "Collecting logs took: {0}s";
+
+		private const string CombineProblem = "There was problm with combining paths '{0}' and '{1}': {2}";
+
+		private const string ConfigNotFound = "Direcotry does not contains config file: {0}";
 
 		private const string CopyingFile = "Copying file '{0}' from {1} to {2}";
 
+		private const string CreateDirSuccess = "Directory created: {0}";
+
 		private const string DirIsEmpty = "Directory is empty: {0}";
+
+		private const string DirNotExist = "Directory does not exist: {0}";
 
 		private const string DllFound = "Correct dll component was not found: {0}";
 
+		private const string DllNotExist = "Directory with tester libraries does not exist: {0}";
+
 		private const string DllSearchDuration = "Dll searching took: {0}s";
+
+		private const string FileNotExist = "File does not exist: {0}";
+
+		private const string IncorrectConfigPath = "Config path is incorrect: {0}";
 
 		private const string NoLogFile = "Directory doesn't contains log file: {0}";
 
 		private const string ProblemParsingValue = "There was problem with parsing value '{0}' to {1}";
+
+		private const string ProcessException =
+			"Something went wrong while starting process '{0}', exception was throwed with message: {1}";
+
+		private const string ProcessNotStart = "Process '{0}' could not started";
 
 		private const string PropertyAdded = "Property '{0}' added successfully ";
 
@@ -44,25 +65,36 @@ namespace LogExplorer.Services.OutputSystem
 
 		private const string PropertyUpdated = "Property '{0}' updated successfully ";
 
+		private const string ReadFileException = "The file could not be read: {0}";
+
 		private const string ScanningDir = "Scanning directory: {0}";
 
 		private const string TesterNotFound = "Tester path is incorrect: {0}";
 
 		private const string UncatchedException = "Something went wrong, exception was throwed with message: {0}";
 
-		private const string IncorrectConfigPath = "Config path is incorrect: {0}";
-		private const string ConfigNotFound = "Direcotry does not contains config file: {0}";
-
-		private const string ReadFileException = "The file could not be read: {0}";
-
-		private const string DllNotExist = "Directory with tester libraries does not exist: {0}";
 		#endregion
 
 		#region Public Methods and Operators
 
+		public static string GetCantCreateDir(string message)
+		{
+			return string.Format(CantCreateDir, message);
+		}
+
 		public static string GetCollectingLogsDuration(double duration)
 		{
 			return string.Format(CollectingLogsDuration, duration);
+		}
+
+		public static string GetCombineProblem(string p1, string p2, string message)
+		{
+			return string.Format(CombineProblem, p1, p2, message);
+		}
+
+		public static string GetConfigNotFound(string dir)
+		{
+			return string.Format(ConfigNotFound, dir);
 		}
 
 		public static string GetCopyingFile(string name, string from, string to)
@@ -70,18 +102,19 @@ namespace LogExplorer.Services.OutputSystem
 			return string.Format(CopyingFile, name, from, to);
 		}
 
+		public static string GetCreateDirSuccess(string path)
+		{
+			return string.Format(CreateDirSuccess, path);
+		}
+
 		public static string GetDirIsEmpty(string dir)
 		{
 			return string.Format(DirIsEmpty, dir);
 		}
-		public static string GetConfigNotFound(string dir)
-		{
-			return string.Format(ConfigNotFound, dir);
-		}
 
-		public static string GetIncorrectConfigPath(string path)
+		public static string GetDirNotExist(string path)
 		{
-			return string.Format(IncorrectConfigPath, path);
+			return string.Format(DirNotExist, path);
 		}
 
 		public static string GetDllFound(string name)
@@ -89,9 +122,24 @@ namespace LogExplorer.Services.OutputSystem
 			return string.Format(DllFound, name);
 		}
 
+		public static string GetDllNotExist(string dir)
+		{
+			return string.Format(DllNotExist, dir);
+		}
+
 		public static string GetDllSearch(double duration)
 		{
 			return string.Format(DllSearchDuration, duration);
+		}
+
+		public static string GetFileNotExist(string path)
+		{
+			return string.Format(FileNotExist, path);
+		}
+
+		public static string GetIncorrectConfigPath(string path)
+		{
+			return string.Format(IncorrectConfigPath, path);
 		}
 
 		public static string GetNoLogFile(string dir)
@@ -102,6 +150,16 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetProblemParsingValue(string value, string nameOf)
 		{
 			return string.Format(ProblemParsingValue, value, nameOf);
+		}
+
+		public static string GetProcessException(string process, string message)
+		{
+			return string.Format(ProcessException, process, message);
+		}
+
+		public static string GetProcessNotStart(string process)
+		{
+			return string.Format(ProcessNotStart, process);
 		}
 
 		public static string GetPropertyAdded(string name)
@@ -117,6 +175,11 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetPropertyUpdated(string name)
 		{
 			return string.Format(PropertyUpdated, name);
+		}
+
+		public static string GetReadFileException(string message)
+		{
+			return string.Format(ReadFileException, message);
 		}
 
 		public static string GetScanningDir(string dir)
@@ -135,15 +198,5 @@ namespace LogExplorer.Services.OutputSystem
 		}
 
 		#endregion
-
-		public static string GetReadFileException(string message)
-		{
-			return string.Format(ReadFileException, message);
-		}
-
-		public static string GetDllNotExist(string dir)
-		{
-			return string.Format(DllNotExist, dir);
-		}
 	}
 }

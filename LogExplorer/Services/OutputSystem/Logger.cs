@@ -30,9 +30,9 @@ namespace LogExplorer.Services.OutputSystem
 
 		private readonly List<string> history;
 
-		private string message;
-
 		private readonly StringBuilder stringBuilder;
+
+		private string message;
 
 		#endregion
 

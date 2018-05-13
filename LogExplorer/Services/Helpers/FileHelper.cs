@@ -15,17 +15,19 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
+using LogExplorer.Services.OutputSystem;
+
 #endregion
 
 namespace LogExplorer.Services.Helpers
 {
 	public static class FileHelper
 	{
+		private static readonly Logger Logger = Logger.Instance;
 		#region Public Methods and Operators
 
 		public static string CombinePaths(string p1, string p2)
 		{
-			//todo
 			string combination;
 			try
 			{
@@ -41,7 +43,8 @@ namespace LogExplorer.Services.Helpers
 				{
 					p2 = "null";
 				}
-				Console.WriteLine("You cannot combine '{0}' and '{1}' because: {2}{3}", p1, p2, Environment.NewLine, e.Message);
+				Logger.AddDetailMessage(Messages.GetCombineProblem(p1,p2,e.Message));
+				
 				return p1;
 			}
 			return combination;
@@ -51,7 +54,6 @@ namespace LogExplorer.Services.Helpers
 	    {
 	        if (!PathExist(path))
 	        {
-                Console.WriteLine($"GetFiles method, path({path}) does not exist.");
 	            return new string[0];
 	        }
 
@@ -59,16 +61,10 @@ namespace LogExplorer.Services.Helpers
 
 	        return files;
 	    }
-
-        public static string GetFullFileName(string path)
-	    {
-	        return Path.GetFileName(path);
-
-	    }
+		
         public static string GetFileName(string path)
         {
             return Path.GetFileNameWithoutExtension(path);
-
         }
 
         public static void CopyFile(string source, string destination)
@@ -76,15 +72,31 @@ namespace LogExplorer.Services.Helpers
 			File.Copy(source, destination, true);
 		}
 
-		public static void CreateDir(string path)
+		public static bool CreateDir(string path)
 		{
-			//todo check if directory can be created
-			Directory.CreateDirectory(path);
+			try
+			{
+				Directory.CreateDirectory(path);
+			}
+			catch (Exception e)
+			{
+				Popup.ShowError(Messages.GetCantCreateDir(e.Message));
+				return false;
+			}
+			Logger.AddDetailMessage(Messages.GetCreateDirSuccess(path));
+			return true;
 		}
         
         public static bool FileExist(string path)
 		{
-			return !string.IsNullOrEmpty(path) && File.Exists(path);
+	        if (!string.IsNullOrEmpty(path)
+	            && File.Exists(path))
+	        {
+		        return true;
+	        }
+
+			Logger.AddDetailMessage(Messages.GetFileNotExist(path));
+	        return false;
 		}
 
 		public static string GetLocalPath(string fileName)
@@ -100,7 +112,14 @@ namespace LogExplorer.Services.Helpers
 
 		public static bool PathExist(string path)
 		{
-			return Directory.Exists(path);
+			if (!string.IsNullOrEmpty(path)
+				&& Directory.Exists(path))
+			{
+				return true;
+			}
+
+			Logger.AddDetailMessage(Messages.GetDirNotExist(path));
+			return false;
 		}
 
 		public static string SelectDir(string path)
@@ -139,22 +158,45 @@ namespace LogExplorer.Services.Helpers
 	        return newPath;
 	    }
 
-        public static void StartProcess(string path)
+        public static bool StartProcess(string path)
 		{
-			//todo try catch, what if path doesn't exist
-			if (string.IsNullOrEmpty(path))
-			{
-				return;
-			}
-			Process.Start(path);
+			var attr = File.GetAttributes(path);
+			
+	        if ((attr & FileAttributes.Directory) == FileAttributes.Directory
+	            && !PathExist(path))
+	        {
+				return false;
+	        }
+	        if (!FileExist(path))
+	        {
+		        return false;
+	        }
+
+	        var process = new Process { StartInfo = new ProcessStartInfo(path) };
+			
+			try
+	        {
+		        if (process.Start())
+		        {
+			        return true;
+		        }
+				Popup.ShowWarning(Messages.GetProcessNotStart(path));
+				return false;
+
+	        }
+	        catch (Exception e)
+	        {
+				Popup.ShowError(Messages.GetProcessException(path, e.Message));
+		        return false;
+	        }
+			
 		}
 
-	    public static void StartCmdProcess(string command, string workingDir, bool hidden)
+	    public static bool StartCmdProcess(string command, string workingDir, bool hidden)
 	    {
-	        //todo try catch
 	        if (string.IsNullOrEmpty(command))
 	        {
-	            return;
+	            return false;
 	        }
 
 	        var process = new Process();
@@ -166,7 +208,23 @@ namespace LogExplorer.Services.Helpers
 	            Arguments = $@"/C {command}"
 	        };
 	        process.StartInfo = startInfo;
-	        process.Start();
+
+			try
+			{
+				if (process.Start())
+				{
+					return true;
+				}
+				Popup.ShowWarning(Messages.GetProcessNotStart(command));
+				return false;
+
+			}
+			catch (Exception e)
+			{
+				Popup.ShowError(Messages.GetProcessException(command, e.Message));
+				return false;
+			}
+			
 	    }
 
         #endregion
