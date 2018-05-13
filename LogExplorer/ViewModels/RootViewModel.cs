@@ -63,11 +63,11 @@ namespace LogExplorer.ViewModels
 
 	    public override void ViewAppearing()
 	    {
-	        this.settings = Mvx.Resolve<Repository>().GetSettings();
+	        this.settings = Mvx.Resolve<Repository>().Settings;
             this.Refresh();
-
-            base.ViewDisappeared();
-        }
+			
+		    base.ViewAppearing();
+	    }
 
         public IMvxCommand CmdClearFilter
 		{

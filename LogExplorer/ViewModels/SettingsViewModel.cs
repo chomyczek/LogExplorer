@@ -60,7 +60,7 @@ namespace LogExplorer.ViewModels
                 return new MvxCommand(
                     () =>
                     {
-                        Mvx.Resolve<Repository>().UpdateSettings(settings);
+                        Mvx.Resolve<Repository>().UpdateSettings();
                         Close(this);
                     });
             }
@@ -114,7 +114,7 @@ namespace LogExplorer.ViewModels
 
         public SettingsViewModel()
         {
-            settings = Mvx.Resolve<Repository>().GetSettings();
+            settings = Mvx.Resolve<Repository>().Settings;
             ConfigSettingDictionary = new List<Tuple<int, string>>
             {
                 new Tuple<int, string>(0, "Tester default"),
