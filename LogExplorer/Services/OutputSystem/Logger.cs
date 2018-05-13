@@ -77,7 +77,7 @@ namespace LogExplorer.Services.OutputSystem
 
 		private int HistoryMemory => 100;
 
-		private bool ShowDetails => false;
+		private bool ShowDetails => true;
 
 		#endregion
 

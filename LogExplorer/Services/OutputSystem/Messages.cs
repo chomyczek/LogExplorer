@@ -24,6 +24,11 @@ namespace LogExplorer.Services.OutputSystem
 
 		private const string UncatchedException = "Something went wrong, exception was throwed with message: {0}";
 
+		public const string ExportSuccess = "Export operation finished successfully";
+
+		private const string CopyingFile = "Copying file '{0}' from {1} to {2}";
+
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -51,6 +56,11 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetUncatchedException(string message)
 		{
 			return string.Format(UncatchedException, message);
+		}
+
+		public static string GetCopyingFile(string name, string from, string to)
+		{
+			return string.Format(CopyingFile, name, from, to);
 		}
 
 		#endregion

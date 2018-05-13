@@ -68,9 +68,12 @@ namespace LogExplorer.Services.Core
 			{
 				if (string.IsNullOrEmpty(log.LogPath) )
 				{
-					this.logger.AddMessage(Messages.GetNoLogFile(log.Name));
+					this.logger.AddMessage(Messages.GetNoLogFile(log.DirPath));
 					continue;
 				}
+
+
+				this.logger.AddDetailMessage(Messages.GetCopyingFile(log.Name, log.DirPath, path));
 				var counter = 0;
 				var newFilePath = FileHelper.CombinePaths(path, $"{log.Name}.html");
 
@@ -81,8 +84,9 @@ namespace LogExplorer.Services.Core
 				}
 
 				FileHelper.CopyFile(log.LogPath, newFilePath);
-				FileHelper.StartProcess(path);
 			}
+			FileHelper.StartProcess(path);
+			this.logger.AddMessage(Messages.ExportSuccess);
 		}
 
 		private List<Log> GetSelectedLogs()
