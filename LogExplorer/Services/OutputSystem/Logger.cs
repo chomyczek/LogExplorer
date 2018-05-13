@@ -5,6 +5,8 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
+using System.Text;
 
 #endregion
 
@@ -26,7 +28,11 @@ namespace LogExplorer.Services.OutputSystem
 
 		#region Fields
 
+		private List<string> history;
+
 		private string message;
+
+		private StringBuilder stringBuilder;
 
 		#endregion
 
@@ -35,6 +41,8 @@ namespace LogExplorer.Services.OutputSystem
 		private Logger()
 		{
 			this.message = string.Empty;
+			this.stringBuilder = new StringBuilder();
+			this.history = new List<string>();
 		}
 
 		#endregion
@@ -65,6 +73,12 @@ namespace LogExplorer.Services.OutputSystem
 
 		#endregion
 
+		#region Properties
+
+		private int HistoryMemory => 100;
+
+		#endregion
+
 		#region Public Methods and Operators
 
 		public static void PrepareInstance(Action propertyChangeAction)
@@ -85,8 +99,30 @@ namespace LogExplorer.Services.OutputSystem
 
 		public void AddMessage(string msg)
 		{
-			this.message = $"[{DateTime.Now.ToString("T")}]: {msg}\n{this.message}".TrimEnd();
+			this.stringBuilder.Clear();
+			msg = $"[{DateTime.Now.ToString("T")}]: {msg}";
+			this.UpdateHistory(msg);
+
+			foreach (var line in this.history)
+			{
+				this.stringBuilder.AppendLine(line);
+			}
+
+			this.message = this.stringBuilder.ToString().TrimEnd();
 			propertyChange?.Invoke();
+		}
+
+		#endregion
+
+		#region Methods
+
+		private void UpdateHistory(string msg)
+		{
+			this.history.Insert(0, msg);
+			if (this.history.Count > this.HistoryMemory)
+			{
+				this.history.RemoveAt(this.HistoryMemory);
+			}
 		}
 
 		#endregion
