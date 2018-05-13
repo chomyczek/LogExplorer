@@ -27,11 +27,11 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 
-        private readonly IManager manager;
+		private readonly IManager manager;
 
-        private readonly ITester tester;
+		private readonly ITester tester;
 
-        private MvxObservableCollection<LogOverview> logs;
+		private MvxObservableCollection<LogOverview> logs;
 
 		private Settings settings;
 
@@ -49,7 +49,7 @@ namespace LogExplorer.ViewModels
 		{
 			this.explorer = explorer;
 			this.manager = manager;
-		    this.tester = tester;
+			this.tester = tester;
 			this.AllResults = ResultHelper.GetAllResults();
 			this.srchSelResult = this.AllResults.First();
 			this.logs = manager.LogOverview;
@@ -61,15 +61,7 @@ namespace LogExplorer.ViewModels
 
 		public List<Result> AllResults { get; }
 
-	    public override void ViewAppearing()
-	    {
-	        this.settings = Mvx.Resolve<Repository>().Settings;
-            this.Refresh();
-			
-		    base.ViewAppearing();
-	    }
-
-        public IMvxCommand CmdClearFilter
+		public IMvxCommand CmdClearFilter
 		{
 			get
 			{
@@ -101,22 +93,23 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand<Log> CmdRerun
+		{
+			get
+			{
+				return new MvxCommand<Log>(log => this.tester.Rerun(log, this.settings));
+			}
+		}
+
 		public IMvxCommand<string> CmdStartProcess
 		{
 			get
 			{
-				return new MvxCommand<string>(path=> { FileHelper.StartProcess(path); });
+				return new MvxCommand<string>(path => { FileHelper.StartProcess(path); });
 			}
 		}
-        public IMvxCommand<Log> CmdRerun
-        {
-            get
-            {
-                return new MvxCommand<Log>(log=>this.tester.Rerun(log, this.settings));
-            }
-        }
 
-        public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
+		public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
 
 		public MvxObservableCollection<LogOverview> Logs
 		{
@@ -175,7 +168,19 @@ namespace LogExplorer.ViewModels
 		}
 
 		#endregion
-        
+
+		#region Public Methods and Operators
+
+		public override void ViewAppearing()
+		{
+			this.settings = Mvx.Resolve<Repository>().Settings;
+			this.Refresh();
+
+			base.ViewAppearing();
+		}
+
+		#endregion
+
 		#region Methods
 
 		private void ClearFilter()
