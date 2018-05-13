@@ -28,11 +28,11 @@ namespace LogExplorer.Services.OutputSystem
 
 		#region Fields
 
-		private List<string> history;
+		private readonly List<string> history;
 
 		private string message;
 
-		private StringBuilder stringBuilder;
+		private readonly StringBuilder stringBuilder;
 
 		#endregion
 
