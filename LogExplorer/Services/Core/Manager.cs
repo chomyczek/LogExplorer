@@ -11,6 +11,7 @@ using System.Linq;
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+using LogExplorer.Services.OutputSystem;
 
 using MvvmCross.Core.ViewModels;
 
@@ -20,11 +21,13 @@ namespace LogExplorer.Services.Core
 {
 	public class Manager : IManager
 	{
+		private Logger logger;
 		#region Constructors and Destructors
 
 		public Manager()
 		{
-			LogOverview = new MvxObservableCollection<LogOverview>();
+			this.LogOverview = new MvxObservableCollection<LogOverview>();
+			this.logger = Logger.Instance;
 		}
 
 		#endregion
@@ -37,16 +40,19 @@ namespace LogExplorer.Services.Core
 
 		#region Public Methods and Operators
 
-		public void Export(List<Log> logs, string exportPath)
+		public void Export( string exportPath)
 		{
+			var logs = this.GetSelectedLogs();
 			if (logs == null
 			    || !logs.Any())
 			{
+				this.logger.AddMessage(Messages.NothingSelected);
 				return;
 			}
 
 			if (string.IsNullOrEmpty(exportPath))
 			{
+				this.logger.AddMessage(Messages.NoExportPath);
 				return;
 			}
 
@@ -60,9 +66,9 @@ namespace LogExplorer.Services.Core
 
 			foreach (var log in logs)
 			{
-				if (string.IsNullOrEmpty(log.LogPath))
+				if (string.IsNullOrEmpty(log.LogPath) )
 				{
-					//todo any message?
+					this.logger.AddMessage(Messages.GetNoLogFile(log.Name));
 					continue;
 				}
 				var counter = 0;
@@ -79,9 +85,9 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
-		public List<Log> GetSelectedLogs()
+		private List<Log> GetSelectedLogs()
 		{
-			var selectedLogs = this.LogOverview.SelectMany(l => Enumerable.Where(l.History, log => log.IsSelected)).ToList();
+			var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
 			return selectedLogs;
 		}
 

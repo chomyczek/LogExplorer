@@ -191,8 +191,7 @@ namespace LogExplorer.ViewModels
 
 		private void Export()
 		{
-			var selectedLogs = this.manager.GetSelectedLogs();
-			this.manager.Export(selectedLogs, this.settings.ExportPath);
+			this.manager.Export(this.settings.ExportPath);
 		}
 
 		private void Filter()

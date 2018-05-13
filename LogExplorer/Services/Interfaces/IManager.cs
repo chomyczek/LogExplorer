@@ -24,9 +24,7 @@ namespace LogExplorer.Services.Interfaces
 
 		#region Public Methods and Operators
 
-		void Export(List<Log> logs, string exportPath);
-
-		List<Log> GetSelectedLogs();
+		void Export(string exportPath);
 
 		#endregion
 	}
