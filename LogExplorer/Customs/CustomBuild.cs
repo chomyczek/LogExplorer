@@ -8,6 +8,8 @@ using System;
 using System.Globalization;
 using System.Reflection;
 
+using LogExplorer.Services.OutputSystem;
+
 #endregion
 
 namespace LogExplorer.Customs
@@ -25,7 +27,17 @@ namespace LogExplorer.Customs
 		public static void Main()
 		{
 			AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
-			LogExplorer.App.Main();
+
+			try
+			{
+				LogExplorer.App.Main();
+			}
+			catch (Exception e)
+			{
+				Popup.ShowError(Messages.GetUncatchedException(e.Message));
+				throw;
+			}
+			
 		}
 
 		#endregion

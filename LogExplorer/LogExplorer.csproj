@@ -126,6 +126,8 @@
     <Compile Include="Services\Interfaces\IExplorer.cs" />
     <Compile Include="Services\Interfaces\IManager.cs" />
     <Compile Include="Services\Interfaces\ITester.cs" />
+    <Compile Include="Services\OutputSystem\Messages.cs" />
+    <Compile Include="Services\OutputSystem\Popup.cs" />
     <Compile Include="ViewModels\LoggerViewModel.cs" />
     <Compile Include="ViewModels\RootViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />

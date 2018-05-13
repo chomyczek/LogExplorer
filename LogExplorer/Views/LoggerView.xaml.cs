@@ -23,7 +23,7 @@ namespace LogExplorer.Views
 	/// Interaction logic for LoggerView.xaml
 	/// </summary>
 
-	[Region("Logger")]
+	[Region(RegionAttribute.Names.Logger)]
 	public partial class LoggerView : MvxWpfView
 	{
 		public LoggerView()

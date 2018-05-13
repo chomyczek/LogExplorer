@@ -77,6 +77,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		private int HistoryMemory => 100;
 
+		private bool ShowDetails => false;
+
 		#endregion
 
 		#region Public Methods and Operators
@@ -94,6 +96,14 @@ namespace LogExplorer.Services.OutputSystem
 					propertyChange = propertyChangeAction;
 					propertyChange.Invoke();
 				}
+			}
+		}
+
+		public void AddDetailMessage(string msg)
+		{
+			if (this.ShowDetails)
+			{
+				this.AddMessage(msg);
 			}
 		}
 

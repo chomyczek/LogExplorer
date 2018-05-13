@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+using LogExplorer.Services.OutputSystem;
 
 using MvvmCross.Core.ViewModels;
 
@@ -21,6 +22,21 @@ namespace LogExplorer.Services.Core
 {
 	public class Explorer : IExplorer
 	{
+		#region Fields
+
+		private readonly Logger logger;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		public Explorer()
+		{
+			this.logger = Logger.Instance;
+		}
+
+		#endregion
+
 		#region Public Methods and Operators
 
 		public Task PopulateLogsRootAsync(
@@ -28,17 +44,14 @@ namespace LogExplorer.Services.Core
 			string path,
 			Action propertyChanges)
 		{
-			//todo try/catch
 			return Task.Run(
 				() =>
 				{
-					//todo remove debug
 					var start = DateTime.Now;
 
 					if (!Directory.Exists(path))
 					{
-						//todo: warning
-						//return new MvxObservableCollection<LogOverview>();
+						Popup.ShowWarning(Messages.RootDirDoesntExist);
 						return;
 					}
 
@@ -46,10 +59,12 @@ namespace LogExplorer.Services.Core
 
 					foreach (var dir in logDirs)
 					{
+						this.logger.AddDetailMessage(Messages.GetScanningDir(dir));
 						var logDir = Directory.GetDirectories(dir).OrderByDescending(Directory.GetCreationTime).FirstOrDefault();
 
 						if (string.IsNullOrEmpty(logDir))
 						{
+							this.logger.AddDetailMessage(Messages.GetDirIsEmpty(logDir));
 							continue;
 						}
 
@@ -57,10 +72,9 @@ namespace LogExplorer.Services.Core
 						logOverviews.Add(logOverview);
 						propertyChanges.Invoke();
 					}
-
-					//todo remove debug
+					
 					var diff = DateTime.Now.Subtract(start);
-					Console.WriteLine("GetLogsRoot took: {0}s", diff.TotalSeconds);
+					this.logger.AddMessage(Messages.GetCollectingLogsDuration(diff.TotalSeconds));
 				});
 		}
 
@@ -115,10 +129,16 @@ namespace LogExplorer.Services.Core
 
 		private string GetLogPath(string path)
 		{
-			var files = Directory.GetFiles(path).Select(Path.GetFileName);
-			var logName = files.FirstOrDefault(f => f.EndsWith($@"{Path.GetFileName(path)}.html") && f.StartsWith("LOG_"));
-			var logPath = string.IsNullOrEmpty(logName) ? string.Empty : $@"{path}\{logName}";
-			return logPath;
+			const string LogPattern = "LOG_*.html";
+			var files = Directory.GetFiles(path, LogPattern).Select(Path.GetFileName);
+			
+			var logName = files.FirstOrDefault(f => f.EndsWith($@"{Path.GetFileName(path)}.html"));
+			if (!string.IsNullOrEmpty(logName))
+			{
+				return $@"{path}\{logName}";
+			}
+			this.logger.AddDetailMessage(Messages.GetNoLogFile(path));
+			return string.Empty;
 		}
 
 		private Result GetResult(string path)

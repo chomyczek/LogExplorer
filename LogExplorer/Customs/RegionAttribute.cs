@@ -12,6 +12,10 @@ namespace LogExplorer.Customs
 {
 	public class RegionAttribute : Attribute
 	{
+		public struct Names
+		{
+			public const string Logger = "Logger";
+		}
 		#region Constructors and Destructors
 
 		public RegionAttribute(string name)

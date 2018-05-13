@@ -7,6 +7,8 @@
 using System.Collections.Generic;
 using System.Windows;
 
+using LogExplorer.Customs;
+
 #endregion
 
 namespace LogExplorer
@@ -34,7 +36,7 @@ namespace LogExplorer
 		{
 			switch (regionName)
 			{
-				case "Logger":
+				case RegionAttribute.Names.Logger:
 					this.LoggerRow.Children.Clear();
 					this.LoggerRow.Children.Add(frameworkElement);
 					break;
