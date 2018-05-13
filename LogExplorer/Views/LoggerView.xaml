@@ -10,9 +10,9 @@
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 
-    <Grid>
-		<!--UpdateSourceTrigger required?-->
-		<TextBox Text="{Binding LoggerBox, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"/>
+	<Grid Height="{Binding Height}">
+		<TextBox Text="{Binding LoggerBox, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
+		         IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
 	</Grid>
 </views:MvxWpfView>
 

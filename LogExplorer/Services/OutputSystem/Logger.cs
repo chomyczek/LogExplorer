@@ -2,8 +2,11 @@
 // Copyright(C) 2018
 // Author Adam Kaszubowski
 
+#region Usings
+
 using System;
-using System.Linq.Expressions;
+
+#endregion
 
 namespace LogExplorer.Services.OutputSystem
 {
@@ -13,15 +16,26 @@ namespace LogExplorer.Services.OutputSystem
 
 		private static Logger instance;
 
+		private static object instanceLocker = new object();
+
 		private static Action propertyChange;
-
-		private string message;
-
-		private static object instanceLocker= new object();
 
 		private static object propertyChangeLocker = new object();
 
-		public string Message => this.message;
+		#endregion
+
+		#region Fields
+
+		private string message;
+
+		#endregion
+
+		#region Constructors and Destructors
+
+		private Logger()
+		{
+			this.message = string.Empty;
+		}
 
 		#endregion
 
@@ -46,10 +60,12 @@ namespace LogExplorer.Services.OutputSystem
 				return instance;
 			}
 		}
-		private Logger()
-		{
-			this.message = string.Empty;
-		}
+
+		public string Message => this.message;
+
+		#endregion
+
+		#region Public Methods and Operators
 
 		public static void PrepareInstance(Action propertyChangeAction)
 		{
@@ -69,7 +85,7 @@ namespace LogExplorer.Services.OutputSystem
 
 		public void AddMessage(string msg)
 		{
-			this.message = $"{msg}\n{this.message}";
+			this.message = $"[{DateTime.Now.ToString("T")}]: {msg}\n{this.message}".TrimEnd();
 			propertyChange?.Invoke();
 		}
 

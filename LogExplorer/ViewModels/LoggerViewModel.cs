@@ -18,6 +18,8 @@ namespace LogExplorer.ViewModels
 
 		private readonly Logger logger;
 
+		private double height = 100;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -32,17 +34,20 @@ namespace LogExplorer.ViewModels
 
 		#region Public Properties
 
-		public string LoggerBox
+		public double Height
 		{
 			get
 			{
-				return this.logger.Message;
+				return this.height;
 			}
-			//Empty set to avoid writing to logger
 			set
 			{
+				this.height = value;
+				this.RaisePropertyChanged(() => this.Height);
 			}
 		}
+
+		public string LoggerBox => this.logger.Message;
 
 		#endregion
 	}
