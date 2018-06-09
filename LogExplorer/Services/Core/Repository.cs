@@ -165,6 +165,10 @@ namespace LogExplorer.Services.Core
 			{
 				settings.ConfigMode = 0;
 			}
+			if (settings.LoggerMemmory < 0)
+			{
+				settings.LoggerMemmory = 0;
+			}
 		}
 
 		#endregion

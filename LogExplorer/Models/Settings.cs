@@ -16,22 +16,31 @@ namespace LogExplorer.Models
 			this.PositionY = string.Empty;
 			this.Width = string.Empty;
 			this.ExportPath = string.Empty;
-            this.TesterPath = string.Empty;
-		    this.ConfigMode = 0;
-		    CustomConfigPath = string.Empty;
-		    IsHiddenTester = false;
-
+			this.TesterPath = string.Empty;
+			this.ConfigMode = 0;
+			this.CustomConfigPath = string.Empty;
+			this.IsHiddenTester = false;
+			this.LoggerMemmory = 100;
+			this.LoggerShowDetails = false;
 		}
 
 		#endregion
 
 		#region Public Properties
-        
+
+		public int ConfigMode { get; set; }
+
+		public string CustomConfigPath { get; set; }
+
 		public string ExportPath { get; set; }
 
-	    public string TesterPath { get; set; }
-
 		public string Height { get; set; }
+
+		public bool IsHiddenTester { get; set; }
+
+		public int LoggerMemmory { get; set; }
+
+		public bool LoggerShowDetails { get; set; }
 
 		public string PositionX { get; set; }
 
@@ -39,13 +48,10 @@ namespace LogExplorer.Models
 
 		public string RootLogsPath { get; set; }
 
+		public string TesterPath { get; set; }
+
 		public string Width { get; set; }
 
-        public int ConfigMode { get; set; }
-
-	    public string CustomConfigPath { get; set; }
-	    public bool IsHiddenTester { get; set; }
-
-	    #endregion
+		#endregion
 	}
 }

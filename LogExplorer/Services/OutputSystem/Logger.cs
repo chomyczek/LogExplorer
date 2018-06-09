@@ -8,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using LogExplorer.Models;
+using LogExplorer.Services.Core;
+
+using MvvmCross.Platform;
+
 #endregion
 
 namespace LogExplorer.Services.OutputSystem
@@ -34,6 +39,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		private string message;
 
+		private Settings settings;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -43,6 +50,7 @@ namespace LogExplorer.Services.OutputSystem
 			this.message = string.Empty;
 			this.stringBuilder = new StringBuilder();
 			this.history = new List<string>();
+			this.TryGetSettings();
 		}
 
 		#endregion
@@ -73,14 +81,6 @@ namespace LogExplorer.Services.OutputSystem
 
 		#endregion
 
-		#region Properties
-
-		private int HistoryMemory => 100;
-
-		private bool ShowDetails => true;
-
-		#endregion
-
 		#region Public Methods and Operators
 
 		public static void PrepareInstance(Action propertyChangeAction)
@@ -101,7 +101,11 @@ namespace LogExplorer.Services.OutputSystem
 
 		public void AddDetailMessage(string msg)
 		{
-			if (this.ShowDetails)
+			if (this.settings == null && !this.TryGetSettings())
+			{
+				return;
+			}
+			if (this.settings.LoggerShowDetails)
 			{
 				this.AddMessage(msg);
 			}
@@ -122,6 +126,17 @@ namespace LogExplorer.Services.OutputSystem
 			propertyChange?.Invoke();
 		}
 
+		private bool TryGetSettings()
+		{
+			if (!Mvx.CanResolve<Repository>())
+			{
+				return false;
+			}
+
+			this.settings = Mvx.Resolve<Repository>().Settings;
+			return true;
+		}
+
 		#endregion
 
 		#region Methods
@@ -129,9 +144,13 @@ namespace LogExplorer.Services.OutputSystem
 		private void UpdateHistory(string msg)
 		{
 			this.history.Insert(0, msg);
-			if (this.history.Count > this.HistoryMemory)
+			if (this.settings == null&& !this.TryGetSettings())
 			{
-				this.history.RemoveAt(this.HistoryMemory);
+				return;
+			}
+			if (this.history.Count > this.settings.LoggerMemmory)
+			{
+				this.history.RemoveAt(this.settings.LoggerMemmory);
 			}
 		}
 
