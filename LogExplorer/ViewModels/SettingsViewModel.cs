@@ -156,6 +156,18 @@ namespace LogExplorer.ViewModels
 				this.RaisePropertyChanged(() => this.IsHiddenTester);
 			}
 		}
+		public bool IsLoggerEnabled
+		{
+			get
+			{
+				return this.settings.IsLoggerEnabled;
+			}
+			set
+			{
+				this.settings.IsLoggerEnabled = value;
+				this.RaisePropertyChanged(() => this.IsLoggerEnabled);
+			}
+		}
 
 		public bool IsLoggerShowDetails
 		{

@@ -34,9 +34,9 @@ namespace LogExplorer.Services.OutputSystem
 
 		#region Fields
 
-		private List<string> history;
-
 		private readonly StringBuilder stringBuilder;
+
+		private List<string> history;
 
 		private string message;
 
@@ -102,11 +102,12 @@ namespace LogExplorer.Services.OutputSystem
 
 		public void AddDetailMessage(string msg)
 		{
-			if (this.settings == null && !this.TryGetSettings())
+			if (!this.TryGetSettings())
 			{
 				return;
 			}
-			if (this.settings.IsLoggerShowDetails)
+			if (this.settings.IsLoggerEnabled
+			    && this.settings.IsLoggerShowDetails)
 			{
 				this.AddMessage(msg);
 			}
@@ -114,9 +115,17 @@ namespace LogExplorer.Services.OutputSystem
 
 		public void AddMessage(string msg)
 		{
-			this.stringBuilder.Clear();
 			msg = $"[{DateTime.Now.ToString("T")}]: {msg}";
 			this.UpdateHistory(msg);
+			if (!this.TryGetSettings())
+			{
+				return;
+			}
+			if (!this.settings.IsLoggerEnabled)
+			{
+				return;
+			}
+			this.stringBuilder.Clear();
 
 			foreach (var line in this.history)
 			{
@@ -127,8 +136,16 @@ namespace LogExplorer.Services.OutputSystem
 			propertyChange?.Invoke();
 		}
 
+		#endregion
+
+		#region Methods
+
 		private bool TryGetSettings()
 		{
+			if (this.settings != null)
+			{
+				return true;
+			}
 			if (!Mvx.CanResolve<Repository>())
 			{
 				return false;
@@ -138,14 +155,10 @@ namespace LogExplorer.Services.OutputSystem
 			return true;
 		}
 
-		#endregion
-
-		#region Methods
-
 		private void UpdateHistory(string msg)
 		{
 			this.history.Insert(0, msg);
-			if (this.settings == null&& !this.TryGetSettings())
+			if (!this.TryGetSettings())
 			{
 				return;
 			}

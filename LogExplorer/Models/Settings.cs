@@ -22,6 +22,7 @@ namespace LogExplorer.Models
 			this.IsHiddenTester = false;
 			this.LoggerMemory = 100;
 			this.IsLoggerShowDetails = false;
+			this.IsLoggerEnabled = true;
 		}
 
 		#endregion
@@ -41,6 +42,8 @@ namespace LogExplorer.Models
 		public int LoggerMemory { get; set; }
 
 		public bool IsLoggerShowDetails { get; set; }
+
+		public bool IsLoggerEnabled { get; set; }
 
 		public string PositionX { get; set; }
 
