@@ -4,15 +4,21 @@
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="clr-namespace:LogExplorer.Views"
+                  xmlns:conv="clr-namespace:LogExplorer.Services.Converters"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   xmlns:models="clr-namespace:LogExplorer.Models"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
+	<views:MvxWpfView.Resources>
+		<ResourceDictionary>
+			<conv:VisibiityConverter x:Key="BoolToVisibility" />
+		</ResourceDictionary>
+	</views:MvxWpfView.Resources>
 
-	<Grid Height="{Binding Height}">
+	<Grid Height="100"
+	      Visibility="{Binding Settings.IsLoggerEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
 		<TextBox Text="{Binding LoggerBox, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
 		         IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
 	</Grid>
 </views:MvxWpfView>
-

@@ -4,6 +4,9 @@
 
 #region Usings
 
+using System.Security.Cryptography.X509Certificates;
+using System.Windows;
+
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.OutputSystem;
@@ -19,11 +22,7 @@ namespace LogExplorer.ViewModels
 	{
 		#region Fields
 
-		private const double EnabledHeight = 100;
-		private const double DisabledHeight = 0;
 		private readonly Logger logger;
-
-		private double height = EnabledHeight;
 
 		private Settings settings;
 
@@ -36,30 +35,16 @@ namespace LogExplorer.ViewModels
 			Logger.PrepareInstance(() => { this.RaisePropertyChanged(() => this.LoggerBox); });
 			this.logger = Logger.Instance;
 			this.settings = Mvx.Resolve<Repository>().Settings;
-			if (this.settings.IsLoggerEnabled)
-			{
-				this.Height = EnabledHeight;
-			}
-			else
-			{
-				this.Height = DisabledHeight;
-			}
 		}
 
 		#endregion
 
 		#region Public Properties
-
-		public double Height
+		public Settings Settings
 		{
 			get
 			{
-				return this.height;
-			}
-			set
-			{
-				this.height = value;
-				this.RaisePropertyChanged(() => this.Height);
+				return this.settings;
 			}
 		}
 

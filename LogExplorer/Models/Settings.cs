@@ -2,10 +2,22 @@
 // Copyright(C) 2018
 // Author Adam Kaszubowski
 
+#region Usings
+
+using MvvmCross.Core.ViewModels;
+
+#endregion
+
 namespace LogExplorer.Models
 {
-	public class Settings
+	public class Settings : MvxNotifyPropertyChanged
 	{
+		#region Fields
+
+		private bool isLoggerEnabled;
+
+		#endregion
+
 		#region Constructors and Destructors
 
 		public Settings()
@@ -39,11 +51,22 @@ namespace LogExplorer.Models
 
 		public bool IsHiddenTester { get; set; }
 
-		public int LoggerMemory { get; set; }
+		public bool IsLoggerEnabled
+		{
+			get
+			{
+				return this.isLoggerEnabled;
+			}
+			set
+			{
+				this.isLoggerEnabled = value;
+				this.RaisePropertyChanged(() => this.IsLoggerEnabled);
+			}
+		}
 
 		public bool IsLoggerShowDetails { get; set; }
 
-		public bool IsLoggerEnabled { get; set; }
+		public int LoggerMemory { get; set; }
 
 		public string PositionX { get; set; }
 
