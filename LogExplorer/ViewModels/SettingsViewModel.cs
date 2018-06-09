@@ -6,9 +6,11 @@
 
 using System;
 using System.Collections.Generic;
+
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.Helpers;
+
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
 
@@ -16,143 +18,210 @@ using MvvmCross.Platform;
 
 namespace LogExplorer.ViewModels
 {
-    public class SettingsViewModel : MvxViewModel
-    {
-        #region Properties
+	public class SettingsViewModel : MvxViewModel
+	{
+		#region Fields
 
-        private Settings settings { get; }
+		private MvxCommand cmdPickCustomConfig;
 
-        #endregion
+		private Tuple<int, string> configSetting;
 
-        #region Public Properties
+		#endregion
 
-        public IMvxCommand CmdCancel
-        {
-            get { return new MvxCommand(() => { Close(this); }); }
-        }
+		#region Constructors and Destructors
 
-        public IMvxCommand CmdPickExportDir
-        {
-            get { return new MvxCommand(() => { ExportPath = FileHelper.SelectDir(ExportPath); }); }
-        }
+		public SettingsViewModel()
+		{
+			this.settings = Mvx.Resolve<Repository>().Settings;
+			this.ConfigSettingDictionary = new List<Tuple<int, string>>
+			                               {
+				                               new Tuple<int, string>(0, "Tester default"),
+				                               new Tuple<int, string>(1, "Previously executed"),
+				                               new Tuple<int, string>(2, "Custom")
+			                               };
+			this.cmdPickCustomConfig =
+				new MvxCommand(
+					() => { this.CustomConfigPath = FileHelper.SelectFile(this.CustomConfigPath, "xml", "Config file"); },
+					() => this.IsConfigPathEnabled);
+			this.ConfigSetting = this.ConfigSettingDictionary[this.settings.ConfigMode];
+		}
 
-        public IMvxCommand CmdPickTesterDir
-        {
-            get { return new MvxCommand(() => { TesterPath = FileHelper.SelectDir(ExportPath); }); }
-        }
+		#endregion
 
-        public IMvxCommand CmdPickRootDir
-        {
-            get { return new MvxCommand(() => { RootLogsPath = FileHelper.SelectDir(RootLogsPath); }); }
-        }
+		#region Public Properties
 
-        /// <summary>
-        /// Require private MvxCommand field to  resolve Enable function.
-        /// </summary>
-        public IMvxCommand CmdPickCustomConfig => this.cmdPickCustomConfig;
+		public IMvxCommand CmdCancel
+		{
+			get
+			{
+				return new MvxCommand(() => { this.Close(this); });
+			}
+		}
 
-        private MvxCommand cmdPickCustomConfig;
+		/// <summary>
+		/// Require private MvxCommand field to  resolve Enable function.
+		/// </summary>
+		public IMvxCommand CmdPickCustomConfig => this.cmdPickCustomConfig;
 
-        public IMvxCommand CmdSave
-        {
-            get
-            {
-                return new MvxCommand(
-                    () =>
-                    {
-                        Mvx.Resolve<Repository>().UpdateSettings();
-                        Close(this);
-                    });
-            }
-        }
+		public IMvxCommand CmdPickExportDir
+		{
+			get
+			{
+				return new MvxCommand(() => { this.ExportPath = FileHelper.SelectDir(this.ExportPath); });
+			}
+		}
 
-        public List<Tuple<int, string>> ConfigSettingDictionary { get; }
+		public IMvxCommand CmdPickRootDir
+		{
+			get
+			{
+				return new MvxCommand(() => { this.RootLogsPath = FileHelper.SelectDir(this.RootLogsPath); });
+			}
+		}
 
-        public string ExportPath
-        {
-            get { return settings.ExportPath; }
-            set
-            {
-                settings.ExportPath = value;
-                RaisePropertyChanged(() => ExportPath);
-            }
-        }
+		public IMvxCommand CmdPickTesterDir
+		{
+			get
+			{
+				return new MvxCommand(() => { this.TesterPath = FileHelper.SelectDir(this.ExportPath); });
+			}
+		}
 
-        public string TesterPath
-        {
-            get { return settings.TesterPath; }
-            set
-            {
-                settings.TesterPath = value;
-                RaisePropertyChanged(() => TesterPath);
-            }
-        }
+		public IMvxCommand CmdSave
+		{
+			get
+			{
+				return new MvxCommand(
+					() =>
+					{
+						Mvx.Resolve<Repository>().UpdateSettings();
+						this.Close(this);
+					});
+			}
+		}
 
-        public string RootLogsPath
-        {
-            get { return settings.RootLogsPath; }
-            set
-            {
-                settings.RootLogsPath = value;
-                RaisePropertyChanged(() => RootLogsPath);
-            }
-        }
+		public Tuple<int, string> ConfigSetting
+		{
+			get
+			{
+				return this.configSetting;
+			}
+			set
+			{
+				this.configSetting = value;
+				this.settings.ConfigMode = value.Item1;
+				this.IsConfigPathEnabled = value.Item1 == 2;
+				this.CmdPickCustomConfig.RaiseCanExecuteChanged();
+				this.RaisePropertyChanged(() => this.ConfigSetting);
+			}
+		}
 
-        public string CustomConfigPath
-        {
-            get { return settings.CustomConfigPath; }
-            set
-            {
-                settings.CustomConfigPath = value;
-                RaisePropertyChanged(() => CustomConfigPath);
-            }
-        }
+		public List<Tuple<int, string>> ConfigSettingDictionary { get; }
 
-        #endregion
+		public string CustomConfigPath
+		{
+			get
+			{
+				return this.settings.CustomConfigPath;
+			}
+			set
+			{
+				this.settings.CustomConfigPath = value;
+				this.RaisePropertyChanged(() => this.CustomConfigPath);
+			}
+		}
 
-        #region Public Methods and Operators
+		public string ExportPath
+		{
+			get
+			{
+				return this.settings.ExportPath;
+			}
+			set
+			{
+				this.settings.ExportPath = value;
+				this.RaisePropertyChanged(() => this.ExportPath);
+			}
+		}
 
-        public SettingsViewModel()
-        {
-            settings = Mvx.Resolve<Repository>().Settings;
-            ConfigSettingDictionary = new List<Tuple<int, string>>
-            {
-                new Tuple<int, string>(0, "Tester default"),
-                new Tuple<int, string>(1, "Previously executed"),
-                new Tuple<int, string>(2, "Custom")
-            };
-            this.cmdPickCustomConfig= new MvxCommand(() => { CustomConfigPath = FileHelper.SelectFile(CustomConfigPath, "xml", "Config file"); }, () => IsConfigPathEnabled);
-            ConfigSetting = ConfigSettingDictionary[settings.ConfigMode];
-        }
+		public bool IsHiddenTester
+		{
+			get
+			{
+				return this.settings.IsHiddenTester;
+			}
+			set
+			{
+				this.settings.IsHiddenTester = value;
+				this.RaisePropertyChanged(() => this.IsHiddenTester);
+			}
+		}
 
-        public Tuple<int, string> ConfigSetting
-        {
-            get { return configSetting; }
-            set
-            {
-                configSetting = value;
-                settings.ConfigMode = value.Item1;
-                IsConfigPathEnabled = value.Item1 == 2;
-                CmdPickCustomConfig.RaiseCanExecuteChanged();
-                RaisePropertyChanged(() => ConfigSetting);
-            }
-        }
+		public bool IsLoggerShowDetails
+		{
+			get
+			{
+				return this.settings.IsLoggerShowDetails;
+			}
+			set
+			{
+				this.settings.IsLoggerShowDetails = value;
+				this.RaisePropertyChanged(() => this.IsLoggerShowDetails);
+			}
+		}
 
-        private bool IsConfigPathEnabled { get; set; }
+		public string LoggerMemory
+		{
+			get
+			{
+				return this.settings.LoggerMemory.ToString();
+			}
+			set
+			{
+				int result;
+				if (!int.TryParse(value, out result))
+				{
+					result = 0;
+				}
+				this.settings.LoggerMemory = result;
+				this.RaisePropertyChanged(() => this.LoggerMemory);
+			}
+		}
 
-        public bool IsHiddenTester
-        {
-            get { return settings.IsHiddenTester; }
-            set
-            {
-                settings.IsHiddenTester = value;
-                RaisePropertyChanged(() => IsHiddenTester);
-            }
-        }
+		public string RootLogsPath
+		{
+			get
+			{
+				return this.settings.RootLogsPath;
+			}
+			set
+			{
+				this.settings.RootLogsPath = value;
+				this.RaisePropertyChanged(() => this.RootLogsPath);
+			}
+		}
 
+		public string TesterPath
+		{
+			get
+			{
+				return this.settings.TesterPath;
+			}
+			set
+			{
+				this.settings.TesterPath = value;
+				this.RaisePropertyChanged(() => this.TesterPath);
+			}
+		}
 
-        private Tuple<int, string> configSetting;
+		#endregion
 
-        #endregion
-    }
+		#region Properties
+
+		private bool IsConfigPathEnabled { get; set; }
+
+		private Settings settings { get; }
+
+		#endregion
+	}
 }

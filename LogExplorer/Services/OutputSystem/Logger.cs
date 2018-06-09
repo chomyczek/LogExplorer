@@ -6,6 +6,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 using LogExplorer.Models;
@@ -33,7 +34,7 @@ namespace LogExplorer.Services.OutputSystem
 
 		#region Fields
 
-		private readonly List<string> history;
+		private List<string> history;
 
 		private readonly StringBuilder stringBuilder;
 
@@ -105,7 +106,7 @@ namespace LogExplorer.Services.OutputSystem
 			{
 				return;
 			}
-			if (this.settings.LoggerShowDetails)
+			if (this.settings.IsLoggerShowDetails)
 			{
 				this.AddMessage(msg);
 			}
@@ -148,9 +149,9 @@ namespace LogExplorer.Services.OutputSystem
 			{
 				return;
 			}
-			if (this.history.Count > this.settings.LoggerMemmory)
+			if (this.history.Count > this.settings.LoggerMemory)
 			{
-				this.history.RemoveAt(this.settings.LoggerMemmory);
+				this.history = this.history.Take(this.settings.LoggerMemory).ToList();
 			}
 		}
 

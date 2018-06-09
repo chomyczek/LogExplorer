@@ -20,8 +20,8 @@ namespace LogExplorer.Models
 			this.ConfigMode = 0;
 			this.CustomConfigPath = string.Empty;
 			this.IsHiddenTester = false;
-			this.LoggerMemmory = 100;
-			this.LoggerShowDetails = false;
+			this.LoggerMemory = 100;
+			this.IsLoggerShowDetails = false;
 		}
 
 		#endregion
@@ -38,9 +38,9 @@ namespace LogExplorer.Models
 
 		public bool IsHiddenTester { get; set; }
 
-		public int LoggerMemmory { get; set; }
+		public int LoggerMemory { get; set; }
 
-		public bool LoggerShowDetails { get; set; }
+		public bool IsLoggerShowDetails { get; set; }
 
 		public string PositionX { get; set; }
 

@@ -6,7 +6,7 @@
                   xmlns:local="clr-namespace:LogExplorer.Views"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   mc:Ignorable="d"
-                  d:DesignHeight="300" d:DesignWidth="300">
+                  d:DesignHeight="500" d:DesignWidth="500">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
@@ -25,8 +25,9 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="Auto" />
@@ -84,7 +85,26 @@
 							          SelectedItem="{Binding ConfigSetting}"
 							          DisplayMemberPath="Item2" />
             </Grid>
-        </Grid>
+			<Grid Grid.Row="6" Grid.Column="0" >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock Margin="4" Grid.Row="0" Text="Logger memory limit:" />
+				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
+			         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"/>
+			</Grid>
+			<Grid Grid.Row="6" Grid.Column="1" >
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<TextBlock Margin="4" Grid.Row="0" Text="Logger details:" />
+				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
+			                 IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+			</Grid>
+			
+		</Grid>
 
 
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Cancel" Command="{Binding CmdCancel}" />
