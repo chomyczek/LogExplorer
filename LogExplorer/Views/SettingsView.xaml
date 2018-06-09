@@ -98,12 +98,12 @@
 					</Grid.ColumnDefinitions>
 					<TextBlock Margin="4" Grid.Row="0" Grid.Column="0" Text="Logger memory limit:" />
 					<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-			         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch"/>
+			         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" IsEnabled="{Binding IsLoggerEnabled}"/>
 
 
 				<TextBlock Margin="4" Grid.Row="0" Text="Logger details:"  Grid.Column="1" HorizontalAlignment="Right"/>
 				<CheckBox Margin="4" Grid.Row="1" Grid.Column="1"
-			                 IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+			                 IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center" IsEnabled="{Binding IsLoggerEnabled}"/>
 
 				<TextBlock Margin="4" Grid.Row="0" Text="Logger enabled:"  Grid.Column="2" HorizontalAlignment="Right"/>
 				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
