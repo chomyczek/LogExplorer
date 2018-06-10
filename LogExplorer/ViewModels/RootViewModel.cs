@@ -81,6 +81,14 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand CmdDeleteSelected
+		{
+			get
+			{
+				return new MvxCommand(this.DeleteSelected);
+			}
+		}
+
 		public IMvxCommand<Log> CmdDeleteOne
 		{
 			get
@@ -211,13 +219,25 @@ namespace LogExplorer.ViewModels
 			this.manager.Export(this.settings.ExportPath);
 		}
 
-		
+
 		private void DeleteOne(Log log)
 		{
 			var delete = Popup.ShowConfirm(Messages.GetDeleteOneLogQuestion(log.Name, log.StartTimeString));
 			if (delete)
 			{
 				this.manager.DeleteLog(log);
+				this.RaisePropertyChanged(() => this.FilterCounter);
+				return;
+			}
+			this.logger.AddMessage(Messages.DeleteAborted);
+		}
+
+		private void DeleteSelected()
+		{
+			var delete = Popup.ShowConfirm(Messages.DeleteSelectedLogsQuestion);
+			if (delete)
+			{
+				this.manager.DeleteSelectedLogs();
 				this.RaisePropertyChanged(() => this.FilterCounter);
 				return;
 			}

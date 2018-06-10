@@ -24,6 +24,8 @@ namespace LogExplorer.Services.Interfaces
 
 		void DeleteLog(Log log);
 
+		void DeleteSelectedLogs();
+
 		void Export(string exportPath);
 
 		#endregion

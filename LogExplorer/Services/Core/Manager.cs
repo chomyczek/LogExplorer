@@ -63,6 +63,20 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
+		public void DeleteSelectedLogs()
+		{
+			var selectedLogs = this.GetSelectedLogs();
+			var counter = 1;
+			var selectedCount = selectedLogs.Count;
+
+			foreach (var selectedLog in selectedLogs)
+			{
+				this.logger.AddMessage(Messages.GetDeletingCounter(counter, selectedCount));
+				this.DeleteLog(selectedLog);
+				counter++;
+			}
+		}
+
 		public void Export(string exportPath)
 		{
 			var logs = this.GetSelectedLogs();

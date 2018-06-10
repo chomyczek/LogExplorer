@@ -182,7 +182,7 @@
 												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding DirPath}"
 												        Margin="5,0,0,0" />
-												<Button Content="DeleteLog"
+												<Button Content="Delete"
 										        Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding .}"
 												Background="IndianRed"
@@ -208,13 +208,15 @@
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
 			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
-		<ContentControl Grid.Row="0" Grid.ColumnSpan="3" Content="{StaticResource LogsTree}"
+		<ContentControl Grid.Row="0" Grid.ColumnSpan="4" Content="{StaticResource LogsTree}"
 		                DataContext="{Binding Logs}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding CmdExport}" />
-		<Button Margin="5,5" Grid.Row="1" Grid.Column="2" Content="Refresh" Command="{Binding CmdRefresh}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="2" Content="Delete Selected" Command="{Binding CmdDeleteSelected}"  Background="IndianRed"/>
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="3" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
 
 

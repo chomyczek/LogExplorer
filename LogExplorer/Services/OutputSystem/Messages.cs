@@ -14,9 +14,9 @@ namespace LogExplorer.Services.OutputSystem
 	{
 		#region Constants
 
-		private const string DeleteSuccess = "Directory '{0}' was deleted successfuly";
-
 		public const string DeleteAborted = "Delete log operation was aborted";
+
+		public const string DeleteSelectedLogsQuestion = "Are you sure you want to delete selected logs directory?";
 
 		public const string DllNotFound = "Correct dll component was not found";
 
@@ -46,10 +46,14 @@ namespace LogExplorer.Services.OutputSystem
 
 		private const string CreateDirSuccess = "Directory created: {0}";
 
+		private const string DeleteOneLogQuestion = "Are you sure you want to delete '{0}' log directory from {1}?";
+
+		private const string DeleteSuccess = "Directory '{0}' was deleted successfuly";
+
+		private const string DeletingCounter = "Deleting {0} of {1} logs";
+
 		private const string DeletingDirerctory =
 			"Something went wrong while deleting direrctory, exception was throwed with message: {0}";
-
-		private const string DeleteOneLogQuestion = "Are you sure you want to delete '{0}' log directory from {1}?";
 
 		private const string DirIsEmpty = "Directory is empty: {0}";
 
@@ -123,10 +127,6 @@ namespace LogExplorer.Services.OutputSystem
 		{
 			return string.Format(CreateDirSuccess, path);
 		}
-		public static string GetDeleteSuccess(string path)
-		{
-			return string.Format(DeleteSuccess, path);
-		}
 
 		public static string GetDeletDirException(string message)
 		{
@@ -136,6 +136,16 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetDeleteOneLogQuestion(string logName, string startTime)
 		{
 			return string.Format(DeleteOneLogQuestion, logName, startTime);
+		}
+
+		public static string GetDeleteSuccess(string path)
+		{
+			return string.Format(DeleteSuccess, path);
+		}
+
+		public static string GetDeletingCounter(int counter, int count)
+		{
+			return string.Format(DeletingCounter, counter, count);
 		}
 
 		public static string GetDirIsEmpty(string dir)
