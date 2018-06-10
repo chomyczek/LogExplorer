@@ -16,22 +16,22 @@ namespace LogExplorer.Services.OutputSystem
 
 		public static void ShowError(string message)
 		{
-			MessageBox.Show(message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+			MessageBox.Show(message, Messages.HeaderError, MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		public static void ShowInfo(string message)
 		{
-			MessageBox.Show(message, "Info!", MessageBoxButton.OK, MessageBoxImage.Information);
+			MessageBox.Show(message, Messages.HeaderInfo, MessageBoxButton.OK, MessageBoxImage.Information);
 		}
 
 		public static void ShowWarning(string message)
 		{
-			MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
+			MessageBox.Show(message, Messages.HeaderWarning, MessageBoxButton.OK, MessageBoxImage.Warning);
 		}
 
 		public static bool ShowConfirm(string message)
 		{
-			if (MessageBox.Show(message, "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+			if (MessageBox.Show(message, Messages.HeaderWarning, MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
 			{
 				return true;
 			}

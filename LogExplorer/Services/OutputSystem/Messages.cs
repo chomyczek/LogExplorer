@@ -22,6 +22,12 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string ExportSuccess = "Export operation finished successfully";
 
+		public const string HeaderError = "Error!";
+
+		public const string HeaderInfo = "Info!";
+
+		public const string HeaderWarning = "Warning!";
+
 		public const string NoExportPath = "Export directory was't selected";
 
 		public const string NothingSelected = "There was no log file selected";
