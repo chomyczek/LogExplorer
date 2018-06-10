@@ -214,8 +214,7 @@ namespace LogExplorer.ViewModels
 			{
 				isActie = true;
 
-				searchLogs =
-					searchLogs.Where(log => log.History.Any(history => history.Result.ContainsString(this.srchSelResult.Value)));
+				searchLogs = searchLogs.Where(log => log.Log.Result.ContainsString(this.srchSelResult.Value));
 			}
 
 			if (this.srchDate.HasValue)

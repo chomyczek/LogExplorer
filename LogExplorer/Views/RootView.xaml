@@ -65,7 +65,7 @@
 
 							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
 							<TreeViewItem Grid.Row="0" Grid.Column="2" Padding="0" />
-							<TextBlock Grid.Row="0" Grid.Column="3" Text="Result" Style="{StaticResource TextBlockBoldStyle}" />
+							<TextBlock Grid.Row="0" Grid.Column="3" Text="Last Result" Style="{StaticResource TextBlockBoldStyle}" />
 							<TextBlock Grid.Row="0" Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
 							<TextBlock Grid.Row="0" Grid.Column="5" Text="Duration" Style="{StaticResource TextBlockBoldStyle}" />
 							<TextBlock Grid.Row="0" Grid.Column="6" Text="Commands" Style="{StaticResource TextBlockBoldStyle}" />
