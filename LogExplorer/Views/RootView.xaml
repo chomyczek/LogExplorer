@@ -89,7 +89,7 @@
 							          DisplayMemberPath="Name" />
 							<xctk:DateTimePicker Grid.Row="1" Grid.Column="4"
 							                     TextAlignment="Left"
-							                     Watermark="Older than.."
+							                     Watermark="Executed after.."
 							                     Format="Custom"
 							                     FormatString="{x:Static models:Log.DateFormat}"
 							                     Value="{Binding DataContext.SrchDate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
