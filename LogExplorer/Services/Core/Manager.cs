@@ -60,6 +60,11 @@ namespace LogExplorer.Services.Core
 			else
 			{
 				this.LogOverview.Remove(overview);
+				var parent = FileHelper.GetParent(log.DirPath);
+				if (FileHelper.EmptyDir(parent))
+				{
+					FileHelper.Delete(parent);
+				}
 			}
 		}
 

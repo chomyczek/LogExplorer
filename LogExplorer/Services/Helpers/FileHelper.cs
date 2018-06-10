@@ -50,6 +50,12 @@ namespace LogExplorer.Services.Helpers
 			return combination;
 		}
 
+		public static string GetParent(string path)
+		{
+			var parent = Directory.GetParent(path);
+			return parent.FullName;
+		}
+
 		public static bool Delete(string path)
 		{
 			if (!PathExist(path))
@@ -73,6 +79,10 @@ namespace LogExplorer.Services.Helpers
 			}
 			catch (Exception e)
 			{
+				if (PathExist(path))
+				{
+					FileHelper.StartProcess(path);
+				}
 				Logger.AddMessage(Messages.GetDeletDirException(e.Message));
 				return false;
 			}
@@ -258,5 +268,12 @@ namespace LogExplorer.Services.Helpers
 	    }
 
         #endregion
-    }
+
+		public static bool EmptyDir(string path)
+		{
+			var containsFiles = GetFiles(path).Any();
+			var containsDirs = Directory.GetDirectories(path).Any();
+			return !containsDirs && !containsFiles;
+		}
+	}
 }
