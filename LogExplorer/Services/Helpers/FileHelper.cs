@@ -50,7 +50,37 @@ namespace LogExplorer.Services.Helpers
 			return combination;
 		}
 
-	    public static string[] GetFiles(string path, string extension)
+		public static bool Delete(string path)
+		{
+			if (!PathExist(path))
+			{
+				return false;
+			}
+			var files = GetFiles(path);
+			foreach (var file in files)
+			{
+				File.Delete(file);
+			}
+			files = GetFiles(path);
+			if (files.Any())
+			{
+				Logger.AddMessage(Messages.GetNotallFilesDeleted(files));
+				return false;
+			}
+			try
+			{
+				Directory.Delete(path);
+			}
+			catch (Exception e)
+			{
+				Logger.AddMessage(Messages.GetDeletDirException(e.Message));
+				return false;
+			}
+			Logger.AddMessage(Messages.GetDeleteSuccess(path));
+			return true;
+		}
+
+	    public static string[] GetFiles(string path, string extension = "*")
 	    {
 	        if (!PathExist(path))
 	        {

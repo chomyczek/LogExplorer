@@ -2,15 +2,23 @@
 // Copyright(C) 2018
 // Author Adam Kaszubowski
 
+#region Usings
+
+using System.Collections.Generic;
+
+#endregion
+
 namespace LogExplorer.Services.OutputSystem
 {
 	public static class Messages
 	{
 		#region Constants
 
-		public const string DllNotFound = "Correct dll component was not found";
+		private const string DeleteSuccess = "Directory '{0}' was deleted successfuly";
 
-		public const string DeleteAborted = "Delete operation was aborted";
+		public const string DeleteAborted = "Delete log operation was aborted";
+
+		public const string DllNotFound = "Correct dll component was not found";
 
 		public const string ExportSuccess = "Export operation finished successfully";
 
@@ -38,6 +46,9 @@ namespace LogExplorer.Services.OutputSystem
 
 		private const string CreateDirSuccess = "Directory created: {0}";
 
+		private const string DeletingDirerctory =
+			"Something went wrong while deleting direrctory, exception was throwed with message: {0}";
+
 		private const string DeleteOneLogQuestion = "Are you sure you want to delete '{0}' log directory from {1}?";
 
 		private const string DirIsEmpty = "Directory is empty: {0}";
@@ -55,6 +66,8 @@ namespace LogExplorer.Services.OutputSystem
 		private const string IncorrectConfigPath = "Config path is incorrect: {0}";
 
 		private const string NoLogFile = "Directory doesn't contains log file: {0}";
+
+		private const string NotallFilesDeleted = "Not all files was deleted: {0}";
 
 		private const string ProblemParsingValue = "There was problem with parsing value '{0}' to {1}";
 
@@ -110,6 +123,15 @@ namespace LogExplorer.Services.OutputSystem
 		{
 			return string.Format(CreateDirSuccess, path);
 		}
+		public static string GetDeleteSuccess(string path)
+		{
+			return string.Format(DeleteSuccess, path);
+		}
+
+		public static string GetDeletDirException(string message)
+		{
+			return string.Format(DeletingDirerctory, message);
+		}
 
 		public static string GetDeleteOneLogQuestion(string logName, string startTime)
 		{
@@ -154,6 +176,11 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetNoLogFile(string dir)
 		{
 			return string.Format(NoLogFile, dir);
+		}
+
+		public static string GetNotallFilesDeleted(IEnumerable<string> files)
+		{
+			return string.Format(NotallFilesDeleted, string.Join(", ", files));
 		}
 
 		public static string GetProblemParsingValue(string value, string nameOf)

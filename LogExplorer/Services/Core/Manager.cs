@@ -45,9 +45,22 @@ namespace LogExplorer.Services.Core
 
 		#region Public Methods and Operators
 
-		public void Delete(Log log)
+		public void DeleteLog(Log log)
 		{
-			
+			var isDeleted = FileHelper.Delete(log.DirPath);
+			if (!isDeleted)
+			{
+				return;
+			}
+			var overview = this.LogOverview.First(logs => logs.History.Contains(log));
+			if (overview.History.Count > 1)
+			{
+				overview.History.Remove(log);
+			}
+			else
+			{
+				this.LogOverview.Remove(overview);
+			}
 		}
 
 		public void Export(string exportPath)

@@ -217,8 +217,8 @@ namespace LogExplorer.ViewModels
 			var delete = Popup.ShowConfirm(Messages.GetDeleteOneLogQuestion(log.Name, log.StartTimeString));
 			if (delete)
 			{
-				this.logger.AddMessage("delete Yes");
-				this.manager.Delete(log);
+				this.manager.DeleteLog(log);
+				this.RaisePropertyChanged(() => this.FilterCounter);
 				return;
 			}
 			this.logger.AddMessage(Messages.DeleteAborted);

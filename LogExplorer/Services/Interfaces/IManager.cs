@@ -22,7 +22,7 @@ namespace LogExplorer.Services.Interfaces
 
 		#region Public Methods and Operators
 
-		void Delete(Log log);
+		void DeleteLog(Log log);
 
 		void Export(string exportPath);
 

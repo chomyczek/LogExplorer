@@ -182,7 +182,7 @@
 												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding DirPath}"
 												        Margin="5,0,0,0" />
-												<Button Content="Delete"
+												<Button Content="DeleteLog"
 										        Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding .}"
 												Background="IndianRed"
