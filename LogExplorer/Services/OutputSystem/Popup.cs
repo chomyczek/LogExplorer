@@ -29,6 +29,15 @@ namespace LogExplorer.Services.OutputSystem
 			MessageBox.Show(message, "Warning!", MessageBoxButton.OK, MessageBoxImage.Warning);
 		}
 
+		public static bool ShowConfirm(string message)
+		{
+			if (MessageBox.Show(message, "Warning!", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+			{
+				return true;
+			}
+			return false;
+		}
+
 		#endregion
 	}
 }

@@ -10,6 +10,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string DllNotFound = "Correct dll component was not found";
 
+		public const string DeleteAborted = "Delete operation was aborted";
+
 		public const string ExportSuccess = "Export operation finished successfully";
 
 		public const string NoExportPath = "Export directory was't selected";
@@ -35,6 +37,8 @@ namespace LogExplorer.Services.OutputSystem
 		private const string CopyingFile = "Copying file '{0}' from {1} to {2}";
 
 		private const string CreateDirSuccess = "Directory created: {0}";
+
+		private const string DeleteOneLogQuestion = "Are you sure you want to delete '{0}' log directory from {1}?";
 
 		private const string DirIsEmpty = "Directory is empty: {0}";
 
@@ -105,6 +109,11 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetCreateDirSuccess(string path)
 		{
 			return string.Format(CreateDirSuccess, path);
+		}
+
+		public static string GetDeleteOneLogQuestion(string logName, string startTime)
+		{
+			return string.Format(DeleteOneLogQuestion, logName, startTime);
 		}
 
 		public static string GetDirIsEmpty(string dir)

@@ -23,7 +23,7 @@ namespace LogExplorer.Services.Core
 	{
 		#region Fields
 
-		private Logger logger;
+		private readonly Logger logger;
 
 		#endregion
 
@@ -44,6 +44,11 @@ namespace LogExplorer.Services.Core
 		#endregion
 
 		#region Public Methods and Operators
+
+		public void Delete(Log log)
+		{
+			
+		}
 
 		public void Export(string exportPath)
 		{

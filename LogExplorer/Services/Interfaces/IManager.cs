@@ -4,8 +4,6 @@
 
 #region Usings
 
-using System.Collections.Generic;
-
 using LogExplorer.Models;
 
 using MvvmCross.Core.ViewModels;
@@ -23,6 +21,8 @@ namespace LogExplorer.Services.Interfaces
 		#endregion
 
 		#region Public Methods and Operators
+
+		void Delete(Log log);
 
 		void Export(string exportPath);
 

@@ -13,6 +13,7 @@ using LogExplorer.Services.Core;
 using LogExplorer.Services.Extensions;
 using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
+using LogExplorer.Services.OutputSystem;
 
 using MvvmCross.Core.ViewModels;
 using MvvmCross.Platform;
@@ -41,6 +42,8 @@ namespace LogExplorer.ViewModels
 
 		private Result srchSelResult;
 
+		private readonly Logger logger;
+
 		#endregion
 
 		#region Constructors and Destructors
@@ -53,6 +56,7 @@ namespace LogExplorer.ViewModels
 			this.AllResults = ResultHelper.GetAllResults();
 			this.srchSelResult = this.AllResults.First();
 			this.logs = manager.LogOverview;
+			this.logger = Logger.Instance;
 		}
 
 		#endregion
@@ -74,6 +78,14 @@ namespace LogExplorer.ViewModels
 			get
 			{
 				return new MvxCommand(this.Export);
+			}
+		}
+
+		public IMvxCommand<Log> CmdDeleteOne
+		{
+			get
+			{
+				return new MvxCommand<Log>(this.DeleteOne);
 			}
 		}
 
@@ -197,6 +209,19 @@ namespace LogExplorer.ViewModels
 		private void Export()
 		{
 			this.manager.Export(this.settings.ExportPath);
+		}
+
+		
+		private void DeleteOne(Log log)
+		{
+			var delete = Popup.ShowConfirm(Messages.GetDeleteOneLogQuestion(log.Name, log.StartTimeString));
+			if (delete)
+			{
+				this.logger.AddMessage("delete Yes");
+				this.manager.Delete(log);
+				return;
+			}
+			this.logger.AddMessage(Messages.DeleteAborted);
 		}
 
 		private void Filter()
