@@ -245,33 +245,38 @@ namespace LogExplorer.Services.Helpers
 
 		public static bool StartProcess(string path)
 		{
-			var attr = File.GetAttributes(path);
+		    if (string.IsNullOrEmpty(path))
+		    {
+		        return false;
+		    }
+            var attr = File.GetAttributes(path);
 
-			if ((attr & FileAttributes.Directory) == FileAttributes.Directory
-			    && !PathExist(path))
-			{
-				return false;
-			}
-			if (!FileExist(path))
-			{
-				return false;
-			}
+		    if (attr.HasFlag(FileAttributes.Directory))
+		    {
+		        if (!PathExist(path))
+		        {
+		            return false;
+		        }
+            }
+            else
+		    {
+                if (!FileExist(path))
+                {
+                    return false;
+                }
+            }
 
-			var process = new Process { StartInfo = new ProcessStartInfo(path) };
+            var process = new Process { StartInfo = new ProcessStartInfo(path) };
 
 			try
 			{
-				if (process.Start())
-				{
-					return true;
-				}
-				Popup.ShowWarning(Messages.GetProcessNotStart(path));
-				return false;
+			    process.Start();
+			    return true;
 			}
 			catch (Exception e)
 			{
 				Popup.ShowError(Messages.GetProcessException(path, e.Message));
-				return false;
+                return false;
 			}
 		}
 
