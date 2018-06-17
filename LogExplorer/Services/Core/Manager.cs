@@ -82,7 +82,7 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
-		public void Export(string exportPath)
+		public void Export(string exportPath, bool onlyLog = true)
 		{
 			var logs = this.GetSelectedLogs();
 			if (logs == null
@@ -101,7 +101,7 @@ namespace LogExplorer.Services.Core
 			var time = DateTime.Now.ToString("yy_MM_dd_hh_mm_ss");
 			var path = FileHelper.CombinePaths(exportPath, time);
 
-			if (!FileHelper.PathExist(path))
+			if (!FileHelper.DirExist(path))
 			{
 				if (!FileHelper.CreateDir(path))
 				{
@@ -111,23 +111,15 @@ namespace LogExplorer.Services.Core
 
 			foreach (var log in logs)
 			{
-				if (string.IsNullOrEmpty(log.LogPath))
+				if (onlyLog)
 				{
-					this.logger.AddMessage(Messages.GetNoLogFile(log.DirPath));
-					continue;
+					this.CopyLog(log, path);
 				}
-
-				this.logger.AddDetailMessage(Messages.GetCopyingFile(log.Name, log.DirPath, path));
-				var counter = 0;
-				var newFilePath = FileHelper.CombinePaths(path, $"{log.Name}.html");
-
-				while (FileHelper.FileExist(newFilePath))
+				else
 				{
-					counter++;
-					newFilePath = FileHelper.CombinePaths(path, $"{log.Name}-{counter}.html");
+					this.CopyDir(log, path);
 				}
-
-				FileHelper.CopyFile(log.LogPath, newFilePath);
+				
 			}
 			if (FileHelper.StartProcess(path))
 			{
@@ -135,9 +127,49 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
-		public void ExportDir(string exportPath)
+		private void CopyDir(Log log, string destPath)
 		{
-			throw new NotImplementedException();
+			if (string.IsNullOrEmpty(log.DirPath))
+			{
+				this.logger.AddMessage(Messages.LogWithoutDirPath);
+				return;
+			}
+
+			var dirCounter = 0;
+			var newDirPath = FileHelper.CombinePaths(destPath, log.Name);
+			while (FileHelper.DirExist(newDirPath))
+			{
+				dirCounter++;
+				newDirPath = FileHelper.CombinePaths(destPath, $"{log.Name}-{dirCounter}");
+			}
+			FileHelper.CreateDir(newDirPath);
+
+			var files = FileHelper.GetFiles(log.DirPath);
+			foreach (var file in files)
+			{
+				FileHelper.CopyFile(file, newDirPath);
+			}
+		}
+
+		private void CopyLog(Log log, string destPath)
+		{
+			if (string.IsNullOrEmpty(log.LogPath))
+			{
+				this.logger.AddMessage(Messages.GetNoLogFile(log.DirPath));
+				return;
+			}
+
+			this.logger.AddDetailMessage(Messages.GetCopyingFile(log.Name, log.DirPath, destPath));
+			var counter = 0;
+			var newFilePath = FileHelper.CombinePaths(destPath, $"{log.Name}.html");
+
+			while (FileHelper.FileExist(newFilePath))
+			{
+				counter++;
+				newFilePath = FileHelper.CombinePaths(destPath, $"{log.Name}-{counter}.html");
+			}
+
+			FileHelper.CopyFile(log.LogPath, newFilePath);
 		}
 
 		#endregion

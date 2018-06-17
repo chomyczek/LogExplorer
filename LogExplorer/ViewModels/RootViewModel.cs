@@ -230,7 +230,7 @@ namespace LogExplorer.ViewModels
 		}
 		private void ExportDir()
 		{
-			this.manager.ExportDir(this.settings.ExportPath);
+			this.manager.Export(this.settings.ExportPath, false);
 		}
 
 

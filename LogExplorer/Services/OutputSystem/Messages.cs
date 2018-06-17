@@ -28,6 +28,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string HeaderWarning = "Warning!";
 
+		public const string LogWithoutDirPath = "Log information object does not contains directory path";
+
 		public const string NoExportPath = "Export directory was't selected";
 
 		public const string NothingSelected = "There was no log file selected";

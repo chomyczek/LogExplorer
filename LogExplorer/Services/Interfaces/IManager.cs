@@ -26,10 +26,7 @@ namespace LogExplorer.Services.Interfaces
 
 		void DeleteSelectedLogs();
 
-		void Export(string exportPath);
-
-		void ExportDir(string exportPath);
-
+		void Export(string exportPath, bool onlyLog = true);
 		#endregion
 	}
 }

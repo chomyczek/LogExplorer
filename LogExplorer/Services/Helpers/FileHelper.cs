@@ -77,7 +77,7 @@ namespace LogExplorer.Services.Helpers
 
 		public static bool Delete(string path)
 		{
-			if (!PathExist(path))
+			if (!DirExist(path))
 			{
 				return false;
 			}
@@ -98,7 +98,7 @@ namespace LogExplorer.Services.Helpers
 			}
 			catch (Exception e)
 			{
-				if (PathExist(path))
+				if (DirExist(path))
 				{
 					StartProcess(path);
 				}
@@ -135,7 +135,7 @@ namespace LogExplorer.Services.Helpers
 
 		public static string[] GetFiles(string path, string extension = "*")
 		{
-			if (!PathExist(path))
+			if (!DirExist(path))
 			{
 				return new string[0];
 			}
@@ -162,7 +162,7 @@ namespace LogExplorer.Services.Helpers
 			return parent.FullName;
 		}
 
-		public static bool PathExist(string path)
+		public static bool DirExist(string path)
 		{
 			if (!string.IsNullOrEmpty(path)
 			    && Directory.Exists(path))
@@ -253,7 +253,7 @@ namespace LogExplorer.Services.Helpers
 
 		    if (attr.HasFlag(FileAttributes.Directory))
 		    {
-		        if (!PathExist(path))
+		        if (!DirExist(path))
 		        {
 		            return false;
 		        }

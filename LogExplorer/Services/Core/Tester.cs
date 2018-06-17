@@ -51,7 +51,7 @@ namespace LogExplorer.Services.Core
 			var testName = log.Name;
 			var librariesPath = FileHelper.CombinePaths(settings.TesterPath, LibSubDir);
 
-			if (!FileHelper.PathExist(librariesPath))
+			if (!FileHelper.DirExist(librariesPath))
 			{
 				Popup.ShowWarning(Messages.GetDllNotExist(librariesPath));
 				return;
