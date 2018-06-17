@@ -128,8 +128,13 @@ namespace LogExplorer.Services.Helpers
 			return false;
 		}
 
-		public static string GetFileName(string path)
+		public static string GetFileName(string path, bool withExtension = false)
 		{
+			if (withExtension)
+			{
+				return Path.GetFileName(path);
+			}
+
 			return Path.GetFileNameWithoutExtension(path);
 		}
 

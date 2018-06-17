@@ -119,7 +119,6 @@ namespace LogExplorer.Services.Core
 				{
 					this.CopyDir(log, path);
 				}
-				
 			}
 			if (FileHelper.StartProcess(path))
 			{
@@ -147,7 +146,8 @@ namespace LogExplorer.Services.Core
 			var files = FileHelper.GetFiles(log.DirPath);
 			foreach (var file in files)
 			{
-				FileHelper.CopyFile(file, newDirPath);
+				var newFile = FileHelper.CombinePaths(newDirPath, FileHelper.GetFileName(file, true));
+				FileHelper.CopyFile(file, newFile);
 			}
 		}
 

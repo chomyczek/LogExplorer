@@ -77,15 +77,15 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand(this.Export);
+				return new MvxCommand(() => this.manager.Export(this.settings.ExportPath));
 			}
 		}
 
-		public IMvxCommand CmdExportDirectory
+		public IMvxCommand CmdExportDir
 		{
 			get
 			{
-				return new MvxCommand(this.ExportDir);
+				return new MvxCommand(() => this.manager.Export(this.settings.ExportPath, false));
 			}
 		}
 
@@ -223,16 +223,6 @@ namespace LogExplorer.ViewModels
 			this.RaisePropertyChanged(() => this.SrchDate);
 			this.Filter();
 		}
-
-		private void Export()
-		{
-			this.manager.Export(this.settings.ExportPath);
-		}
-		private void ExportDir()
-		{
-			this.manager.Export(this.settings.ExportPath, false);
-		}
-
 
 		private void DeleteOne(Log log)
 		{
