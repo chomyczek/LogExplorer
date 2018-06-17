@@ -81,6 +81,16 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand CmdExportDirectory
+		{
+			get
+			{
+				return new MvxCommand(this.ExportDir);
+			}
+		}
+
+		
+
 		public IMvxCommand CmdDeleteSelected
 		{
 			get
@@ -217,6 +227,10 @@ namespace LogExplorer.ViewModels
 		private void Export()
 		{
 			this.manager.Export(this.settings.ExportPath);
+		}
+		private void ExportDir()
+		{
+			this.manager.ExportDir(this.settings.ExportPath);
 		}
 
 

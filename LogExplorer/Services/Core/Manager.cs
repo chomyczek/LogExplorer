@@ -135,6 +135,11 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
+		public void ExportDir(string exportPath)
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
 
 		#region Methods

@@ -28,6 +28,8 @@ namespace LogExplorer.Services.Interfaces
 
 		void Export(string exportPath);
 
+		void ExportDir(string exportPath);
+
 		#endregion
 	}
 }
