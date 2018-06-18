@@ -105,6 +105,9 @@ namespace LogExplorer.Services.Core
 
 		private string GetCorrectComponent(string[] pdbs, string testName)
 		{
+#if DEBUG
+			return "FakeComponnet";
+#endif
 			foreach (var pdb in pdbs)
 			{
 				try
