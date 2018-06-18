@@ -74,6 +74,11 @@ namespace LogExplorer.Services.Core
 			this.Execute(settings.TesterPath, testName, component, config, settings.IsHiddenTester);
 		}
 
+		public void RerunQueue()
+		{
+			throw new NotImplementedException();
+		}
+
 		#endregion
 
 		#region Methods

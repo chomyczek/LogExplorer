@@ -5,6 +5,8 @@ namespace LogExplorer.Services.Interfaces
     public interface ITester
     {
 
-        void Rerun(Log name, Settings settings);
+        void Rerun(Log log, Settings settings);
+
+	    void RerunQueue();
     }
 }

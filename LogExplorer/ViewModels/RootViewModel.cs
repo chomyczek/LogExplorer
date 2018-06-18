@@ -28,6 +28,8 @@ namespace LogExplorer.ViewModels
 
 		private readonly IExplorer explorer;
 
+		private readonly Logger logger;
+
 		private readonly IManager manager;
 
 		private readonly ITester tester;
@@ -41,8 +43,6 @@ namespace LogExplorer.ViewModels
 		private string srchName;
 
 		private Result srchSelResult;
-
-		private readonly Logger logger;
 
 		#endregion
 
@@ -73,6 +73,22 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand<Log> CmdDeleteOne
+		{
+			get
+			{
+				return new MvxCommand<Log>(this.DeleteOne);
+			}
+		}
+
+		public IMvxCommand CmdDeleteSelected
+		{
+			get
+			{
+				return new MvxCommand(this.DeleteSelected);
+			}
+		}
+
 		public IMvxCommand CmdExport
 		{
 			get
@@ -86,24 +102,6 @@ namespace LogExplorer.ViewModels
 			get
 			{
 				return new MvxCommand(() => this.manager.Export(this.settings.ExportPath, false));
-			}
-		}
-
-		
-
-		public IMvxCommand CmdDeleteSelected
-		{
-			get
-			{
-				return new MvxCommand(this.DeleteSelected);
-			}
-		}
-
-		public IMvxCommand<Log> CmdDeleteOne
-		{
-			get
-			{
-				return new MvxCommand<Log>(this.DeleteOne);
 			}
 		}
 
@@ -128,6 +126,14 @@ namespace LogExplorer.ViewModels
 			get
 			{
 				return new MvxCommand<Log>(log => this.tester.Rerun(log, this.settings));
+			}
+		}
+
+		public IMvxCommand CmdRerunSelected
+		{
+			get
+			{
+				return new MvxCommand(this.RerunSelected);
 			}
 		}
 
@@ -313,6 +319,11 @@ namespace LogExplorer.ViewModels
 
 			this.Filter();
 			this.RaisePropertyChanged(() => this.FilterCounter);
+		}
+
+		private void RerunSelected()
+		{
+			throw new NotImplementedException();
 		}
 
 		#endregion
