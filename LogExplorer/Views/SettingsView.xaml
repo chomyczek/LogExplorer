@@ -44,7 +44,7 @@
 			         Text="{Binding ExportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
 			<Button Margin="4" Grid.Row="3" Grid.Column="1" Command="{Binding CmdPickExportDir}" HorizontalAlignment="Right"
 			        Content=".." />
-			<Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0" >
+			<Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
@@ -55,16 +55,18 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Tester path:" />
-				<TextBlock Margin="4" Grid.Row="0"  Grid.Column="2" Text="Hide Tester cmd.exe:" HorizontalAlignment="Right" />
+				<TextBlock Margin="4" Grid.Row="0" Grid.Column="2" Text="Hide Tester cmd.exe:" HorizontalAlignment="Right" />
 				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-			                 Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
+				         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				         HorizontalAlignment="Stretch" />
 				<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickTesterDir}" HorizontalAlignment="Right"
-			                Content=".." />
+				        Content=".." />
 				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
-			                 IsChecked="{Binding IsHiddenTester, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+				          IsChecked="{Binding IsHiddenTester, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				          HorizontalAlignment="Right" VerticalAlignment="Center" />
 			</Grid>
 
-			<Grid Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0" >
+			<Grid Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
@@ -76,38 +78,42 @@
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Text="Config path:" />
 				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-			         Text="{Binding CustomConfigPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" 
-                     IsEnabled="{Binding IsConfigPathEnabled}"/>
+				         Text="{Binding CustomConfigPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				         HorizontalAlignment="Stretch"
+				         IsEnabled="{Binding IsConfigPathEnabled}" />
 				<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickCustomConfig}" HorizontalAlignment="Right"
-			        Content=".." />
+				        Content=".." />
 				<ComboBox Grid.Row="1" Grid.Column="2"
-							          ItemsSource="{Binding ConfigSettingDictionary}"
-							          SelectedItem="{Binding ConfigSetting}"
-							          DisplayMemberPath="Item2" />
+				          ItemsSource="{Binding ConfigSettingDictionary}"
+				          SelectedItem="{Binding ConfigSetting}"
+				          DisplayMemberPath="Item2" />
 			</Grid>
-			<Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0" >
-			
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto" />
-						<RowDefinition Height="Auto" />
-					</Grid.RowDefinitions>
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<TextBlock Margin="4" Grid.Row="0" Grid.Column="0" Text="Logger memory limit:" />
-					<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-			         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" IsEnabled="{Binding IsLoggerEnabled}"/>
+			<Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0">
+
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+					<ColumnDefinition Width="*" />
+				</Grid.ColumnDefinitions>
+				<TextBlock Margin="4" Grid.Row="0" Grid.Column="0" Text="Logger memory limit:" />
+				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
+				         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				         HorizontalAlignment="Stretch" IsEnabled="{Binding IsLoggerEnabled}" />
 
 
-				<TextBlock Margin="4" Grid.Row="0" Text="Logger details:"  Grid.Column="1" HorizontalAlignment="Right"/>
+				<TextBlock Margin="4" Grid.Row="0" Text="Logger details:" Grid.Column="1" HorizontalAlignment="Right" />
 				<CheckBox Margin="4" Grid.Row="1" Grid.Column="1"
-			                 IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center" IsEnabled="{Binding IsLoggerEnabled}"/>
+				          IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				          HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="{Binding IsLoggerEnabled}" />
 
-				<TextBlock Margin="4" Grid.Row="0" Text="Logger enabled:"  Grid.Column="2" HorizontalAlignment="Right"/>
+				<TextBlock Margin="4" Grid.Row="0" Text="Logger enabled:" Grid.Column="2" HorizontalAlignment="Right" />
 				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
-			                 IsChecked="{Binding IsLoggerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right"  VerticalAlignment="Center"/>
+				          IsChecked="{Binding IsLoggerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+				          HorizontalAlignment="Right" VerticalAlignment="Center" />
 
 			</Grid>
 		</Grid>

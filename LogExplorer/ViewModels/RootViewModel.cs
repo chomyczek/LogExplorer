@@ -323,7 +323,7 @@ namespace LogExplorer.ViewModels
 
 		private void RerunSelected()
 		{
-			throw new NotImplementedException();
+			this.tester.RerunQueue();
 		}
 
 		#endregion
