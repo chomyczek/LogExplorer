@@ -55,7 +55,7 @@
 					<ColumnDefinition Width="*" />
 				</Grid.ColumnDefinitions>
 				<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Tester path:" />
-				<TextBlock Margin="4" Grid.Row="0" Grid.Column="2" Text="Hide Tester cmd.exe:" HorizontalAlignment="Right" />
+				<TextBlock Margin="4" Grid.Row="0" Grid.Column="2" Text="Hide Tester.exe:" HorizontalAlignment="Right" />
 				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
 				         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
 				         HorizontalAlignment="Stretch" />
