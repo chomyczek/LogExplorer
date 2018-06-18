@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Helpers;
@@ -47,7 +48,7 @@ namespace LogExplorer.Services.Core
 
 		#region Public Methods and Operators
 
-		public void Rerun(Log log, Settings settings)
+		public async Task<bool> RerunAsync(Log log, Settings settings)
 		{
 			var testName = log.Name;
 			var librariesPath = FileHelper.CombinePaths(settings.TesterPath, LibSubDir);
@@ -55,7 +56,7 @@ namespace LogExplorer.Services.Core
 			if (!FileHelper.DirExist(librariesPath))
 			{
 				Popup.ShowWarning(Messages.GetDllNotExist(librariesPath));
-				return;
+				return await Task.Run(() => false);
 			}
 
 			var pdbs = FileHelper.GetFiles(librariesPath, "pdb");
@@ -67,46 +68,50 @@ namespace LogExplorer.Services.Core
 			if (string.IsNullOrEmpty(component))
 			{
 				Popup.ShowWarning(Messages.DllNotFound);
-				return;
+				return await Task.Run(() => false);
 			}
 
 			this.logger.AddDetailMessage(Messages.GetDllFound(component));
 			var config = this.PrepareConfig(settings, log);
-			this.Execute(settings.TesterPath, testName, component, config, settings.IsHiddenTester);
+			return await this.ExecuteAsync(settings.TesterPath, testName, component, config, settings.IsHiddenTester);
 		}
 
-		public void RerunQueue(List<Log> logs, Settings settings)
+		public async void RerunQueue(List<Log> logs, Settings settings)
 		{
+			var counter = 1;
+			var count = logs.Count;
 			foreach (var log in logs)
 			{
-				
+				this.logger.AddMessage(Messages.GetRunningCounter(log.Name, counter, count));
+				await this.RerunAsync(log, settings);
+				this.logger.AddMessage(Messages.GetExecutionEnded(log.Name));
+				counter++;
 			}
-			throw new NotImplementedException();
 		}
 
 		#endregion
 
 		#region Methods
 
-		private void Execute(string testerPath, string name, string component, string config, bool hidden)
+		private async Task<bool> ExecuteAsync(string testerPath, string name, string component, string config, bool hidden)
 		{
 			var testerExePath = FileHelper.CombinePaths(testerPath, TesterName);
 			if (!FileHelper.FileExist(testerExePath))
 			{
 				Popup.ShowWarning(Messages.GetTesterNotFound(FileHelper.CombinePaths(testerPath, TesterName)));
-				return;
+				return await Task.Run(()=>  false);
 			}
 			string paramters = $"-p {component} -n {name}";
 			if (FileHelper.FileExist(config))
 			{
 				paramters = $"{paramters} -c {config}";
 			}
-			else if(!string.IsNullOrEmpty(config))
+			else if (!string.IsNullOrEmpty(config))
 			{
 				this.logger.AddMessage(Messages.GetIncorrectConfigPath(config));
 			}
 
-			FileHelper.StartProcessWithArguments(testerExePath, paramters, hidden);
+			return await Task.Run(() => FileHelper.StartProcessWithArguments(testerExePath, paramters, hidden));
 		}
 
 		private string GetCorrectComponent(string[] pdbs, string testName)

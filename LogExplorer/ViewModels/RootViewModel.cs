@@ -125,7 +125,7 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand<Log>(log => this.tester.Rerun(log, this.settings));
+				return new MvxCommand<Log>(log => this.tester.RerunAsync(log, this.settings));
 			}
 		}
 

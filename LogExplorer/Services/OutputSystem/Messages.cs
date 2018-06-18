@@ -73,6 +73,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		private const string DllSearchDuration = "Dll searching took: {0}s";
 
+		private const string ExecutionEnded = "Execution ended: {0}";
+
 		private const string FileNotExist = "File does not exist: {0}";
 
 		private const string IncorrectConfigPath = "Config path is incorrect: {0}";
@@ -95,6 +97,8 @@ namespace LogExplorer.Services.OutputSystem
 		private const string PropertyUpdated = "Property '{0}' updated successfully ";
 
 		private const string ReadFileException = "The file could not be read: {0}";
+
+		private const string RunningCounter = "Running test: {0} ({1}/{2})";
 
 		private const string ScanningDir = "Scanning directory: {0}";
 
@@ -181,6 +185,11 @@ namespace LogExplorer.Services.OutputSystem
 			return string.Format(DllSearchDuration, duration);
 		}
 
+		public static string GetExecutionEnded(string name)
+		{
+			return string.Format(ExecutionEnded, name);
+		}
+
 		public static string GetFileNotExist(string path)
 		{
 			return string.Format(FileNotExist, path);
@@ -234,6 +243,11 @@ namespace LogExplorer.Services.OutputSystem
 		public static string GetReadFileException(string message)
 		{
 			return string.Format(ReadFileException, message);
+		}
+
+		public static string GetRunningCounter(string name, int counter, int count)
+		{
+			return string.Format(RunningCounter, name, counter, count);
 		}
 
 		public static string GetScanningDir(string dir)
