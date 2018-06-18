@@ -40,6 +40,8 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string SettingsSaved = "Settings saved successfully";
 
+		public const string UpdateUnexpected = "Something went wrong while updating log list";
+
 		public const string XmlFileLoadSuccess = "XML file was successfully loaded";
 
 		private const string CantCreateDir = "Directory cannot be created: {0}";

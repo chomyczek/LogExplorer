@@ -30,11 +30,12 @@ namespace LogExplorer.Models
 			set
 			{
 				this.history = value;
-				RaisePropertyChanged(() => History);
+				this.RaisePropertyChanged(() => this.History);
+				this.RaisePropertyChanged(() => this.Log);
 			}
 		}
 
-		public Log Log => History[0];
+		public Log Log => this.History[0];
 
 		#endregion
 	}

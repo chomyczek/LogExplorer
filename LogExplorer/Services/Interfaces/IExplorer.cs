@@ -21,6 +21,8 @@ namespace LogExplorer.Services.Interfaces
 
 		Task PopulateLogsRootAsync(MvxObservableCollection<LogOverview> logOverviews, string path, Action propertyChanges);
 
+		MvxObservableCollection<Log> GetLogHistory(string path);
+
 		#endregion
 	}
 }

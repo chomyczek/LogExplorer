@@ -111,7 +111,7 @@ namespace LogExplorer.Services.Core
 			return logTime - startTime;
 		}
 
-		private MvxObservableCollection<Log> GetLogHistory(string path)
+		public MvxObservableCollection<Log> GetLogHistory(string path)
 		{
 			var logs = new MvxObservableCollection<Log>();
 			var logDirs = Directory.GetDirectories(path);

@@ -126,6 +126,33 @@ namespace LogExplorer.Services.Core
 			}
 		}
 
+		public List<Log> GetSelectedLogs()
+		{
+			var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
+			return selectedLogs;
+		}
+
+		public void UpdateOverview(MvxObservableCollection<Log> updatedCollection)
+		{
+			if (updatedCollection == null
+			    || !updatedCollection.Any())
+			{
+				return;
+			}
+			var overview = this.LogOverview.FirstOrDefault(o => o.Log.Name.Equals(updatedCollection.First().Name));
+			if (overview == null)
+			{
+				Popup.ShowError(Messages.UpdateUnexpected);
+				return;
+			}
+
+			overview.History = updatedCollection;
+		}
+
+		#endregion
+
+		#region Methods
+
 		private void CopyDir(Log log, string destPath)
 		{
 			if (string.IsNullOrEmpty(log.DirPath))
@@ -170,16 +197,6 @@ namespace LogExplorer.Services.Core
 			}
 
 			FileHelper.CopyFile(log.LogPath, newFilePath);
-		}
-
-		#endregion
-
-		#region Methods
-
-		public List<Log> GetSelectedLogs()
-		{
-			var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
-			return selectedLogs;
 		}
 
 		#endregion

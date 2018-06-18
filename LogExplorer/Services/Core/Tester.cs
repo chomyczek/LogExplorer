@@ -15,6 +15,8 @@ using LogExplorer.Services.Helpers;
 using LogExplorer.Services.Interfaces;
 using LogExplorer.Services.OutputSystem;
 
+using MvvmCross.Platform;
+
 #endregion
 
 namespace LogExplorer.Services.Core
@@ -34,14 +36,18 @@ namespace LogExplorer.Services.Core
 		#region Fields
 
 		private readonly Logger logger;
+		private readonly IManager manager;
+		private readonly IExplorer explorer;
 
 		#endregion
 
 		#region Constructors and Destructors
 
-		public Tester()
+		public Tester(IExplorer explorer)
 		{
 			this.logger = Logger.Instance;
+			this.explorer = explorer;
+			this.manager = Mvx.Resolve<Manager>();
 		}
 
 		#endregion
@@ -83,7 +89,11 @@ namespace LogExplorer.Services.Core
 			foreach (var log in logs)
 			{
 				this.logger.AddMessage(Messages.GetRunningCounter(log.Name, counter, count));
-				await this.RerunAsync(log, settings);
+				if (await this.RerunAsync(log, settings))
+				{
+					var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
+					this.manager.UpdateOverview(updatedHistory);
+				}
 				this.logger.AddMessage(Messages.GetExecutionEnded(log.Name));
 				counter++;
 			}

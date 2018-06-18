@@ -32,6 +32,8 @@ namespace LogExplorer.Services.Interfaces
 
 		List<Log> GetSelectedLogs();
 
+		void UpdateOverview(MvxObservableCollection<Log> updatedCollection);
+
 		#endregion
 	}
 }

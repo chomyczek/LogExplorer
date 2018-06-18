@@ -29,6 +29,8 @@ namespace LogExplorer.Customs
             Mvx.RegisterType<IManager, Manager>();
 			var xmlPath = FileHelper.GetLocalPath("LogExplorer.xml");
 			Mvx.RegisterSingleton(new Repository(xmlPath));
+			//manager hold current logs, if moved, then this singleton should be removed.
+			Mvx.RegisterSingleton(new Manager());
 
 			// Tells the MvvmCross framework that whenever any code requests an IMvxAppStart reference,
 			// the framework should return that same appStart instance.

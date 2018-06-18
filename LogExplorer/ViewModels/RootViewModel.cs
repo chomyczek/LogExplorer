@@ -48,10 +48,10 @@ namespace LogExplorer.ViewModels
 
 		#region Constructors and Destructors
 
-		public RootViewModel(IExplorer explorer, IManager manager, ITester tester)
+		public RootViewModel(IExplorer explorer, ITester tester)
 		{
 			this.explorer = explorer;
-			this.manager = manager;
+			this.manager = Mvx.Resolve<Manager>();
 			this.tester = tester;
 			this.AllResults = ResultHelper.GetAllResults();
 			this.srchSelResult = this.AllResults.First();
@@ -125,7 +125,7 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand<Log>(log => this.tester.RerunAsync(log, this.settings));
+				return new MvxCommand<Log>(this.RerunOne);
 			}
 		}
 
@@ -331,6 +331,15 @@ namespace LogExplorer.ViewModels
 				return;
 			}
 			this.tester.RerunQueue(selectedLogs, this.settings);
+		}
+
+		private async void RerunOne(Log log)
+		{
+			if (await this.tester.RerunAsync(log, this.settings))
+			{
+				var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
+				this.manager.UpdateOverview(updatedHistory);
+			}
 		}
 
 		#endregion
