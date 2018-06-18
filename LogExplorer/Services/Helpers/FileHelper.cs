@@ -215,9 +215,9 @@ namespace LogExplorer.Services.Helpers
 			return newPath;
 		}
 
-		public static bool StartCmdProcess(string command, string workingDir, bool hidden)
+		public static bool StartProcessWithArguments(string filePath, string arguments, bool hidden)
 		{
-			if (string.IsNullOrEmpty(command))
+			if (string.IsNullOrEmpty(arguments))
 			{
 				return false;
 			}
@@ -226,26 +226,27 @@ namespace LogExplorer.Services.Helpers
 			var startInfo = new ProcessStartInfo
 			                {
 				                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
-				                WorkingDirectory = workingDir,
-				                FileName = "cmd.exe",
-				                Arguments = $@"/C {command}"
-			                };
+				                FileName = filePath,
+				                Arguments = arguments
+			};
 			process.StartInfo = startInfo;
-
+			var processStr = $"'{GetFileName(filePath, true)} {arguments}'";
 			try
 			{
 				if (process.Start())
 				{
+					process.WaitForExit();
 					return true;
 				}
-				Popup.ShowWarning(Messages.GetProcessNotStart(command));
+				Popup.ShowWarning(Messages.GetProcessNotStart(processStr));
 				return false;
 			}
 			catch (Exception e)
 			{
-				Popup.ShowError(Messages.GetProcessException(command, e.Message));
+				Popup.ShowError(Messages.GetProcessException(processStr, e.Message));
 				return false;
 			}
+			
 		}
 
 		public static bool StartProcess(string path)

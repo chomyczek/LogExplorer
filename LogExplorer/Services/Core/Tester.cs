@@ -90,22 +90,23 @@ namespace LogExplorer.Services.Core
 
 		private void Execute(string testerPath, string name, string component, string config, bool hidden)
 		{
-			if (!FileHelper.FileExist(FileHelper.CombinePaths(testerPath, TesterName)))
+			var testerExePath = FileHelper.CombinePaths(testerPath, TesterName);
+			if (!FileHelper.FileExist(testerExePath))
 			{
 				Popup.ShowWarning(Messages.GetTesterNotFound(FileHelper.CombinePaths(testerPath, TesterName)));
 				return;
 			}
-			string command = $"{TesterName} -p {component} -n {name}";
+			string paramters = $"-p {component} -n {name}";
 			if (FileHelper.FileExist(config))
 			{
-				command = $"{command} -c {config}";
+				paramters = $"{paramters} -c {config}";
 			}
 			else if(!string.IsNullOrEmpty(config))
 			{
 				this.logger.AddMessage(Messages.GetIncorrectConfigPath(config));
 			}
 
-			FileHelper.StartCmdProcess(command, testerPath, hidden);
+			FileHelper.StartProcessWithArguments(testerExePath, paramters, hidden);
 		}
 
 		private string GetCorrectComponent(string[] pdbs, string testName)
