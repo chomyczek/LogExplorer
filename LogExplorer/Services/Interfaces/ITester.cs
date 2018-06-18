@@ -1,4 +1,6 @@
-﻿using LogExplorer.Models;
+﻿using System.Collections.Generic;
+
+using LogExplorer.Models;
 
 namespace LogExplorer.Services.Interfaces
 {
@@ -7,6 +9,6 @@ namespace LogExplorer.Services.Interfaces
 
         void Rerun(Log log, Settings settings);
 
-	    void RerunQueue();
+	    void RerunQueue(List<Log> logs, Settings settings);
     }
 }

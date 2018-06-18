@@ -5,6 +5,7 @@
 #region Usings
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -74,8 +75,12 @@ namespace LogExplorer.Services.Core
 			this.Execute(settings.TesterPath, testName, component, config, settings.IsHiddenTester);
 		}
 
-		public void RerunQueue()
+		public void RerunQueue(List<Log> logs, Settings settings)
 		{
+			foreach (var log in logs)
+			{
+				
+			}
 			throw new NotImplementedException();
 		}
 
@@ -95,7 +100,7 @@ namespace LogExplorer.Services.Core
 			{
 				command = $"{command} -c {config}";
 			}
-			else
+			else if(!string.IsNullOrEmpty(config))
 			{
 				this.logger.AddMessage(Messages.GetIncorrectConfigPath(config));
 			}

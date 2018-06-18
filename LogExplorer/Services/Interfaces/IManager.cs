@@ -4,6 +4,8 @@
 
 #region Usings
 
+using System.Collections.Generic;
+
 using LogExplorer.Models;
 
 using MvvmCross.Core.ViewModels;
@@ -27,6 +29,9 @@ namespace LogExplorer.Services.Interfaces
 		void DeleteSelectedLogs();
 
 		void Export(string exportPath, bool onlyLog = true);
+
+		List<Log> GetSelectedLogs();
+
 		#endregion
 	}
 }

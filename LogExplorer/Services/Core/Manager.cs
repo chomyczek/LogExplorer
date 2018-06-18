@@ -176,7 +176,7 @@ namespace LogExplorer.Services.Core
 
 		#region Methods
 
-		private List<Log> GetSelectedLogs()
+		public List<Log> GetSelectedLogs()
 		{
 			var selectedLogs = this.LogOverview.SelectMany(l => l.History.Where(log => log.IsSelected)).ToList();
 			return selectedLogs;

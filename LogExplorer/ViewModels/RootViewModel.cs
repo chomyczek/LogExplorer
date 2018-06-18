@@ -323,7 +323,14 @@ namespace LogExplorer.ViewModels
 
 		private void RerunSelected()
 		{
-			this.tester.RerunQueue();
+			var selectedLogs = this.manager.GetSelectedLogs();
+			if (selectedLogs == null
+			    || !selectedLogs.Any())
+			{
+				this.logger.AddMessage(Messages.NothingSelected);
+				return;
+			}
+			this.tester.RerunQueue(selectedLogs, this.settings);
 		}
 
 		#endregion
