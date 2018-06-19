@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
@@ -34,6 +35,10 @@ namespace LogExplorer.ViewModels
 
 		private readonly ITester tester;
 
+		private CancellationTokenSource cts;
+
+		private bool isRerunAvailable;
+
 		private MvxObservableCollection<LogOverview> logs;
 
 		private Settings settings;
@@ -57,6 +62,7 @@ namespace LogExplorer.ViewModels
 			this.srchSelResult = this.AllResults.First();
 			this.logs = manager.LogOverview;
 			this.logger = Logger.Instance;
+			this.IsRerunAvailable = true;
 		}
 
 		#endregion
@@ -133,7 +139,7 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand(this.RerunSelected);
+				return this.isRerunAvailable ? new MvxCommand(this.RerunSelected) : new MvxCommand(this.CancelRerun);
 			}
 		}
 
@@ -147,6 +153,21 @@ namespace LogExplorer.ViewModels
 
 		public string FilterCounter => $"({this.logs?.Count ?? 0}/{this.manager.LogOverview?.Count ?? 0})";
 
+		public bool IsRerunAvailable
+		{
+			get
+			{
+				return this.isRerunAvailable;
+			}
+			private set
+			{
+				this.isRerunAvailable = value;
+				this.RaisePropertyChanged(() => this.IsRerunAvailable);
+				this.RaisePropertyChanged(() => this.RerunSelectedButtonName);
+				this.RaisePropertyChanged(() => this.CmdRerunSelected);
+			}
+		}
+
 		public MvxObservableCollection<LogOverview> Logs
 		{
 			get
@@ -158,6 +179,18 @@ namespace LogExplorer.ViewModels
 			{
 				this.logs = value;
 				this.RaisePropertyChanged(() => this.Logs);
+			}
+		}
+
+		public string RerunSelectedButtonName
+		{
+			get
+			{
+				if (this.isRerunAvailable)
+				{
+					return ElementsName.RerunSelectedAvailable;
+				}
+				return ElementsName.RerunSelectedUnavailable;
 			}
 		}
 
@@ -218,6 +251,14 @@ namespace LogExplorer.ViewModels
 		#endregion
 
 		#region Methods
+
+		private void CancelRerun()
+		{
+			if (Popup.ShowConfirm(Messages.CancelRerunQuesion))
+			{
+				this.cts?.Cancel();
+			}
+		}
 
 		private void ClearFilter()
 		{
@@ -321,7 +362,27 @@ namespace LogExplorer.ViewModels
 			this.RaisePropertyChanged(() => this.FilterCounter);
 		}
 
-		private void RerunSelected()
+		private async void RerunOne(Log log)
+		{
+			this.IsRerunAvailable = false;
+			this.cts = new CancellationTokenSource();
+			try
+			{
+				if (await this.tester.RerunAsync(log, this.settings, this.cts.Token))
+				{
+					var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
+					this.manager.UpdateOverview(updatedHistory);
+				}
+			}
+			catch (OperationCanceledException)
+			{
+				this.logger.AddMessage(Messages.RerunCanceled);
+			}
+			this.cts = null;
+			this.IsRerunAvailable = true;
+		}
+
+		private async void RerunSelected()
 		{
 			var selectedLogs = this.manager.GetSelectedLogs();
 			if (selectedLogs == null
@@ -330,16 +391,18 @@ namespace LogExplorer.ViewModels
 				this.logger.AddMessage(Messages.NothingSelected);
 				return;
 			}
-			this.tester.RerunQueue(selectedLogs, this.settings);
-		}
-
-		private async void RerunOne(Log log)
-		{
-			if (await this.tester.RerunAsync(log, this.settings))
+			this.IsRerunAvailable = false;
+			this.cts = new CancellationTokenSource();
+			try
 			{
-				var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
-				this.manager.UpdateOverview(updatedHistory);
+				await this.tester.RerunQueueAwait(selectedLogs, this.settings, this.cts.Token);
 			}
+			catch (OperationCanceledException)
+			{
+				this.logger.AddMessage(Messages.RerunCanceled);
+			}
+			this.cts = null;
+			this.IsRerunAvailable = true;
 		}
 
 		#endregion

@@ -13,6 +13,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using LogExplorer.Services.OutputSystem;
@@ -109,6 +111,18 @@ namespace LogExplorer.Services.Helpers
 			return true;
 		}
 
+		public static bool DirExist(string path)
+		{
+			if (!string.IsNullOrEmpty(path)
+			    && Directory.Exists(path))
+			{
+				return true;
+			}
+
+			Logger.AddDetailMessage(Messages.GetDirNotExist(path));
+			return false;
+		}
+
 		public static bool EmptyDir(string path)
 		{
 			var containsFiles = GetFiles(path).Any();
@@ -167,18 +181,6 @@ namespace LogExplorer.Services.Helpers
 			return parent.FullName;
 		}
 
-		public static bool DirExist(string path)
-		{
-			if (!string.IsNullOrEmpty(path)
-			    && Directory.Exists(path))
-			{
-				return true;
-			}
-
-			Logger.AddDetailMessage(Messages.GetDirNotExist(path));
-			return false;
-		}
-
 		public static string SelectDir(string path)
 		{
 			var directory = path;
@@ -215,7 +217,48 @@ namespace LogExplorer.Services.Helpers
 			return newPath;
 		}
 
-		public static bool StartProcessWithArguments(string filePath, string arguments, bool hidden)
+		public static bool StartProcess(string path)
+		{
+			if (string.IsNullOrEmpty(path))
+			{
+				return false;
+			}
+			var attr = File.GetAttributes(path);
+
+			if (attr.HasFlag(FileAttributes.Directory))
+			{
+				if (!DirExist(path))
+				{
+					return false;
+				}
+			}
+			else
+			{
+				if (!FileExist(path))
+				{
+					return false;
+				}
+			}
+
+			var process = new Process { StartInfo = new ProcessStartInfo(path) };
+
+			try
+			{
+				process.Start();
+				return true;
+			}
+			catch (Exception e)
+			{
+				Popup.ShowError(Messages.GetProcessException(path, e.Message));
+				return false;
+			}
+		}
+
+		public static async Task<bool> StartProcessWithArguments(
+			string filePath,
+			string arguments,
+			bool hidden,
+			CancellationToken ct)
 		{
 			if (string.IsNullOrEmpty(arguments))
 			{
@@ -228,62 +271,58 @@ namespace LogExplorer.Services.Helpers
 				                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
 				                FileName = filePath,
 				                Arguments = arguments
-			};
+			                };
 			process.StartInfo = startInfo;
 			var processStr = $"'{GetFileName(filePath, true)} {arguments}'";
 			try
 			{
 				if (process.Start())
 				{
-					process.WaitForExit();
+					await process.WaitForExitAsync(ct);
 					return true;
 				}
 				Popup.ShowWarning(Messages.GetProcessNotStart(processStr));
 				return false;
+			}
+			catch (OperationCanceledException)
+			{
+				process.Kill();
+				Logger.AddMessage(Messages.KillingProccess);
+				throw;
 			}
 			catch (Exception e)
 			{
 				Popup.ShowError(Messages.GetProcessException(processStr, e.Message));
 				return false;
 			}
-			
 		}
 
-		public static bool StartProcess(string path)
+		#endregion
+
+		#region Methods
+
+		/// <summary>
+		/// Waits asynchronously for the process to exit.
+		/// </summary>
+		/// <param name="process">The process to wait for cancellation.</param>
+		/// <param name="cancellationToken">
+		/// A cancellation token. If invoked, the task will return
+		/// immediately as canceled.
+		/// </param>
+		/// <returns>A Task representing waiting for the process to end.</returns>
+		private static Task WaitForExitAsync(
+			this Process process,
+			CancellationToken cancellationToken = default(CancellationToken))
 		{
-		    if (string.IsNullOrEmpty(path))
-		    {
-		        return false;
-		    }
-            var attr = File.GetAttributes(path);
-
-		    if (attr.HasFlag(FileAttributes.Directory))
-		    {
-		        if (!DirExist(path))
-		        {
-		            return false;
-		        }
-            }
-            else
-		    {
-                if (!FileExist(path))
-                {
-                    return false;
-                }
-            }
-
-            var process = new Process { StartInfo = new ProcessStartInfo(path) };
-
-			try
+			var tcs = new TaskCompletionSource<object>();
+			process.EnableRaisingEvents = true;
+			process.Exited += (sender, args) => tcs.TrySetResult(null);
+			if (cancellationToken != default(CancellationToken))
 			{
-			    process.Start();
-			    return true;
+				cancellationToken.Register(tcs.SetCanceled);
 			}
-			catch (Exception e)
-			{
-				Popup.ShowError(Messages.GetProcessException(path, e.Message));
-                return false;
-			}
+
+			return tcs.Task;
 		}
 
 		#endregion

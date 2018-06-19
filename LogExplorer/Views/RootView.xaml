@@ -147,6 +147,7 @@
 										        Margin="5,0,0,0" />
 										<Button Content="Rerun"
 										        Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												IsEnabled="{Binding DataContext.IsRerunAvailable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 										        CommandParameter="{Binding Log}"
 										        Margin="5,0,0,0" />
 									</StackPanel>
@@ -219,7 +220,7 @@
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding CmdExport}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="2" Content="Export Directory" Command="{Binding CmdExportDir}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="3" Content="Delete Selected" Command="{Binding CmdDeleteSelected}"  Background="IndianRed"/>
-		<Button Margin="5,5" Grid.Row="1" Grid.Column="4" Content="Rerun Selected" Command="{Binding CmdRerunSelected}" />
+		<Button Margin="5,5" Grid.Row="1" Grid.Column="4" Content="{Binding RerunSelectedButtonName}" Command="{Binding CmdRerunSelected}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="5" Content="Refresh" Command="{Binding CmdRefresh}" />
 	</Grid>
 

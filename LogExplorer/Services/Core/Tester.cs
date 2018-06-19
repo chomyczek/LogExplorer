@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 using LogExplorer.Models;
@@ -35,9 +36,11 @@ namespace LogExplorer.Services.Core
 
 		#region Fields
 
-		private readonly Logger logger;
-		private readonly IManager manager;
 		private readonly IExplorer explorer;
+
+		private readonly Logger logger;
+
+		private readonly IManager manager;
 
 		#endregion
 
@@ -54,7 +57,7 @@ namespace LogExplorer.Services.Core
 
 		#region Public Methods and Operators
 
-		public async Task<bool> RerunAsync(Log log, Settings settings)
+		public async Task<bool> RerunAsync(Log log, Settings settings, CancellationToken ct)
 		{
 			var testName = log.Name;
 			var librariesPath = FileHelper.CombinePaths(settings.TesterPath, LibSubDir);
@@ -62,7 +65,7 @@ namespace LogExplorer.Services.Core
 			if (!FileHelper.DirExist(librariesPath))
 			{
 				Popup.ShowWarning(Messages.GetDllNotExist(librariesPath));
-				return await Task.Run(() => false);
+				return false;
 			}
 
 			var pdbs = FileHelper.GetFiles(librariesPath, "pdb");
@@ -74,42 +77,53 @@ namespace LogExplorer.Services.Core
 			if (string.IsNullOrEmpty(component))
 			{
 				Popup.ShowWarning(Messages.DllNotFound);
-				return await Task.Run(() => false);
+				return false;
 			}
 
 			this.logger.AddDetailMessage(Messages.GetDllFound(component));
 			var config = this.PrepareConfig(settings, log);
-			return await this.ExecuteAsync(settings.TesterPath, testName, component, config, settings.IsHiddenTester);
+			return await this.ExecuteAsync(settings.TesterPath, testName, component, config, settings.IsHiddenTester, ct);
 		}
 
-		public async void RerunQueue(List<Log> logs, Settings settings)
+		public async Task RerunQueueAwait(List<Log> logs, Settings settings, CancellationToken ct)
 		{
-			var counter = 1;
-			var count = logs.Count;
-			foreach (var log in logs)
-			{
-				this.logger.AddMessage(Messages.GetRunningCounter(log.Name, counter, count));
-				if (await this.RerunAsync(log, settings))
+			await Task.Run(
+				async () =>
 				{
-					var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
-					this.manager.UpdateOverview(updatedHistory);
-				}
-				this.logger.AddMessage(Messages.GetExecutionEnded(log.Name));
-				counter++;
-			}
+					var counter = 1;
+					var count = logs.Count;
+					foreach (var log in logs)
+					{
+						this.logger.AddMessage(Messages.GetRunningCounter(log.Name, counter, count));
+						if (await this.RerunAsync(log, settings, ct))
+						{
+							var updatedHistory = this.explorer.GetLogHistory(FileHelper.GetParent(log.DirPath));
+							this.manager.UpdateOverview(updatedHistory);
+						}
+						this.logger.AddMessage(Messages.GetExecutionEnded(log.Name));
+						counter++;
+					}
+				},
+				ct);
 		}
 
 		#endregion
 
 		#region Methods
 
-		private async Task<bool> ExecuteAsync(string testerPath, string name, string component, string config, bool hidden)
+		private async Task<bool> ExecuteAsync(
+			string testerPath,
+			string name,
+			string component,
+			string config,
+			bool hidden,
+			CancellationToken ct)
 		{
 			var testerExePath = FileHelper.CombinePaths(testerPath, TesterName);
 			if (!FileHelper.FileExist(testerExePath))
 			{
 				Popup.ShowWarning(Messages.GetTesterNotFound(FileHelper.CombinePaths(testerPath, TesterName)));
-				return await Task.Run(()=>  false);
+				return false;
 			}
 			string paramters = $"-p {component} -n {name}";
 			if (FileHelper.FileExist(config))
@@ -121,7 +135,7 @@ namespace LogExplorer.Services.Core
 				this.logger.AddMessage(Messages.GetIncorrectConfigPath(config));
 			}
 
-			return await Task.Run(() => FileHelper.StartProcessWithArguments(testerExePath, paramters, hidden));
+			return await FileHelper.StartProcessWithArguments(testerExePath, paramters, hidden, ct);
 		}
 
 		private string GetCorrectComponent(string[] pdbs, string testName)

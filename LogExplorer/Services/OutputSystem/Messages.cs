@@ -14,6 +14,8 @@ namespace LogExplorer.Services.OutputSystem
 	{
 		#region Constants
 
+		public const string CancelRerunQuesion = "Are you sure you want to cancel tests rerunning?";
+
 		public const string DeleteAborted = "Delete log operation was aborted";
 
 		public const string DeleteSelectedLogsQuestion = "Are you sure you want to delete selected logs directory?";
@@ -28,11 +30,15 @@ namespace LogExplorer.Services.OutputSystem
 
 		public const string HeaderWarning = "Warning!";
 
+		public const string KillingProccess = "Killing process";
+
 		public const string LogWithoutDirPath = "Log information object does not contains directory path";
 
 		public const string NoExportPath = "Export directory was't selected";
 
 		public const string NothingSelected = "There was no log file selected";
+
+		public const string RerunCanceled = "Rerun operation was canceled";
 
 		public const string RootDirDoesntExist = "Directory set as root logs path doesn't exist";
 
