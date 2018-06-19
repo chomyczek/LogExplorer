@@ -266,13 +266,21 @@ namespace LogExplorer.Services.Helpers
 			}
 
 			var process = new Process();
-			var startInfo = new ProcessStartInfo
-			                {
-				                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
-				                FileName = filePath,
-				                Arguments = arguments
-			                };
-			process.StartInfo = startInfo;
+            var startInfo = new ProcessStartInfo
+            {
+                WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+                WorkingDirectory = Path.GetDirectoryName(filePath),
+                FileName = "cmd.exe",
+                Arguments = $@"/C {GetFileName(filePath, true)} {arguments}"
+            };
+            //todo fix this way
+            //var startInfo = new ProcessStartInfo
+            //{
+            //    WindowStyle = hidden ? ProcessWindowStyle.Hidden : ProcessWindowStyle.Normal,
+            //    FileName = filePath,
+            //    Arguments = arguments
+            //       };
+            process.StartInfo = startInfo;
 			var processStr = $"'{GetFileName(filePath, true)} {arguments}'";
 			try
 			{
@@ -286,7 +294,16 @@ namespace LogExplorer.Services.Helpers
 			}
 			catch (OperationCanceledException)
 			{
-				process.Kill();
+#region todo delete when fixed 
+                var processlist = Process.GetProcesses().Where(p=>p.ProcessName.Contains(GetFileName(filePath)));
+
+                foreach (var coProcess in processlist)
+			    {
+			        coProcess.Kill();
+			    }
+#endregion
+
+                process.Kill();
 				Logger.AddMessage(Messages.KillingProccess);
 				throw;
 			}
