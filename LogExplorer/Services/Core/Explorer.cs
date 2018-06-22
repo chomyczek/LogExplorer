@@ -137,7 +137,14 @@ namespace LogExplorer.Services.Core
 			{
 				return $@"{path}\{logName}";
 			}
-			this.logger.AddDetailMessage(Messages.GetNoLogFile(path));
+
+            logName = files.FirstOrDefault(f => !f.EndsWith(@".xml.html"));
+            if (!string.IsNullOrEmpty(logName))
+            {
+                return $@"{path}\{logName}";
+            }
+
+            this.logger.AddDetailMessage(Messages.GetNoLogFile(path));
 			return string.Empty;
 		}
 
