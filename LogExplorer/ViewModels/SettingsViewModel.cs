@@ -31,13 +31,16 @@ namespace LogExplorer.ViewModels
 
 		private Settings previousSettings;
 
+		private readonly Repository repository;
+
 		#endregion
 
 		#region Constructors and Destructors
 
 		public SettingsViewModel()
 		{
-			this.settings = Mvx.Resolve<Repository>().Settings;
+			this.repository = Mvx.Resolve<Repository>();
+			this.settings = this.repository.Settings;
 			this.previousSettings = new Settings();
 			this.settings.CopyValues(ref this.previousSettings);
 
@@ -108,6 +111,14 @@ namespace LogExplorer.ViewModels
 			get
 			{
 				return new MvxCommand(this.SaveChanges);
+			}
+		}
+
+		public IMvxCommand CmdLoad
+		{
+			get
+			{
+				return new MvxCommand(this.LoadSettings);
 			}
 		}
 
@@ -256,8 +267,15 @@ namespace LogExplorer.ViewModels
 
 		private void SaveChanges()
 		{
-			Mvx.Resolve<Repository>().UpdateSettings();
+			this.repository.UpdateSettings();
 			this.Close(this);
+		}
+
+		private void LoadSettings()
+		{
+			this.repository.GetSettings();
+			this.repository.Settings.CopyValues(ref this.settings);
+			this.RaiseAllPropertiesChanged();
 		}
 
 		#endregion

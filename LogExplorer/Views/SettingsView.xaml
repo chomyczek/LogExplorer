@@ -117,11 +117,13 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
 			<Button Margin="5,5" Grid.Column="0" Content="Cancel" Command="{Binding CmdCancel}" />
 			<Button Margin="5,5" Grid.Column="1" Content="Back" Command="{Binding CmdBack}" />
-			<Button Margin="5,5" Grid.Column="2" Content="Save" Command="{Binding CmdSave}" />
+			<Button Margin="5,5" Grid.Column="2" Content="Load" Command="{Binding CmdLoad}" />
+			<Button Margin="5,5" Grid.Column="3" Content="Save" Command="{Binding CmdSave}" />
 		</Grid>
 
 	</Grid>

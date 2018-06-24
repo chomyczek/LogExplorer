@@ -98,7 +98,7 @@ namespace LogExplorer.Services.Core
 
 		#region Methods
 
-		private void GetSettings()
+		public void GetSettings()
 		{
 			var settings = new Settings();
 
