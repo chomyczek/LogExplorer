@@ -50,11 +50,19 @@ namespace LogExplorer.ViewModels
 
 		#region Public Properties
 
-		public IMvxCommand CmdCancel
+		public IMvxCommand CmdBack
 		{
 			get
 			{
 				return new MvxCommand(() => { this.Close(this); });
+			}
+		}
+
+		public IMvxCommand CmdCancel
+		{
+			get
+			{
+				return new MvxCommand(this.CancelChanges);
 			}
 		}
 
@@ -156,6 +164,7 @@ namespace LogExplorer.ViewModels
 				this.RaisePropertyChanged(() => this.IsHiddenTester);
 			}
 		}
+
 		public bool IsLoggerEnabled
 		{
 			get
@@ -233,6 +242,15 @@ namespace LogExplorer.ViewModels
 		private bool IsConfigPathEnabled { get; set; }
 
 		private Settings settings { get; }
+
+		#endregion
+
+		#region Methods
+
+		private void CancelChanges()
+		{
+			throw new NotImplementedException();
+		}
 
 		#endregion
 	}
