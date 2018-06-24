@@ -117,6 +117,7 @@
     <Compile Include="Models\Settings.cs" />
     <Compile Include="Services\Converters\VisibiityConverter.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
+    <Compile Include="Services\Extensions\SettingsExtensions.cs" />
     <Compile Include="Services\OutputSystem\ElementsName.cs" />
     <Compile Include="Services\OutputSystem\Logger.cs" />
     <Compile Include="Services\Core\Manager.cs" />

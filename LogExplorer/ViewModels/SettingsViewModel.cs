@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
+using LogExplorer.Services.Extensions;
 using LogExplorer.Services.Helpers;
 
 using MvvmCross.Core.ViewModels;
@@ -22,9 +23,13 @@ namespace LogExplorer.ViewModels
 	{
 		#region Fields
 
+		private Settings settings;
+
 		private MvxCommand cmdPickCustomConfig;
 
 		private Tuple<int, string> configSetting;
+
+		private Settings previousSettings;
 
 		#endregion
 
@@ -33,6 +38,9 @@ namespace LogExplorer.ViewModels
 		public SettingsViewModel()
 		{
 			this.settings = Mvx.Resolve<Repository>().Settings;
+			this.previousSettings = new Settings();
+			this.settings.CopyValues(ref this.previousSettings);
+
 			this.ConfigSettingDictionary = new List<Tuple<int, string>>
 			                               {
 				                               new Tuple<int, string>(0, "Tester default"),
@@ -99,12 +107,7 @@ namespace LogExplorer.ViewModels
 		{
 			get
 			{
-				return new MvxCommand(
-					() =>
-					{
-						Mvx.Resolve<Repository>().UpdateSettings();
-						this.Close(this);
-					});
+				return new MvxCommand(this.SaveChanges);
 			}
 		}
 
@@ -241,15 +244,20 @@ namespace LogExplorer.ViewModels
 
 		private bool IsConfigPathEnabled { get; set; }
 
-		private Settings settings { get; }
-
 		#endregion
 
 		#region Methods
 
 		private void CancelChanges()
 		{
-			throw new NotImplementedException();
+			this.previousSettings.CopyValues(ref this.settings);
+			this.Close(this);
+		}
+
+		private void SaveChanges()
+		{
+			Mvx.Resolve<Repository>().UpdateSettings();
+			this.Close(this);
 		}
 
 		#endregion
