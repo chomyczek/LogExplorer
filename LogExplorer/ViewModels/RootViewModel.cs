@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
@@ -40,6 +41,8 @@ namespace LogExplorer.ViewModels
 		private bool isRerunAvailable;
 
 		private MvxObservableCollection<LogOverview> logs;
+
+		private Task refreshTask;
 
 		private Settings settings;
 
@@ -297,6 +300,11 @@ namespace LogExplorer.ViewModels
 
 		private void Filter()
 		{
+			if (this.refreshTask?.IsCompleted == false)
+			{
+				return;
+			}
+
 			var isActie = false;
 			IEnumerable<LogOverview> searchLogs = this.manager.LogOverview.ToArray();
 
@@ -309,14 +317,12 @@ namespace LogExplorer.ViewModels
 			if (!string.IsNullOrEmpty(this.srchSelResult?.Value))
 			{
 				isActie = true;
-
 				searchLogs = searchLogs.Where(log => log.Log.Result.ContainsString(this.srchSelResult.Value));
 			}
 
 			if (this.srchDate.HasValue)
 			{
 				isActie = true;
-
 				searchLogs =
 					searchLogs.Where(log => log.History.Any(history => DateTime.Compare(this.srchDate.Value, history.StartTime) <= 0));
 			}
@@ -352,11 +358,11 @@ namespace LogExplorer.ViewModels
 		private async void Refresh()
 		{
 			this.ReasignCollections(new MvxObservableCollection<LogOverview>());
-			await
-				this.explorer.PopulateLogsRootAsync(
-					this.manager.LogOverview,
-					this.settings.RootLogsPath,
-					() => this.RaisePropertyChanged(() => this.FilterCounter));
+			refreshTask = this.explorer.PopulateLogsRootAsync(
+				this.manager.LogOverview,
+				this.settings.RootLogsPath,
+				() => this.RaisePropertyChanged(() => this.FilterCounter));
+			await refreshTask;
 
 			this.Filter();
 			this.RaisePropertyChanged(() => this.FilterCounter);
