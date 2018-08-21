@@ -20,8 +20,8 @@
 		<GridLength x:Key="DurationWidth">70</GridLength>
 		<GridLength x:Key="CommandsWidth">200</GridLength>
 
-		<!-- TreeGrid "Control" -->
-		<Border x:Key="LogsTree" BorderBrush="Black" BorderThickness="1">
+		 <!--TreeGrid "Control"--> 
+		<Border x:Key="LogsTree_old" BorderBrush="Black" BorderThickness="1">
 			<Border.Resources>
 				<Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
 					<Setter Property="Margin" Value="3 0 3 0" />
@@ -31,14 +31,14 @@
 				</Style>
 			</Border.Resources>
 
-			<!-- Content -->
+			 <!--Content--> 
 			<Grid>
 				<Grid.RowDefinitions>
 					<RowDefinition Height="Auto" />
 					<RowDefinition />
 				</Grid.RowDefinitions>
 
-				<!-- Column headers -->
+				 <!--Column headers--> 
 				<TreeViewItem Grid.Row="0" BorderThickness="1">
 					<TreeViewItem.Header>
 						<Grid>
@@ -49,7 +49,7 @@
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="{StaticResource SelectWidth}" />
 								<ColumnDefinition Width="{StaticResource NameWidth}" />
-								<!-- Placeholders for column of ToggleButton -->
+								 <!--Placeholders for column of ToggleButton--> 
 								<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
 								<ColumnDefinition Width="{StaticResource ResultWidth}" />
 								<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
@@ -64,7 +64,7 @@
 								<TextBlock Text="Name" Style="{StaticResource TextBlockBoldStyle}" />
 							</StackPanel>
 
-							<!-- Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
+							 <!--Empty TreeViewItem to measure the size of its ToggleButton into the "Toggle" group-->
 							<TreeViewItem Grid.Row="0" Grid.Column="2" Padding="0" />
 							<TextBlock Grid.Row="0" Grid.Column="3" Text="Last Result" Style="{StaticResource TextBlockBoldStyle}" />
 							<TextBlock Grid.Row="0" Grid.Column="4" Text="Start Time" Style="{StaticResource TextBlockBoldStyle}" />
@@ -104,9 +104,9 @@
 					</TreeViewItem.Header>
 				</TreeViewItem>
 
-				<!-- Data rows -->
+				 <!--Data rows--> 
 				<TreeView Grid.Row="1" ItemsSource="{Binding .}" BorderBrush="Gray" BorderThickness="0 1 0 0">
-					<!--<TreeView.ItemContainerStyle>	
+					<TreeView.ItemContainerStyle>	
 						<Style TargetType="{x:Type TreeViewItem}">
 							<Setter Property="FontWeight" Value="Normal" />
 							<Style.Triggers>
@@ -115,18 +115,18 @@
 								</Trigger>
 							</Style.Triggers>
 						</Style>
-					</TreeView.ItemContainerStyle>-->
+					</TreeView.ItemContainerStyle>
 
 					<TreeView.ItemTemplate>
 
-						<!-- Level 0 - log overview -->
+						 <!--Level 0 - log overview--> 
 						<HierarchicalDataTemplate ItemsSource="{Binding History}">
 							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
 								<Grid Background="{Binding Log.ResultColor}">
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="{StaticResource SelectWidth}" />
 										<ColumnDefinition Width="{StaticResource NameWidth}" />
-										<!-- Placeholders for column of ToggleButton -->
+										 <!--Placeholders for column of ToggleButton--> 
 										<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
 										<ColumnDefinition Width="{StaticResource ResultWidth}" />
 										<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
@@ -164,7 +164,7 @@
 											<Grid.ColumnDefinitions>
 												<ColumnDefinition Width="{StaticResource SelectWidth}" />
 												<ColumnDefinition Width="{StaticResource NameWidth}" />
-												<!-- Placeholders for column of ToggleButton -->
+												 <!--Placeholders for column of ToggleButton--> 
 												<ColumnDefinition Width="0" />
 												<ColumnDefinition Width="{StaticResource ResultWidth}" />
 												<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
@@ -199,30 +199,11 @@
 				</TreeView>
 			</Grid>
 		</Border>
-	</views:MvxWpfView.Resources>
 
-	<Grid>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="*" />
-			<RowDefinition Height="30" />
-		</Grid.RowDefinitions>
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-			<ColumnDefinition Width="*" />
-		</Grid.ColumnDefinitions>
-
-		<!--<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree}"
-		                DataContext="{Binding Logs}" />-->
-
-
-		<tlv:TreeListView AllowsColumnReorder="True">
+		<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}"><!--TODO Filter-->
 			<!--Create an item template to specify the ItemsSource-->
 			<tlv:TreeListView.ItemTemplate>
-				<HierarchicalDataTemplate ItemsSource="{Binding Children}" />
+				<HierarchicalDataTemplate ItemsSource="{Binding History}" />
 			</tlv:TreeListView.ItemTemplate>
 			<tlv:TreeListView.Columns>
 				<!--Create the first column containing the expand button and the type name.-->
@@ -233,46 +214,62 @@
 								<!--The Expander Button (can be used in any column (typically the first one))-->
 								<tlv:TreeListViewExpander/>
 								<!--Display the name of the DataElement-->
-								<TextBlock Text="{Binding}"/>
+								<TextBlock Text="{Binding Log.Name}"/>
 							</StackPanel>
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
 				<!--Create a second column containing the number of children.-->
-				<GridViewColumn Header="Children" Width="100">
+				<GridViewColumn Header="Result" Width="100">
 					<GridViewColumn.CellTemplate>
 						<DataTemplate>
-							<!--Display the size of the DataElement-->
-							<TextBlock Text="{Binding Children.Count}" HorizontalAlignment="Right"/>
+							<TextBlock Text="{Binding Log.Result}" HorizontalAlignment="Right"/>
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
 				<!--Create a third column containing the brush of the material.-->
-				<GridViewColumn Header="Brush" Width="100">
+				<GridViewColumn Header="Start" Width="100">
 					<GridViewColumn.CellTemplate>
 						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<!--Border showing the actual color-->
-								<Border Background="{Binding Brush}" CornerRadius="2"
-                                    Width="16" Height="16"
-                                    BorderThickness="1" BorderBrush="DarkGray"/>
-								<!--Display the brush-->
-								<TextBlock Text="{Binding Brush}"/>
-							</StackPanel>
+							<TextBlock Text="{Binding Log.StartTimeString}" />
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
 			</tlv:TreeListView.Columns>
 			<!--Create some sample data-->
-			<MaterialGroup>
+			<!--<MaterialGroup>
 				<MaterialGroup>
 					<DiffuseMaterial Brush="Blue"/>
 					<DiffuseMaterial Brush="Red"/>
 					<SpecularMaterial Brush="Orange"/>
 				</MaterialGroup>
 				<EmissiveMaterial Brush="AliceBlue"/>
-			</MaterialGroup>
+			</MaterialGroup>-->
 		</tlv:TreeListView>
+
+	</views:MvxWpfView.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="30" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" Name="Settings"/>
+			<ColumnDefinition Width="*" Name="Export"/>
+			<ColumnDefinition Width="*" Name="ExportDict"/>
+			<ColumnDefinition Width="*" Name="Delete"/>
+			<ColumnDefinition Width="*" Name="Rerun"/>
+			<ColumnDefinition Width="*" Name="Refresh"/>
+		</Grid.ColumnDefinitions>
+
+		<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree}"
+		                DataContext="{Binding Logs}" />
+		<!--<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree_old}"
+		                DataContext="{Binding Logs}" />-->
+
+
+
 
 
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
