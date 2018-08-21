@@ -8,17 +8,26 @@
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   xmlns:models="clr-namespace:LogExplorer.Models"
                   xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
+                  xmlns:system="clr-namespace:System;assembly=mscorlib"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 
 	<views:MvxWpfView.Resources>
-		<GridLength x:Key="SelectWidth">15</GridLength>
-		<GridLength x:Key="NameWidth">350</GridLength>
-		<GridLength x:Key="PlaceholderWidth">18</GridLength>
-		<GridLength x:Key="ResultWidth">100</GridLength>
-		<GridLength x:Key="StartTimeWidth">150</GridLength>
-		<GridLength x:Key="DurationWidth">70</GridLength>
-		<GridLength x:Key="CommandsWidth">200</GridLength>
+		<GridLength x:Key="SelectWidth_old">15</GridLength>
+		<GridLength x:Key="NameWidth_old">350</GridLength>
+		<GridLength x:Key="PlaceholderWidth_old">18</GridLength>
+		<GridLength x:Key="ResultWidth_old">100</GridLength>
+		<GridLength x:Key="StartTimeWidth_old">150</GridLength>
+		<GridLength x:Key="DurationWidth_old">70</GridLength>
+		<GridLength x:Key="CommandsWidth_old">200</GridLength>
+		<system:Double x:Key="SelectWidth">15</system:Double>
+		<system:Double x:Key="NameWidth">350</system:Double>
+		<system:Double x:Key="PlaceholderWidth">18</system:Double>
+		<system:Double x:Key="ResultWidth">100</system:Double>
+		<system:Double x:Key="StartTimeWidth">150</system:Double>
+		<system:Double x:Key="DurationWidth">70</system:Double>
+		<system:Double x:Key="CommandsWidth">200</system:Double>
+		
 
 		 <!--TreeGrid "Control"--> 
 		<Border x:Key="LogsTree_old" BorderBrush="Black" BorderThickness="1">
@@ -47,14 +56,14 @@
 								<RowDefinition Height="Auto" />
 							</Grid.RowDefinitions>
 							<Grid.ColumnDefinitions>
-								<ColumnDefinition Width="{StaticResource SelectWidth}" />
-								<ColumnDefinition Width="{StaticResource NameWidth}" />
+								<ColumnDefinition Width="{StaticResource SelectWidth_old}" />
+								<ColumnDefinition Width="{StaticResource NameWidth_old}" />
 								 <!--Placeholders for column of ToggleButton--> 
-								<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
-								<ColumnDefinition Width="{StaticResource ResultWidth}" />
-								<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
-								<ColumnDefinition Width="{StaticResource DurationWidth}" />
-								<ColumnDefinition Width="{StaticResource CommandsWidth}" />
+								<ColumnDefinition Width="{StaticResource PlaceholderWidth_old}" />
+								<ColumnDefinition Width="{StaticResource ResultWidth_old}" />
+								<ColumnDefinition Width="{StaticResource StartTimeWidth_old}" />
+								<ColumnDefinition Width="{StaticResource DurationWidth_old}" />
+								<ColumnDefinition Width="{StaticResource CommandsWidth_old}" />
 							</Grid.ColumnDefinitions>
 
 							<StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
@@ -77,7 +86,7 @@
 								<xctk:WatermarkTextBox.Watermark>
 									<Grid>
 										<Grid.ColumnDefinitions>
-											<ColumnDefinition Width="{StaticResource NameWidth}" />
+											<ColumnDefinition Width="{StaticResource NameWidth_old}" />
 										</Grid.ColumnDefinitions>
 										<TextBlock TextAlignment="Right" Text="Filter by name.." />
 									</Grid>
@@ -124,14 +133,14 @@
 							<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.5">
 								<Grid Background="{Binding Log.ResultColor}">
 									<Grid.ColumnDefinitions>
-										<ColumnDefinition Width="{StaticResource SelectWidth}" />
-										<ColumnDefinition Width="{StaticResource NameWidth}" />
+										<ColumnDefinition Width="{StaticResource SelectWidth_old}" />
+										<ColumnDefinition Width="{StaticResource NameWidth_old}" />
 										 <!--Placeholders for column of ToggleButton--> 
-										<ColumnDefinition Width="{StaticResource PlaceholderWidth}" />
-										<ColumnDefinition Width="{StaticResource ResultWidth}" />
-										<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
-										<ColumnDefinition Width="{StaticResource DurationWidth}" />
-										<ColumnDefinition Width="{StaticResource CommandsWidth}" />
+										<ColumnDefinition Width="{StaticResource PlaceholderWidth_old}" />
+										<ColumnDefinition Width="{StaticResource ResultWidth_old}" />
+										<ColumnDefinition Width="{StaticResource StartTimeWidth_old}" />
+										<ColumnDefinition Width="{StaticResource DurationWidth_old}" />
+										<ColumnDefinition Width="{StaticResource CommandsWidth_old}" />
 									</Grid.ColumnDefinitions>
 									<CheckBox Grid.Column="0" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
 									<TextBlock Grid.Column="1" Text="{Binding Log.Name}" Style="{StaticResource TextBlockStyle}" />
@@ -162,14 +171,14 @@
 									<Border HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" BorderThickness="0.2">
 										<Grid Background="{Binding ResultColor}">
 											<Grid.ColumnDefinitions>
-												<ColumnDefinition Width="{StaticResource SelectWidth}" />
-												<ColumnDefinition Width="{StaticResource NameWidth}" />
+												<ColumnDefinition Width="{StaticResource SelectWidth_old}" />
+												<ColumnDefinition Width="{StaticResource NameWidth_old}" />
 												 <!--Placeholders for column of ToggleButton--> 
 												<ColumnDefinition Width="0" />
-												<ColumnDefinition Width="{StaticResource ResultWidth}" />
-												<ColumnDefinition Width="{StaticResource StartTimeWidth}" />
-												<ColumnDefinition Width="{StaticResource DurationWidth}" />
-												<ColumnDefinition Width="{StaticResource CommandsWidth}" />
+												<ColumnDefinition Width="{StaticResource ResultWidth_old}" />
+												<ColumnDefinition Width="{StaticResource StartTimeWidth_old}" />
+												<ColumnDefinition Width="{StaticResource DurationWidth_old}" />
+												<ColumnDefinition Width="{StaticResource CommandsWidth_old}" />
 											</Grid.ColumnDefinitions>
 											<CheckBox Grid.Column="0" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 											<TextBlock Grid.Column="1" Text="{Binding Name}" Style="{StaticResource TextBlockStyle}" />
@@ -200,14 +209,16 @@
 			</Grid>
 		</Border>
 
+
+
 		<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}"><!--TODO Filter-->
 			<!--Create an item template to specify the ItemsSource-->
 			<tlv:TreeListView.ItemTemplate>
 				<HierarchicalDataTemplate ItemsSource="{Binding History}" />
 			</tlv:TreeListView.ItemTemplate>
 			<tlv:TreeListView.Columns>
-				<!--Create the first column containing the expand button and the type name.-->
-				<GridViewColumn Header="Name" Width="200">
+				<!--Create the first column containing the expand button and the name.-->
+				<GridViewColumn Header="Name" Width="{StaticResource NameWidth}">
 					<GridViewColumn.CellTemplate>
 						<DataTemplate>
 							<StackPanel Orientation="Horizontal">
@@ -215,36 +226,56 @@
 								<tlv:TreeListViewExpander/>
 								<!--Display the name of the DataElement-->
 								<TextBlock Text="{Binding Log.Name}"/>
+								<TextBlock Text="{Binding Name}"/>
 							</StackPanel>
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
-				<!--Create a second column containing the number of children.-->
-				<GridViewColumn Header="Result" Width="100">
+				<!--Create a Last Result column.-->
+				<GridViewColumn Header="Last Result" Width="{StaticResource ResultWidth}">
 					<GridViewColumn.CellTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Log.Result}" HorizontalAlignment="Right"/>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Log.Result}" HorizontalAlignment="Right"/>
+								<TextBlock Text="{Binding Result}" HorizontalAlignment="Right"/>
+							</StackPanel>
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
-				<!--Create a third column containing the brush of the material.-->
-				<GridViewColumn Header="Start" Width="100">
+				<!--Create a Start Time column.-->
+				<GridViewColumn Header="Start Time" Width="{StaticResource StartTimeWidth}">
 					<GridViewColumn.CellTemplate>
 						<DataTemplate>
-							<TextBlock Text="{Binding Log.StartTimeString}" />
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Log.StartTimeString}" />
+								<TextBlock Text="{Binding StartTimeString}" />
+							</StackPanel>
+						</DataTemplate>
+					</GridViewColumn.CellTemplate>
+				</GridViewColumn>
+				<!--Create a Duration column.-->
+				<GridViewColumn Header="Duration" Width="{StaticResource DurationWidth}">
+					<GridViewColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Log.DurationString}" />
+								<TextBlock Text="{Binding DurationString}" />
+							</StackPanel>
+						</DataTemplate>
+					</GridViewColumn.CellTemplate>
+				</GridViewColumn>
+				<!--Create a Commands column.-->
+				<GridViewColumn Header="Commands" Width="{StaticResource CommandsWidth}">
+					<GridViewColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding Log.StartTimeString}" />
+								<TextBlock Text="{Binding StartTimeString}" />
+							</StackPanel>
 						</DataTemplate>
 					</GridViewColumn.CellTemplate>
 				</GridViewColumn>
 			</tlv:TreeListView.Columns>
-			<!--Create some sample data-->
-			<!--<MaterialGroup>
-				<MaterialGroup>
-					<DiffuseMaterial Brush="Blue"/>
-					<DiffuseMaterial Brush="Red"/>
-					<SpecularMaterial Brush="Orange"/>
-				</MaterialGroup>
-				<EmissiveMaterial Brush="AliceBlue"/>
-			</MaterialGroup>-->
 		</tlv:TreeListView>
 
 	</views:MvxWpfView.Resources>
