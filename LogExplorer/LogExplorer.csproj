@@ -211,6 +211,12 @@
   <ItemGroup>
     <Resource Include="Customs\Explorer.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TreeListView\TreeListView.csproj">
+      <Project>{eeec8728-22cb-4a8a-a2d2-e4e78b990596}</Project>
+      <Name>TreeListView</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -7,6 +7,7 @@
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   xmlns:models="clr-namespace:LogExplorer.Models"
+                  xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 
@@ -214,8 +215,66 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 
-		<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree}"
-		                DataContext="{Binding Logs}" />
+		<!--<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree}"
+		                DataContext="{Binding Logs}" />-->
+
+
+		<tlv:TreeListView AllowsColumnReorder="True">
+			<!--Create an item template to specify the ItemsSource-->
+			<tlv:TreeListView.ItemTemplate>
+				<HierarchicalDataTemplate ItemsSource="{Binding Children}" />
+			</tlv:TreeListView.ItemTemplate>
+			<tlv:TreeListView.Columns>
+				<!--Create the first column containing the expand button and the type name.-->
+				<GridViewColumn Header="Name" Width="200">
+					<GridViewColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<!--The Expander Button (can be used in any column (typically the first one))-->
+								<tlv:TreeListViewExpander/>
+								<!--Display the name of the DataElement-->
+								<TextBlock Text="{Binding}"/>
+							</StackPanel>
+						</DataTemplate>
+					</GridViewColumn.CellTemplate>
+				</GridViewColumn>
+				<!--Create a second column containing the number of children.-->
+				<GridViewColumn Header="Children" Width="100">
+					<GridViewColumn.CellTemplate>
+						<DataTemplate>
+							<!--Display the size of the DataElement-->
+							<TextBlock Text="{Binding Children.Count}" HorizontalAlignment="Right"/>
+						</DataTemplate>
+					</GridViewColumn.CellTemplate>
+				</GridViewColumn>
+				<!--Create a third column containing the brush of the material.-->
+				<GridViewColumn Header="Brush" Width="100">
+					<GridViewColumn.CellTemplate>
+						<DataTemplate>
+							<StackPanel Orientation="Horizontal">
+								<!--Border showing the actual color-->
+								<Border Background="{Binding Brush}" CornerRadius="2"
+                                    Width="16" Height="16"
+                                    BorderThickness="1" BorderBrush="DarkGray"/>
+								<!--Display the brush-->
+								<TextBlock Text="{Binding Brush}"/>
+							</StackPanel>
+						</DataTemplate>
+					</GridViewColumn.CellTemplate>
+				</GridViewColumn>
+			</tlv:TreeListView.Columns>
+			<!--Create some sample data-->
+			<MaterialGroup>
+				<MaterialGroup>
+					<DiffuseMaterial Brush="Blue"/>
+					<DiffuseMaterial Brush="Red"/>
+					<SpecularMaterial Brush="Orange"/>
+				</MaterialGroup>
+				<EmissiveMaterial Brush="AliceBlue"/>
+			</MaterialGroup>
+		</tlv:TreeListView>
+
+
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="0" Content="Settings" Command="{Binding CmdNavigateSettings}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="1" Content="Export" Command="{Binding CmdExport}" />
 		<Button Margin="5,5" Grid.Row="1" Grid.Column="2" Content="Export Directory" Command="{Binding CmdExportDir}" />
