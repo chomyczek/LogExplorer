@@ -3,12 +3,9 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:local="clr-namespace:LogExplorer.Views"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   xmlns:models="clr-namespace:LogExplorer.Models"
-                  xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
-                  xmlns:system="clr-namespace:System;assembly=mscorlib"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 
@@ -20,13 +17,6 @@
 		<GridLength x:Key="StartTimeWidth_old">150</GridLength>
 		<GridLength x:Key="DurationWidth_old">70</GridLength>
 		<GridLength x:Key="CommandsWidth_old">200</GridLength>
-		<system:Double x:Key="SelectWidth">15</system:Double>
-		<system:Double x:Key="NameWidth">350</system:Double>
-		<system:Double x:Key="PlaceholderWidth">18</system:Double>
-		<system:Double x:Key="ResultWidth">100</system:Double>
-		<system:Double x:Key="StartTimeWidth">150</system:Double>
-		<system:Double x:Key="DurationWidth">70</system:Double>
-		<system:Double x:Key="CommandsWidth">200</system:Double>
 		
 
 		 <!--TreeGrid "Control"--> 
@@ -208,75 +198,6 @@
 				</TreeView>
 			</Grid>
 		</Border>
-
-
-
-		<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}"><!--TODO Filter-->
-			<!--Create an item template to specify the ItemsSource-->
-			<tlv:TreeListView.ItemTemplate>
-				<HierarchicalDataTemplate ItemsSource="{Binding History}" />
-			</tlv:TreeListView.ItemTemplate>
-			<tlv:TreeListView.Columns>
-				<!--Create the first column containing the expand button and the name.-->
-				<GridViewColumn Header="Name" Width="{StaticResource NameWidth}">
-					<GridViewColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<!--The Expander Button (can be used in any column (typically the first one))-->
-								<tlv:TreeListViewExpander/>
-								<!--Display the name of the DataElement-->
-								<TextBlock Text="{Binding Log.Name}"/>
-								<TextBlock Text="{Binding Name}"/>
-							</StackPanel>
-						</DataTemplate>
-					</GridViewColumn.CellTemplate>
-				</GridViewColumn>
-				<!--Create a Last Result column.-->
-				<GridViewColumn Header="Last Result" Width="{StaticResource ResultWidth}">
-					<GridViewColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Log.Result}" HorizontalAlignment="Right"/>
-								<TextBlock Text="{Binding Result}" HorizontalAlignment="Right"/>
-							</StackPanel>
-						</DataTemplate>
-					</GridViewColumn.CellTemplate>
-				</GridViewColumn>
-				<!--Create a Start Time column.-->
-				<GridViewColumn Header="Start Time" Width="{StaticResource StartTimeWidth}">
-					<GridViewColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Log.StartTimeString}" />
-								<TextBlock Text="{Binding StartTimeString}" />
-							</StackPanel>
-						</DataTemplate>
-					</GridViewColumn.CellTemplate>
-				</GridViewColumn>
-				<!--Create a Duration column.-->
-				<GridViewColumn Header="Duration" Width="{StaticResource DurationWidth}">
-					<GridViewColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Log.DurationString}" />
-								<TextBlock Text="{Binding DurationString}" />
-							</StackPanel>
-						</DataTemplate>
-					</GridViewColumn.CellTemplate>
-				</GridViewColumn>
-				<!--Create a Commands column.-->
-				<GridViewColumn Header="Commands" Width="{StaticResource CommandsWidth}">
-					<GridViewColumn.CellTemplate>
-						<DataTemplate>
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding Log.StartTimeString}" />
-								<TextBlock Text="{Binding StartTimeString}" />
-							</StackPanel>
-						</DataTemplate>
-					</GridViewColumn.CellTemplate>
-				</GridViewColumn>
-			</tlv:TreeListView.Columns>
-		</tlv:TreeListView>
 
 	</views:MvxWpfView.Resources>
 
