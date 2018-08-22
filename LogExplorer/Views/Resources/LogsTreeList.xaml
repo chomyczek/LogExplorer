@@ -11,6 +11,14 @@
 	<system:Double x:Key="DurationWidth">70</system:Double>
 	<system:Double x:Key="CommandsWidth">200</system:Double>
 
+	<!--NameGrid + CounterGrid = NameWidth-->
+	<GridLength x:Key="NameGrid">300</GridLength>
+	<GridLength x:Key="CounterGrid">50</GridLength>
+	<GridLength x:Key="ResultGrid">100</GridLength>
+	<GridLength x:Key="StartTimeGrid">150</GridLength>
+	<GridLength x:Key="DurationGrid">70</GridLength>
+	<GridLength x:Key="CommandsGrid">200</GridLength>
+
 	<Style x:Key="OverviewBorderStyle" TargetType="{x:Type Border}">
 		<Setter Property="Margin" Value="-6, 0 " />
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
