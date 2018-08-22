@@ -219,10 +219,10 @@
 				<ColumnDefinition Width="{StaticResource CommandsGrid}" />
 			</Grid.ColumnDefinitions>
 
-				<!--Filter Ccunter-->
-			<!--<TextBlock Grid.Column="0"
+			<!--Filter Counter-->
+			<TextBlock Grid.Column="0" HorizontalAlignment="Center"
 									Text="{Binding DataContext.FilterCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-									Style="{StaticResource TextBlockBoldStyle}" />-->
+									FontWeight="Bold" />
 
 
 			<!--Filter by name-->

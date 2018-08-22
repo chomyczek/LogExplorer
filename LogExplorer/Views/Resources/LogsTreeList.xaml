@@ -12,8 +12,8 @@
 	<system:Double x:Key="CommandsWidth">200</system:Double>
 
 	<!--NameGrid + CounterGrid = NameWidth-->
-	<GridLength x:Key="NameGrid">300</GridLength>
-	<GridLength x:Key="CounterGrid">50</GridLength>
+	<GridLength x:Key="NameGrid">250</GridLength>
+	<GridLength x:Key="CounterGrid">100</GridLength>
 	<GridLength x:Key="ResultGrid">100</GridLength>
 	<GridLength x:Key="StartTimeGrid">150</GridLength>
 	<GridLength x:Key="DurationGrid">70</GridLength>
