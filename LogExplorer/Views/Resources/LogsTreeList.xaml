@@ -18,11 +18,30 @@
 		<Setter Property="BorderBrush" Value="Black" />
 		<Setter Property="BorderThickness" Value="0.5" />
 		<Setter Property="Padding" Value="3, 0" />
-		<Setter Property="MinHeight" Value="20" />
+		<Setter Property="MinHeight" Value="22" />
 		<Setter Property="Background" Value="{Binding Log.ResultColor}" />
 	</Style>
 	<Style x:Key="LogBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource OverviewBorderStyle}">
 		<Setter Property="Background" Value="{Binding ResultColor}" />
+	</Style>
+
+	<!--Look of expander button-->
+	<Style TargetType="{x:Type ToggleButton}">
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="ToggleButton">
+					<Border BorderBrush="Black" 
+                                Background="{TemplateBinding Background}" BorderThickness="0.5">
+						<TextBlock Text=">" Margin="0, -5"/>
+					</Border>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Style.Triggers>
+			<Trigger Property="IsChecked" Value="True">
+				<Setter Property="Background" Value="Black" />
+			</Trigger>
+		</Style.Triggers>
 	</Style>
 
 	<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}">
