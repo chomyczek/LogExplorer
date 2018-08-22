@@ -215,6 +215,10 @@
 			<ColumnDefinition Width="*" Name="Refresh"/>
 		</Grid.ColumnDefinitions>
 
+
+		<!--TODO Filter-->
+
+
 		<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree}"
 		                DataContext="{Binding Logs}" />
 		<!--<ContentControl Grid.Row="0" Grid.ColumnSpan="6" Content="{StaticResource LogsTree_old}"

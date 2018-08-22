@@ -2,7 +2,8 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:models="clr-namespace:LogExplorer.Models"
-                    xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView">
+                    xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
+                    xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf">
 
 	<system:Double x:Key="NameWidth">350</system:Double>
 	<system:Double x:Key="ResultWidth">100</system:Double>
@@ -10,19 +11,7 @@
 	<system:Double x:Key="DurationWidth">70</system:Double>
 	<system:Double x:Key="CommandsWidth">200</system:Double>
 
-	<DataTemplate x:Key="ResultCoulmn" DataType="{x:Type models:Log}">
-		<StackPanel>
-			<TextBlock Text="LOG" />
-		</StackPanel>
-	</DataTemplate>
-	<DataTemplate x:Key="Result2Coulmn" DataType="{x:Type models:LogOverview}">
-		<StackPanel>
-			<TextBlock Text="LOG Overview" />
-		</StackPanel>
-	</DataTemplate>
-
 	<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}">
-		<!--TODO Filter-->
 
 		<!--Create an item template to specify the ItemsSource-->
 		<tlv:TreeListView.ItemTemplate>
@@ -114,12 +103,43 @@
 						<StackPanel Orientation="Horizontal">
 							<ContentControl Content="{Binding}">
 								<ContentControl.Resources>
+									
+									<!--LogOverview commands template-->
 									<DataTemplate DataType="{x:Type models:LogOverview}">
-										<TextBlock Text="LogOverview Commands" />
+										<StackPanel Grid.Column="6" Orientation="Horizontal">
+											<Button Content="Show log"
+										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding Log.LogPath}" />
+											<Button Content="Show dir"
+										        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding Log.DirPath}"
+										        Margin="5,0,0,0" />
+											<Button Content="Rerun"
+										        Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												IsEnabled="{Binding DataContext.IsRerunAvailable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding Log}"
+										        Margin="5,0,0,0" />
+										</StackPanel>
 									</DataTemplate>
+									
+									<!--Log commands template-->
 									<DataTemplate DataType="{x:Type models:Log}">
-										<TextBlock Text="Log Commands" />
+										<StackPanel Grid.Column="6" Orientation="Horizontal">
+											<Button Content="Show log"
+												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding LogPath}" />
+											<Button Content="Show dir"
+												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding DirPath}"
+												        Margin="5,0,0,0" />
+											<Button Content="Delete"
+										        Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+										        CommandParameter="{Binding .}"
+												Background="IndianRed"
+										        Margin="5,0,0,0" />
+										</StackPanel>
 									</DataTemplate>
+									
 								</ContentControl.Resources>
 							</ContentControl>
 						</StackPanel>
