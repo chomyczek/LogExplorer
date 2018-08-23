@@ -329,7 +329,8 @@ namespace LogExplorer.ViewModels
 
 			if (isActie)
 			{
-				if (this.Logs?.Count == searchLogs.Count())
+				if (this.Logs?.Count == searchLogs.Count()
+				    && !this.Logs.Except(searchLogs).Any())
 				{
 					return;
 				}
