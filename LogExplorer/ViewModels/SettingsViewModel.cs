@@ -23,15 +23,17 @@ namespace LogExplorer.ViewModels
 	{
 		#region Fields
 
-		private Settings settings;
+		private readonly Repository repository;
 
 		private MvxCommand cmdPickCustomConfig;
 
 		private Tuple<int, string> configSetting;
 
+		private bool isConfigPathEnabled;
+
 		private Settings previousSettings;
 
-		private readonly Repository repository;
+		private Settings settings;
 
 		#endregion
 
@@ -77,6 +79,14 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
+		public IMvxCommand CmdLoad
+		{
+			get
+			{
+				return new MvxCommand(this.LoadSettings);
+			}
+		}
+
 		/// <summary>
 		/// Require private MvxCommand field to  resolve Enable function.
 		/// </summary>
@@ -114,14 +124,6 @@ namespace LogExplorer.ViewModels
 			}
 		}
 
-		public IMvxCommand CmdLoad
-		{
-			get
-			{
-				return new MvxCommand(this.LoadSettings);
-			}
-		}
-
 		public Tuple<int, string> ConfigSetting
 		{
 			get
@@ -133,7 +135,6 @@ namespace LogExplorer.ViewModels
 				this.configSetting = value;
 				this.settings.ConfigMode = value.Item1;
 				this.IsConfigPathEnabled = value.Item1 == 2;
-				this.CmdPickCustomConfig.RaiseCanExecuteChanged();
 				this.RaisePropertyChanged(() => this.ConfigSetting);
 			}
 		}
@@ -163,6 +164,20 @@ namespace LogExplorer.ViewModels
 			{
 				this.settings.ExportPath = value;
 				this.RaisePropertyChanged(() => this.ExportPath);
+			}
+		}
+
+		public bool IsConfigPathEnabled
+		{
+			get
+			{
+				return this.isConfigPathEnabled;
+			}
+			set
+			{
+				this.isConfigPathEnabled = value;
+				this.CmdPickCustomConfig.RaiseCanExecuteChanged();
+				this.RaisePropertyChanged(() => this.IsConfigPathEnabled);
 			}
 		}
 
@@ -251,12 +266,6 @@ namespace LogExplorer.ViewModels
 
 		#endregion
 
-		#region Properties
-
-		private bool IsConfigPathEnabled { get; set; }
-
-		#endregion
-
 		#region Methods
 
 		private void CancelChanges()
@@ -265,17 +274,17 @@ namespace LogExplorer.ViewModels
 			this.Close(this);
 		}
 
-		private void SaveChanges()
-		{
-			this.repository.UpdateSettings();
-			this.Close(this);
-		}
-
 		private void LoadSettings()
 		{
 			this.repository.GetSettings();
 			this.repository.Settings.CopyValues(ref this.settings);
 			this.RaiseAllPropertiesChanged();
+		}
+
+		private void SaveChanges()
+		{
+			this.repository.UpdateSettings();
+			this.Close(this);
 		}
 
 		#endregion
