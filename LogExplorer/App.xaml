@@ -30,6 +30,7 @@
 					Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
 
 				<!--Local dictionaries-->
+				<ResourceDictionary Source="Views/Resources/Consts.xaml"/>
 				<ResourceDictionary Source="Views/Resources/Overrides.xaml" />
 				<ResourceDictionary Source="Views/Resources/LogsTreeList.xaml"/>
 

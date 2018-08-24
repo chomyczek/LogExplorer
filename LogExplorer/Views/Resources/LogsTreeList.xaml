@@ -5,20 +5,6 @@
                     xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
                     xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf">
 
-	<system:Double x:Key="NameWidth">350</system:Double>
-	<system:Double x:Key="ResultWidth">100</system:Double>
-	<system:Double x:Key="StartTimeWidth">150</system:Double>
-	<system:Double x:Key="DurationWidth">100</system:Double>
-	<system:Double x:Key="CommandsWidth">200</system:Double>
-
-	<!--NameGrid + CounterGrid = NameWidth-->
-	<GridLength x:Key="NameGrid">250</GridLength>
-	<GridLength x:Key="CounterGrid">100</GridLength>
-	<GridLength x:Key="ResultGrid">100</GridLength>
-	<GridLength x:Key="StartTimeGrid">150</GridLength>
-	<GridLength x:Key="DurationGrid">100</GridLength>
-	<GridLength x:Key="CommandsGrid">200</GridLength>
-
 	<Style x:Key="OverviewBorderStyle" TargetType="{x:Type Border}">
 		<Setter Property="Margin" Value="-6, 0 " />
 		<Setter Property="HorizontalAlignment" Value="Stretch" />
