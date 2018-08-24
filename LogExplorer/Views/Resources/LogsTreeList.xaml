@@ -8,7 +8,7 @@
 	<system:Double x:Key="NameWidth">350</system:Double>
 	<system:Double x:Key="ResultWidth">100</system:Double>
 	<system:Double x:Key="StartTimeWidth">150</system:Double>
-	<system:Double x:Key="DurationWidth">70</system:Double>
+	<system:Double x:Key="DurationWidth">100</system:Double>
 	<system:Double x:Key="CommandsWidth">200</system:Double>
 
 	<!--NameGrid + CounterGrid = NameWidth-->
@@ -16,7 +16,7 @@
 	<GridLength x:Key="CounterGrid">100</GridLength>
 	<GridLength x:Key="ResultGrid">100</GridLength>
 	<GridLength x:Key="StartTimeGrid">150</GridLength>
-	<GridLength x:Key="DurationGrid">70</GridLength>
+	<GridLength x:Key="DurationGrid">100</GridLength>
 	<GridLength x:Key="CommandsGrid">200</GridLength>
 
 	<Style x:Key="OverviewBorderStyle" TargetType="{x:Type Border}">
@@ -26,7 +26,7 @@
 		<Setter Property="BorderBrush" Value="Black" />
 		<Setter Property="BorderThickness" Value="0.5" />
 		<Setter Property="Padding" Value="3, 0" />
-		<Setter Property="MinHeight" Value="22" />
+		<Setter Property="MinHeight" Value="25" />
 		<Setter Property="Background" Value="{Binding Log.ResultColor}" />
 	</Style>
 	<Style x:Key="LogBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource OverviewBorderStyle}">

@@ -7,8 +7,6 @@
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				
-				<ResourceDictionary Source="Views/Resources/LogsTreeList.xaml"/>
-				
 				<!-- MahApps - metro app -->
 				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
 				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
@@ -30,7 +28,11 @@
 					Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Fonts.xaml" />
 				<ResourceDictionary
 					Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
-				
+
+				<!--Local dictionaries-->
+				<ResourceDictionary Source="Views/Resources/Overrides.xaml" />
+				<ResourceDictionary Source="Views/Resources/LogsTreeList.xaml"/>
+
 			</ResourceDictionary.MergedDictionaries>
 
 			<!-- MahApps Brushes -->
