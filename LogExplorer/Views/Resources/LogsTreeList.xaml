@@ -3,7 +3,8 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:models="clr-namespace:LogExplorer.Models"
                     xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
-                    xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf">
+                    xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
+                    xmlns:controls="clr-namespace:LogExplorer.Customs.Controls">
 
 	<Style x:Key="OverviewBorderStyle" TargetType="{x:Type Border}">
 		<Setter Property="Margin" Value="-6, 0 " />
@@ -161,18 +162,30 @@
 									<DataTemplate DataType="{x:Type models:LogOverview}">
 										<Border Style="{StaticResource OverviewBorderStyle}">
 											<StackPanel Orientation="Horizontal">
-												<Button Content="Show log"
-												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-												        CommandParameter="{Binding Log.LogPath}" />
-												<Button Content="Show dir"
-												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding Log.LogPath}" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource ShowLogIco}"/>
+														<TextBlock Text="Show log" />
+													</StackPanel>
+												</Button>
+												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding Log.DirPath}"
-												        Margin="5,0,0,0" />
-												<Button Content="Rerun"
-												        Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        Margin="5,0,0,0" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource ShowDirIco}"/>
+														<TextBlock Text="Show dir" />
+													</StackPanel>
+												</Button>
+												<Button Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        IsEnabled="{Binding DataContext.IsRerunAvailable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding Log}"
-												        Margin="5,0,0,0" />
+												        Margin="5,0,0,0" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource RerunIco}"/>
+														<TextBlock Text="Rerun" />
+													</StackPanel>
+												</Button>
 											</StackPanel>
 										</Border>
 									</DataTemplate>
@@ -181,18 +194,30 @@
 									<DataTemplate DataType="{x:Type models:Log}">
 										<Border Style="{StaticResource LogBorderStyle}">
 											<StackPanel Orientation="Horizontal">
-												<Button Content="Show log"
-												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-												        CommandParameter="{Binding LogPath}" />
-												<Button Content="Show dir"
-												        Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        CommandParameter="{Binding LogPath}" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource ShowLogIco}"/>
+														<TextBlock Text="Show log" />
+													</StackPanel>
+												</Button>
+												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding DirPath}"
-												        Margin="5,0,0,0" />
-												<Button Content="Delete"
-												        Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+												        Margin="5,0,0,0" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource ShowDirIco}"/>
+														<TextBlock Text="Show dir" />
+													</StackPanel>
+												</Button>
+												<Button Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding .}"
 												        Background="IndianRed"
-												        Margin="5,0,0,0" />
+												        Margin="5,0,0,0" >
+													<StackPanel Orientation="Horizontal">
+														<controls:Icon Data="{StaticResource DeleteIco}"/>
+														<TextBlock Text="Delete" />
+													</StackPanel>
+												</Button>
 											</StackPanel>
 										</Border>
 									</DataTemplate>
