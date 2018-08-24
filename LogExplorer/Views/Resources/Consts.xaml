@@ -16,6 +16,4 @@
 	<GridLength x:Key="DurationGrid">100</GridLength>
 	<GridLength x:Key="CommandsGrid">200</GridLength>
 
-	<Brush x:Key="IconColor">White</Brush>
-
 </ResourceDictionary>
