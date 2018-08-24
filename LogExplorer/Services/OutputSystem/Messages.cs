@@ -25,9 +25,7 @@ namespace LogExplorer.Services.OutputSystem
 		public const string ExportSuccess = "Export operation finished successfully";
 
 		public const string HeaderError = "Error!";
-
-		public const string HeaderInfo = "Info!";
-
+		
 		public const string HeaderWarning = "Warning!";
 
 		public const string KillingProccess = "Killing process";
