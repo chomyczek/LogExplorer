@@ -9,6 +9,8 @@ using System.Windows;
 
 using LogExplorer.Customs;
 
+using MahApps.Metro.Controls;
+
 #endregion
 
 namespace LogExplorer
@@ -16,7 +18,7 @@ namespace LogExplorer
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow : MetroWindow
 	{
 		#region Constructors and Destructors
 
