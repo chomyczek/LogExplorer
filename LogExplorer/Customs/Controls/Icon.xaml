@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" >
-		<Viewbox Width="{Binding Size}" Height="{Binding Size}">
+		<Viewbox Width="{Binding Size}" Height="{Binding Size}" Margin="5, 0">
 			<Canvas Width="24" Height="24">
 				<Path Data="{Binding Data}" Fill="White" />
 			</Canvas>
