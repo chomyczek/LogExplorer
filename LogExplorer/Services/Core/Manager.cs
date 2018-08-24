@@ -56,6 +56,8 @@ namespace LogExplorer.Services.Core
 			if (overview.History.Count > 1)
 			{
 				overview.History.Remove(log);
+				// update overview first element
+				overview.RaisePropertyChanged("Log");
 			}
 			else
 			{
