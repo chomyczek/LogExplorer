@@ -19,6 +19,10 @@
 	<Style x:Key="LogBorderStyle" TargetType="{x:Type Border}" BasedOn="{StaticResource OverviewBorderStyle}">
 		<Setter Property="Background" Value="{Binding ResultColor}" />
 	</Style>
+	<Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
+		<Setter Property="Height" Value="25" />
+		<Setter Property="Padding" Value="0, 5" />
+	</Style>
 
 	<!--Look of expander button-->
 	<Style TargetType="{x:Type ToggleButton}">
@@ -52,8 +56,6 @@
 			<GridViewColumn Header="Name" Width="{StaticResource NameWidth}">
 				<GridViewColumn.CellTemplate>
 					<DataTemplate>
-						<!--<StackPanel Orientation="Horizontal">-->
-
 						<ContentControl Content="{Binding}">
 							<ContentControl.Resources>
 								<DataTemplate DataType="{x:Type models:LogOverview}">
@@ -62,7 +64,7 @@
 											<!--The Expander Button (can be used in any column (typically the first one))-->
 											<tlv:TreeListViewExpander />
 											<CheckBox IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
-											<TextBlock Text="{Binding Log.Name}" />
+											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.Name}" />
 										</StackPanel>
 									</Border>
 								</DataTemplate>
@@ -71,13 +73,12 @@
 										<StackPanel Orientation="Horizontal">
 											<TextBlock Text=" ∟" />
 											<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-											<TextBlock Text="{Binding Name}" />
+											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Name}"/>
 										</StackPanel>
 									</Border>
 								</DataTemplate>
 							</ContentControl.Resources>
 						</ContentControl>
-						<!--</StackPanel>-->
 					</DataTemplate>
 				</GridViewColumn.CellTemplate>
 			</GridViewColumn>
@@ -89,15 +90,13 @@
 						<ContentControl Content="{Binding}">
 							<ContentControl.Resources>
 								<DataTemplate DataType="{x:Type models:LogOverview}">
-
 									<Border Style="{StaticResource OverviewBorderStyle}">
-										<TextBlock Text="{Binding Log.Result}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.Result}" />
 									</Border>
 								</DataTemplate>
 								<DataTemplate DataType="{x:Type models:Log}">
-
 									<Border Style="{StaticResource LogBorderStyle}">
-										<TextBlock Text="{Binding Result}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Result}" />
 									</Border>
 								</DataTemplate>
 							</ContentControl.Resources>
@@ -114,12 +113,12 @@
 							<ContentControl.Resources>
 								<DataTemplate DataType="{x:Type models:LogOverview}">
 									<Border Style="{StaticResource OverviewBorderStyle}">
-										<TextBlock Text="{Binding Log.StartTimeString}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.StartTimeString}" />
 									</Border>
 								</DataTemplate>
 								<DataTemplate DataType="{x:Type models:Log}">
 									<Border Style="{StaticResource LogBorderStyle}">
-										<TextBlock Text="{Binding StartTimeString}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding StartTimeString}" />
 									</Border>
 								</DataTemplate>
 							</ContentControl.Resources>
@@ -136,12 +135,12 @@
 							<ContentControl.Resources>
 								<DataTemplate DataType="{x:Type models:LogOverview}">
 									<Border Style="{StaticResource OverviewBorderStyle}">
-										<TextBlock Text="{Binding Log.DurationString}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.DurationString}" />
 									</Border>
 								</DataTemplate>
 								<DataTemplate DataType="{x:Type models:Log}">
 									<Border Style="{StaticResource LogBorderStyle}">
-										<TextBlock Text="{Binding DurationString}" />
+										<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding DurationString}" />
 									</Border>
 								</DataTemplate>
 							</ContentControl.Resources>
