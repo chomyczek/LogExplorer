@@ -23,6 +23,9 @@
 		<Setter Property="Height" Value="25" />
 		<Setter Property="Padding" Value="0, 5" />
 	</Style>
+	
+	<!--Restore default header style-->
+	<Style TargetType="{x:Type GridViewColumnHeader}" />
 
 	<!--Look of expander button-->
 	<Style TargetType="{x:Type ToggleButton}">
