@@ -11,13 +11,13 @@
                   d:DesignHeight="300" d:DesignWidth="1000">
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="25" Name="FilterRow"/>
+			<RowDefinition Height="35" Name="FilterRow"/>
 			<RowDefinition Height="*"  Name="TreeRow"/>
 			<RowDefinition Height="30" Name="ButtonsRow"/>
 		</Grid.RowDefinitions>
 
 		<!--Filter-->
-		<Grid>
+		<Grid Margin="0, 5">
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="{StaticResource CounterGrid}" />
 				<ColumnDefinition Width="{StaticResource NameGrid}" />
