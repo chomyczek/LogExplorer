@@ -3,22 +3,32 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:local="clr-namespace:LogExplorer.Views"
                   xmlns:conv="clr-namespace:LogExplorer.Services.Converters"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
-                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-                  xmlns:models="clr-namespace:LogExplorer.Models"
                   mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 	<views:MvxWpfView.Resources>
 		<ResourceDictionary>
 			<conv:VisibiityConverter x:Key="BoolToVisibility" />
+			<Style x:Key="GroupStyle" TargetType="GroupBox">
+				<Setter Property="Margin" Value="0" />
+			</Style>
+			<Style x:Key="TextBoxStyle" TargetType="TextBox">
+				<Setter Property="HorizontalAlignment" Value="Stretch" />
+				<Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+				<Setter Property="IsReadOnly" Value="True" />
+				<Setter Property="TextWrapping" Value="Wrap" />
+				<Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+				<Setter Property="BorderThickness" Value="0" />
+				<Setter Property="Background" Value="Transparent" />
+			</Style>
 		</ResourceDictionary>
 	</views:MvxWpfView.Resources>
 
 	<Grid Height="100"
 	      Visibility="{Binding Settings.IsLoggerEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibility}}">
-		<TextBox Text="{Binding LoggerBox, Mode=OneWay}" HorizontalAlignment="Stretch" HorizontalScrollBarVisibility="Auto"
-		         IsReadOnly="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+		<GroupBox Style="{StaticResource GroupStyle}" Header="Logger">
+			<TextBox Text="{Binding LoggerBox, Mode=OneWay}" Style="{StaticResource TextBoxStyle}" />
+		</GroupBox>
 	</Grid>
 </views:MvxWpfView>
