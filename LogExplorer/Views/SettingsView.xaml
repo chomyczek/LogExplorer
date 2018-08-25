@@ -6,8 +6,35 @@
                   xmlns:local="clr-namespace:LogExplorer.Views"
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:controls="clr-namespace:LogExplorer.Customs.Controls"
+                  xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   mc:Ignorable="d"
                   d:DesignHeight="500" d:DesignWidth="500">
+	<views:MvxWpfView.Resources>
+		<Style x:Key="GroupStyle" TargetType="GroupBox" BasedOn="{StaticResource {x:Type GroupBox}}">
+			<Setter Property="Margin" Value="5" />
+		</Style>
+		<Style x:Key="TextblockStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
+			<Setter Property="Margin" Value="4" />
+		</Style>
+		<Style x:Key="TextboxStyle" TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+			<Setter Property="Margin" Value="4" />
+			<Setter Property="HorizontalAlignment" Value="Stretch" />
+		</Style>
+		<Style x:Key="CheckboxStyle" TargetType="CheckBox" BasedOn="{StaticResource {x:Type CheckBox}}">
+			<Setter Property="Margin" Value="4" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="VerticalAlignment" Value="Center" />
+		</Style>
+		<Style x:Key="DotButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+			<Setter Property="Margin" Value="4" />
+			<Setter Property="HorizontalAlignment" Value="Right" />
+			<Setter Property="Content" Value=".." />
+		</Style>
+		<Style x:Key="BottomButtonStyle" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+			<Setter Property="Margin" Value="5, 0" />
+		</Style>
+	</views:MvxWpfView.Resources>
+
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="*" />
@@ -19,99 +46,104 @@
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
 				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
-				<RowDefinition Height="Auto" />
 			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="Auto" />
-			</Grid.ColumnDefinitions>
-			<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Text="Root logs path:" />
-			<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-			         Text="{Binding RootLogsPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-			         HorizontalAlignment="Stretch" />
-			<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickRootDir}" HorizontalAlignment="Right"
-			        Content=".." />
 
-			<TextBlock Margin="4" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Text="Export logs path:" />
-			<TextBox Margin="4" Grid.Row="3" Grid.Column="0"
-			         Text="{Binding ExportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" />
-			<Button Margin="4" Grid.Row="3" Grid.Column="1" Command="{Binding CmdPickExportDir}" HorizontalAlignment="Right"
-			        Content=".." />
-			<Grid Grid.Row="4" Grid.ColumnSpan="2" Grid.Column="0">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="2*" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="2" Grid.Column="0" Text="Tester path:" />
-				<TextBlock Margin="4" Grid.Row="0" Grid.Column="2" Text="Hide Tester.exe:" HorizontalAlignment="Right" />
-				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-				         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				         HorizontalAlignment="Stretch" />
-				<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickTesterDir}" HorizontalAlignment="Right"
-				        Content=".." />
-				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
-				          IsChecked="{Binding IsHiddenTester, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				          HorizontalAlignment="Right" VerticalAlignment="Center" />
-			</Grid>
+			<!--Explorer settings-->
+			<GroupBox Style="{StaticResource GroupStyle}" Grid.Row="0" Header="Explorer">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="Auto" />
+					</Grid.ColumnDefinitions>
 
-			<Grid Grid.Row="5" Grid.ColumnSpan="2" Grid.Column="0">
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="Auto" />
-					<ColumnDefinition Width="Auto" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Margin="4" Grid.Row="0" Grid.ColumnSpan="3" Grid.Column="0" Text="Config path:" />
-				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-				         Text="{Binding CustomConfigPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				         HorizontalAlignment="Stretch"
-				         IsEnabled="{Binding IsConfigPathEnabled}" />
-				<Button Margin="4" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickCustomConfig}" HorizontalAlignment="Right"
-				        Content=".." />
-				<ComboBox Grid.Row="1" Grid.Column="2"
-				          ItemsSource="{Binding ConfigSettingDictionary}"
-				          SelectedItem="{Binding ConfigSetting}"
-				          DisplayMemberPath="Item2" />
-			</Grid>
-			<Grid Grid.Row="6" Grid.ColumnSpan="2" Grid.Column="0">
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Grid.ColumnSpan="2" Text="Root logs path:" />
+					<TextBox Style="{StaticResource TextboxStyle}" Grid.Row="1" Grid.Column="0"
+					         Text="{Binding RootLogsPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Style="{StaticResource DotButtonStyle}" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickRootDir}" />
 
-				<Grid.RowDefinitions>
-					<RowDefinition Height="Auto" />
-					<RowDefinition Height="Auto" />
-				</Grid.RowDefinitions>
-				<Grid.ColumnDefinitions>
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="*" />
-					<ColumnDefinition Width="*" />
-				</Grid.ColumnDefinitions>
-				<TextBlock Margin="4" Grid.Row="0" Grid.Column="0" Text="Logger memory limit:" />
-				<TextBox Margin="4" Grid.Row="1" Grid.Column="0"
-				         Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				         HorizontalAlignment="Stretch" IsEnabled="{Binding IsLoggerEnabled}" />
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0"
+					           Text="Export logs path:" />
+					<TextBox Style="{StaticResource TextboxStyle}" Grid.Row="3" Grid.Column="0"
+					         Text="{Binding ExportPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Style="{StaticResource DotButtonStyle}" Grid.Row="3" Grid.Column="1" Command="{Binding CmdPickExportDir}" />
+				</Grid>
+			</GroupBox>
+
+			<!--Tester setings-->
+			<GroupBox Style="{StaticResource GroupStyle}" Grid.Row="1" Header="Tester">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="2*" />
+						<ColumnDefinition Width="Auto" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+					           Text="Tester path:" />
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Grid.Column="2" Text="Hide Tester.exe:"
+					           HorizontalAlignment="Right" />
+					<TextBox Style="{StaticResource TextboxStyle}" Grid.Row="1" Grid.Column="0"
+					         Text="{Binding TesterPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+					<Button Style="{StaticResource DotButtonStyle}" Grid.Row="1" Grid.Column="1" Command="{Binding CmdPickTesterDir}" />
+					<CheckBox Style="{StaticResource CheckboxStyle}" Grid.Row="1" Grid.Column="2"
+					          IsChecked="{Binding IsHiddenTester, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0"
+					           Text="Config path:" />
+					<TextBox Style="{StaticResource TextboxStyle}" Grid.Row="3" Grid.Column="0"
+					         Text="{Binding CustomConfigPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					         IsEnabled="{Binding IsConfigPathEnabled}" />
+					<Button Style="{StaticResource DotButtonStyle}" Grid.Row="3" Grid.Column="1"
+					        Command="{Binding CmdPickCustomConfig}" />
+					<ComboBox Grid.Row="3" Grid.Column="2"
+					          ItemsSource="{Binding ConfigSettingDictionary}"
+					          SelectedItem="{Binding ConfigSetting}"
+					          DisplayMemberPath="Item2" />
+				</Grid>
+			</GroupBox>
+
+			<!--Logger settings-->
+			<GroupBox Style="{StaticResource GroupStyle}" Grid.Row="2" Header="Logger">
+				<Grid>
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+						<ColumnDefinition Width="*" />
+					</Grid.ColumnDefinitions>
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Grid.Column="0" Text="Memory limit:" />
+					<xctk:IntegerUpDown Margin="4" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch"
+					                    Text="{Binding LoggerMemory, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					                    IsEnabled="{Binding IsLoggerEnabled}" />
 
 
-				<TextBlock Margin="4" Grid.Row="0" Text="Logger details:" Grid.Column="1" HorizontalAlignment="Right" />
-				<CheckBox Margin="4" Grid.Row="1" Grid.Column="1"
-				          IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				          HorizontalAlignment="Right" VerticalAlignment="Center" IsEnabled="{Binding IsLoggerEnabled}" />
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Text="Details:" Grid.Column="1"
+					           HorizontalAlignment="Right" />
+					<CheckBox Style="{StaticResource CheckboxStyle}" Grid.Row="1" Grid.Column="1"
+					          IsChecked="{Binding IsLoggerShowDetails, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+					          IsEnabled="{Binding IsLoggerEnabled}" />
 
-				<TextBlock Margin="4" Grid.Row="0" Text="Logger enabled:" Grid.Column="2" HorizontalAlignment="Right" />
-				<CheckBox Margin="4" Grid.Row="1" Grid.Column="2"
-				          IsChecked="{Binding IsLoggerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-				          HorizontalAlignment="Right" VerticalAlignment="Center" />
+					<TextBlock Style="{StaticResource TextblockStyle}" Grid.Row="0" Text="Enabled:" Grid.Column="2"
+					           HorizontalAlignment="Right" />
+					<CheckBox Style="{StaticResource CheckboxStyle}" Grid.Row="1" Grid.Column="2"
+					          IsChecked="{Binding IsLoggerEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
-			</Grid>
+				</Grid>
+			</GroupBox>
 		</Grid>
 		<Grid Row="1">
 			<Grid.ColumnDefinitions>
@@ -121,27 +153,27 @@
 				<ColumnDefinition Width="*" />
 			</Grid.ColumnDefinitions>
 
-			<Button Margin="5,0" Grid.Column="0"  Command="{Binding CmdCancel}" >
+			<Button Style="{StaticResource BottomButtonStyle}" Grid.Column="0" Command="{Binding CmdCancel}">
 				<StackPanel Orientation="Horizontal">
-					<controls:Icon Data="{StaticResource CancelIco}"/>
+					<controls:Icon Data="{StaticResource CancelIco}" />
 					<TextBlock Text="Cancel" />
 				</StackPanel>
 			</Button>
-			<Button Margin="5,0" Grid.Column="1" Command="{Binding CmdBack}" >
+			<Button Style="{StaticResource BottomButtonStyle}" Grid.Column="1" Command="{Binding CmdBack}">
 				<StackPanel Orientation="Horizontal">
-					<controls:Icon Data="{StaticResource BackIco}"/>
+					<controls:Icon Data="{StaticResource BackIco}" />
 					<TextBlock Text="Back" />
 				</StackPanel>
 			</Button>
-			<Button Margin="5,0" Grid.Column="2" Command="{Binding CmdLoad}" >
+			<Button Style="{StaticResource BottomButtonStyle}" Grid.Column="2" Command="{Binding CmdLoad}">
 				<StackPanel Orientation="Horizontal">
-					<controls:Icon Data="{StaticResource LoadIco}"/>
+					<controls:Icon Data="{StaticResource LoadIco}" />
 					<TextBlock Text="Load" />
 				</StackPanel>
 			</Button>
-			<Button Margin="5,0" Grid.Column="3" Command="{Binding CmdSave}" >
+			<Button Style="{StaticResource BottomButtonStyle}" Grid.Column="3" Command="{Binding CmdSave}">
 				<StackPanel Orientation="Horizontal">
-					<controls:Icon Data="{StaticResource SaveIco}"/>
+					<controls:Icon Data="{StaticResource SaveIco}" />
 					<TextBlock Text="Save" />
 				</StackPanel>
 			</Button>
