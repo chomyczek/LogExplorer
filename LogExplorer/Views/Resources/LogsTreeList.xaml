@@ -31,13 +31,13 @@
 	<Style TargetType="{x:Type GridViewColumnHeader}" />
 
 	<!--Look of expander button-->
-	<Style TargetType="{x:Type ToggleButton}">
+	<Style TargetType="{x:Type ToggleButton}" >
 		<Setter Property="Template">
 			<Setter.Value>
 				<ControlTemplate TargetType="ToggleButton">
 					<Border BorderBrush="Black" 
                                 Background="{TemplateBinding Background}" BorderThickness="0.5">
-						<TextBlock Text=">" Margin="0, -5"/>
+						<TextBlock Text=">" Padding="1, -4"/>
 					</Border>
 				</ControlTemplate>
 			</Setter.Value>
@@ -68,7 +68,7 @@
 									<Border Style="{StaticResource OverviewBorderStyle}">
 										<StackPanel Orientation="Horizontal">
 											<!--The Expander Button (can be used in any column (typically the first one))-->
-											<tlv:TreeListViewExpander />
+											<tlv:TreeListViewExpander/>
 											<CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
 											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.Name}" />
 										</StackPanel>
