@@ -29,13 +29,13 @@
 
 			<!--Filter Counter-->
 			<TextBlock Grid.Column="0" HorizontalAlignment="Center"
-			           Text="{Binding DataContext.FilterCounter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+			           Text="{Binding FilterCounter}"
 			           FontWeight="Bold" />
 
 
 			<!--Filter by name-->
 			<xctk:WatermarkTextBox Grid.Column="1"
-			                       Text="{Binding DataContext.SrchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}">
+			                       Text="{Binding SrchName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
 				<xctk:WatermarkTextBox.Watermark>
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -48,8 +48,8 @@
 
 			<!--Filter by results-->
 			<ComboBox Grid.Column="2"
-			          ItemsSource="{Binding DataContext.AllResults, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-			          SelectedItem="{Binding DataContext.SrchSelResult, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
+			          ItemsSource="{Binding AllResults}"
+			          SelectedItem="{Binding SrchSelResult}"
 			          DisplayMemberPath="Name" />
 			<!--Filter by date-->
 			<xctk:DateTimePicker Grid.Column="3"
@@ -57,10 +57,10 @@
 			                     Watermark="Executed after.."
 			                     Format="Custom"
 			                     FormatString="{x:Static models:Log.DateFormat}"
-			                     Value="{Binding DataContext.SrchDate, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}" />
+			                     Value="{Binding SrchDate}" />
 
 			<StackPanel Grid.Column="5" Orientation="Horizontal">
-				<Button Command="{Binding DataContext.CmdClearFilter, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}">
+				<Button Command="{Binding CmdClearFilter}">
 					<StackPanel Orientation="Horizontal">
 						<controls:Icon Data="{StaticResource ClearFilterIco}"/>
 						<TextBlock Text="Clear filters" />
