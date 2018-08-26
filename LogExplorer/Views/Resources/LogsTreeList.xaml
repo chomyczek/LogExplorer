@@ -159,7 +159,6 @@
 			<GridViewColumn Header="Commands" Width="{StaticResource CommandsWidth}">
 				<GridViewColumn.CellTemplate>
 					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
 							<ContentControl Content="{Binding}">
 								<ContentControl.Resources>
 
@@ -229,7 +228,6 @@
 
 								</ContentControl.Resources>
 							</ContentControl>
-						</StackPanel>
 					</DataTemplate>
 				</GridViewColumn.CellTemplate>
 			</GridViewColumn>
