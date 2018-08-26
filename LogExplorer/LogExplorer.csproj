@@ -134,10 +134,13 @@
     <Compile Include="Customs\MultiRegionPresenter.cs" />
     <Compile Include="Customs\RegionAttribute.cs" />
     <Compile Include="Customs\Setup.cs" />
+    <Compile Include="Models\ConfirmDialog.cs" />
+    <Compile Include="Models\Dialog.cs" />
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\LogOverview.cs" />
     <Compile Include="Models\Result.cs" />
     <Compile Include="Models\Settings.cs" />
+    <Compile Include="Models\WarningDialog.cs" />
     <Compile Include="Services\Converters\VisibiityConverter.cs" />
     <Compile Include="Services\Core\Explorer.cs" />
     <Compile Include="Services\Extensions\SettingsExtensions.cs" />
