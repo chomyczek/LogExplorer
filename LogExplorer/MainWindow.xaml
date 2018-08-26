@@ -20,7 +20,7 @@
 		GlowBrush="{DynamicResource AccentColorBrush}"
         BorderThickness="1"
 					  
-        Title="Log Explorer - BETA" Height="500" Width="1050">
+        Title="Log Explorer v1.0.0" Height="500" Width="1050">
 <controls:MetroWindow.Resources>
 		<Style x:Key="ButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
 			<Setter Property="Margin" Value="5" />
