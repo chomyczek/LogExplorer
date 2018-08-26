@@ -255,9 +255,9 @@ namespace LogExplorer.ViewModels
 
 		#region Methods
 
-		private void CancelRerun()
+		private async void CancelRerun()
 		{
-			if (Popup.ShowConfirm(Messages.CancelRerunQuesion))
+			if (await Popup.ShowConfirmAsync(Messages.CancelRerunQuesion))
 			{
 				this.cts?.Cancel();
 			}
@@ -274,9 +274,9 @@ namespace LogExplorer.ViewModels
 			this.Filter();
 		}
 
-		private void DeleteOne(Log log)
+		private async void DeleteOne(Log log)
 		{
-			var delete = Popup.ShowConfirm(Messages.GetDeleteOneLogQuestion(log.Name, log.StartTimeString));
+			var delete = await Popup.ShowConfirmAsync(Messages.GetDeleteOneLogQuestion(log.Name, log.StartTimeString));
 			if (delete)
 			{
 				this.manager.DeleteLog(log);
@@ -286,9 +286,9 @@ namespace LogExplorer.ViewModels
 			this.logger.AddMessage(Messages.DeleteAborted);
 		}
 
-		private void DeleteSelected()
+		private async void DeleteSelected()
 		{
-			var delete = Popup.ShowConfirm(Messages.DeleteSelectedLogsQuestion);
+			var delete = await Popup.ShowConfirmAsync(Messages.DeleteSelectedLogsQuestion);
 			if (delete)
 			{
 				this.manager.DeleteSelectedLogs();
