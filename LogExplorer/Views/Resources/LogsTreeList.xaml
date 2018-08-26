@@ -23,7 +23,10 @@
 		<Setter Property="Height" Value="25" />
 		<Setter Property="Padding" Value="0, 5" />
 	</Style>
-	
+	<Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}" BasedOn="{StaticResource {x:Type CheckBox}}">
+		<Setter Property="Background" Value="Black" />
+	</Style>
+
 	<!--Restore default header style-->
 	<Style TargetType="{x:Type GridViewColumnHeader}" />
 
@@ -66,7 +69,7 @@
 										<StackPanel Orientation="Horizontal">
 											<!--The Expander Button (can be used in any column (typically the first one))-->
 											<tlv:TreeListViewExpander />
-											<CheckBox IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
+											<CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
 											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.Name}" />
 										</StackPanel>
 									</Border>
@@ -75,7 +78,7 @@
 									<Border Style="{StaticResource LogBorderStyle}" Background="LightGray">
 										<StackPanel Orientation="Horizontal">
 											<TextBlock Text=" ∟" />
-											<CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+											<CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
 											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Name}"/>
 										</StackPanel>
 									</Border>
