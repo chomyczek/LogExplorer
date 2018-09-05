@@ -129,6 +129,7 @@
     <Compile Include="Customs\Controls\Icon.xaml.cs">
       <DependentUpon>Icon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Customs\Controls\TreeListView\TreeListView.cs" />
     <Compile Include="Customs\CustomAppStart.cs" />
     <Compile Include="Customs\CustomBuild.cs" />
     <Compile Include="Customs\MultiRegionPresenter.cs" />
@@ -172,6 +173,10 @@
     <Page Include="Customs\Controls\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Customs\Controls\TreeListView\Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -252,12 +257,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Customs\Explorer.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TreeListView\TreeListView.csproj">
-      <Project>{eeec8728-22cb-4a8a-a2d2-e4e78b990596}</Project>
-      <Name>TreeListView</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

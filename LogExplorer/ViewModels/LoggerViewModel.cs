@@ -4,9 +4,6 @@
 
 #region Usings
 
-using System.Security.Cryptography.X509Certificates;
-using System.Windows;
-
 using LogExplorer.Models;
 using LogExplorer.Services.Core;
 using LogExplorer.Services.OutputSystem;
@@ -40,6 +37,9 @@ namespace LogExplorer.ViewModels
 		#endregion
 
 		#region Public Properties
+
+		public string LoggerBox => this.logger.Message;
+
 		public Settings Settings
 		{
 			get
@@ -47,8 +47,6 @@ namespace LogExplorer.ViewModels
 				return this.settings;
 			}
 		}
-
-		public string LoggerBox => this.logger.Message;
 
 		#endregion
 	}
