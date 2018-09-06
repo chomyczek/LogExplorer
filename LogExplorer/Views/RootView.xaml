@@ -6,8 +6,8 @@
                   xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                   xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                   xmlns:models="clr-namespace:LogExplorer.Models"
-				  xmlns:controls="clr-namespace:LogExplorer.Customs.Controls"
-				  mc:Ignorable="d"
+                  xmlns:controls="clr-namespace:LogExplorer.Views.Controls"
+                  mc:Ignorable="d"
                   d:DesignHeight="300" d:DesignWidth="1000">
 	<Grid>
 		<Grid.RowDefinitions>

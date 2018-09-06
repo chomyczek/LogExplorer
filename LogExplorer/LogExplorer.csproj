@@ -126,10 +126,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Customs\App.cs" />
-    <Compile Include="Customs\Controls\Icon.xaml.cs">
+    <Compile Include="Views\Controls\Icon.xaml.cs">
       <DependentUpon>Icon.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Customs\Controls\TreeListView\TreeListView.cs" />
+    <Compile Include="Views\Controls\TreeListView\TreeListView.cs" />
     <Compile Include="Customs\CustomAppStart.cs" />
     <Compile Include="Customs\CustomBuild.cs" />
     <Compile Include="Customs\MultiRegionPresenter.cs" />
@@ -170,7 +170,7 @@
     <Compile Include="Views\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="Customs\Controls\Icon.xaml">
+    <Page Include="Views\Controls\Icon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

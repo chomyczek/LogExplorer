@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 #endregion
 
-namespace LogExplorer.Customs.Controls
+namespace LogExplorer.Views.Controls
 {
 	/// <summary>
 	/// Interaction logic for Icon.xaml

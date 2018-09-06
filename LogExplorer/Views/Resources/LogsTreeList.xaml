@@ -2,9 +2,9 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:models="clr-namespace:LogExplorer.Models"
-                    xmlns:tlv="clr-namespace:LogExplorer.Customs.Controls.TreeListView"
                     xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
-                    xmlns:controls="clr-namespace:LogExplorer.Customs.Controls">
+                    xmlns:treeListView="clr-namespace:LogExplorer.Views.Controls.TreeListView"
+                    xmlns:controls="clr-namespace:LogExplorer.Views.Controls">
 
 	<Style x:Key="OverviewBorderStyle" TargetType="{x:Type Border}">
 		<Setter Property="Margin" Value="-6, 0 " />
@@ -49,14 +49,14 @@
 		</Style.Triggers>
 	</Style>
 
-	<tlv:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}">
+	<treeListView:TreeListView x:Key="LogsTree" AllowsColumnReorder="True" ItemsSource="{Binding .}">
 
 		<!--Create an item template to specify the ItemsSource-->
-		<tlv:TreeListView.ItemTemplate>
+		<treeListView:TreeListView.ItemTemplate>
 			<HierarchicalDataTemplate DataType="{x:Type models:LogOverview}" ItemsSource="{Binding History}" />
-		</tlv:TreeListView.ItemTemplate>
+		</treeListView:TreeListView.ItemTemplate>
 
-		<tlv:TreeListView.Columns>
+		<treeListView:TreeListView.Columns>
 
 			<!--Create the first column containing the expand button and the name.-->
 			<GridViewColumn Header="Name" Width="{StaticResource NameWidth}">
@@ -68,7 +68,7 @@
 									<Border Style="{StaticResource OverviewBorderStyle}">
 										<StackPanel Orientation="Horizontal">
 											<!--The Expander Button (can be used in any column (typically the first one))-->
-											<tlv:TreeListViewExpander/>
+											<treeListView:TreeListViewExpander/>
 											<CheckBox Style="{StaticResource CheckBoxStyle}" IsChecked="{Binding Log.IsSelected, Mode=TwoWay}" />
 											<TextBlock Style="{StaticResource TextBlockStyle}" Text="{Binding Log.Name}" />
 										</StackPanel>
@@ -231,6 +231,6 @@
 					</DataTemplate>
 				</GridViewColumn.CellTemplate>
 			</GridViewColumn>
-		</tlv:TreeListView.Columns>
-	</tlv:TreeListView>
+		</treeListView:TreeListView.Columns>
+	</treeListView:TreeListView>
 </ResourceDictionary>
