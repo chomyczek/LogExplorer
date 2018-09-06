@@ -30,6 +30,12 @@
 	<!--Restore default header style-->
 	<Style TargetType="{x:Type GridViewColumnHeader}" />
 
+	<!--Restore default header style-->
+	<Style TargetType="{x:Type Button}" x:Key="SimpleButton">
+		<Setter Property="Padding" Value="0, 0, 5, 0" />
+		<Setter Property="MaxHeight" Value="21" />
+	</Style>
+
 	<!--Look of expander button-->
 	<Style TargetType="{x:Type ToggleButton}" >
 		<Setter Property="Template">
@@ -167,26 +173,26 @@
 										<Border Style="{StaticResource OverviewBorderStyle}">
 											<StackPanel Orientation="Horizontal">
 												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-												        CommandParameter="{Binding Log.LogPath}" >
+												        CommandParameter="{Binding Log.LogPath}" Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource ShowLogIco}"/>
+														<controls:Icon Data="{StaticResource ShowLogIco}" Fill="Black"/>
 														<TextBlock Text="Show log" />
 													</StackPanel>
 												</Button>
 												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding Log.DirPath}"
-												        Margin="5,0,0,0" >
+												        Margin="5,0,0,0" Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource ShowDirIco}"/>
+													<controls:Icon Data="{StaticResource ShowDirIco}" Fill="Black"/>
 														<TextBlock Text="Show dir" />
 													</StackPanel>
 												</Button>
 												<Button Command="{Binding DataContext.CmdRerun, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        IsEnabled="{Binding DataContext.IsRerunAvailable, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding Log}"
-												        Margin="5,0,0,0" >
+												        Margin="5,0,0,0"  Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource RerunIco}"/>
+													<controls:Icon Data="{StaticResource RerunIco}" Fill="Black"/>
 														<TextBlock Text="Rerun" />
 													</StackPanel>
 												</Button>
@@ -199,27 +205,27 @@
 										<Border Style="{StaticResource LogBorderStyle}">
 											<StackPanel Orientation="Horizontal">
 												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
-												        CommandParameter="{Binding LogPath}" >
+												        CommandParameter="{Binding LogPath}"  Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource ShowLogIco}"/>
+													<controls:Icon Data="{StaticResource ShowLogIco}" Fill="Black"/>
 														<TextBlock Text="Show log" />
 													</StackPanel>
 												</Button>
 												<Button Command="{Binding DataContext.CmdStartProcess, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding DirPath}"
-												        Margin="5,0,0,0" >
+												        Margin="5,0,0,0"  Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource ShowDirIco}"/>
+													<controls:Icon Data="{StaticResource ShowDirIco}" Fill="Black"/>
 														<TextBlock Text="Show dir" />
 													</StackPanel>
 												</Button>
 												<Button Command="{Binding DataContext.CmdDeleteOne, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=views:MvxWpfView}}"
 												        CommandParameter="{Binding .}"
 												        Background="IndianRed"
-												        Margin="5,0,0,0" >
+												        Margin="5,0,0,0"  Style="{StaticResource SimpleButton}">
 													<StackPanel Orientation="Horizontal">
-														<controls:Icon Data="{StaticResource DeleteIco}"/>
-														<TextBlock Text="Delete" />
+													<controls:Icon Data="{StaticResource DeleteIco}"/>
+														<TextBlock Text="Delete" Foreground="White" />
 													</StackPanel>
 												</Button>
 											</StackPanel>

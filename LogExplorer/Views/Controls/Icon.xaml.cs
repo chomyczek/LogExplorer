@@ -8,6 +8,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 
+using LogExplorer.Services.OutputSystem;
+
+using Color = System.Drawing.Color;
+
 #endregion
 
 namespace LogExplorer.Views.Controls
@@ -24,6 +28,11 @@ namespace LogExplorer.Views.Controls
 			typeof(Geometry),
 			typeof(Icon));
 
+		public static readonly DependencyProperty FillProperty = DependencyProperty.Register(
+			"Fill",
+			typeof(Brush),
+			typeof(Icon));
+
 		public static readonly DependencyProperty SizeProperty = DependencyProperty.Register(
 			"Size",
 			typeof(double),
@@ -37,7 +46,6 @@ namespace LogExplorer.Views.Controls
 		{
 			this.InitializeComponent();
 			this.DataContext = this;
-			this.Size = 18;
 		}
 
 		#endregion
@@ -53,6 +61,18 @@ namespace LogExplorer.Views.Controls
 			set
 			{
 				this.SetValue(DataProperty, value);
+			}
+		}
+
+		public Brush Fill
+		{
+			get
+			{
+				return (Brush)this.GetValue(FillProperty);
+			}
+			set
+			{
+				this.SetValue(FillProperty, value);
 			}
 		}
 
