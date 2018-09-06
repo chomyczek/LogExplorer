@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:system="clr-namespace:System;assembly=mscorlib"
                     xmlns:models="clr-namespace:LogExplorer.Models"
-                    xmlns:tlv="clr-namespace:SampleApplication;assembly=TreeListView"
+                    xmlns:tlv="clr-namespace:LogExplorer.Customs.Controls.TreeListView"
                     xmlns:views="clr-namespace:MvvmCross.Wpf.Views;assembly=MvvmCross.Wpf"
                     xmlns:controls="clr-namespace:LogExplorer.Customs.Controls">
 

@@ -1,19 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Media;
 
-namespace SampleApplication
+namespace LogExplorer.Customs.Controls.TreeListView
 {
     /// <summary>
     /// Represents a control that displays hierarchical data in a tree structure
@@ -32,7 +24,7 @@ namespace SampleApplication
         /// </summary>
         public TreeListView()
         {
-            Columns = new GridViewColumnCollection();
+            this.Columns = new GridViewColumnCollection();
         }
 
         #region Properties
@@ -42,8 +34,8 @@ namespace SampleApplication
         /// </summary>
         public GridViewColumnCollection Columns
         {
-            get { return (GridViewColumnCollection)GetValue(ColumnsProperty); }
-            set { SetValue(ColumnsProperty, value); }
+            get { return (GridViewColumnCollection)this.GetValue(ColumnsProperty); }
+            set { this.SetValue(ColumnsProperty, value); }
         }        
 
         /// <summary>
@@ -52,8 +44,8 @@ namespace SampleApplication
         /// </summary>
         public bool AllowsColumnReorder
         {
-            get { return (bool)GetValue(AllowsColumnReorderProperty); }
-            set { SetValue(AllowsColumnReorderProperty, value); }
+            get { return (bool)this.GetValue(AllowsColumnReorderProperty); }
+            set { this.SetValue(AllowsColumnReorderProperty, value); }
         }
         #endregion
 
