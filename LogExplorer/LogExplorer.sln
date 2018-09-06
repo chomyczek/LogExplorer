@@ -5,8 +5,6 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogExplorer", "LogExplorer.csproj", "{8CCFFC10-6A17-490B-92A4-7E94D364605F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeListView", "..\TreeListView\TreeListView.csproj", "{EEEC8728-22CB-4A8A-A2D2-E4E78B990596}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{8CCFFC10-6A17-490B-92A4-7E94D364605F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8CCFFC10-6A17-490B-92A4-7E94D364605F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8CCFFC10-6A17-490B-92A4-7E94D364605F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEEC8728-22CB-4A8A-A2D2-E4E78B990596}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEEC8728-22CB-4A8A-A2D2-E4E78B990596}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEEC8728-22CB-4A8A-A2D2-E4E78B990596}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEEC8728-22CB-4A8A-A2D2-E4E78B990596}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
